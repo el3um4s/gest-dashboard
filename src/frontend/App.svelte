@@ -45,6 +45,9 @@
 
   // ADDED
 
+  let isElectron = globalThis?.api?.systemInfo ? true : false;
+  $: console.log(isElectron);
+
   import PickFolder from "./Components/Cards/PickFolder.svelte";
 
   import { onMount } from "svelte";
@@ -134,7 +137,7 @@
   {/if}
 </MainWithTitlebar>
 
-<style>
+<style lang="postcss">
   .list-cards {
     display: grid;
     gap: 1rem;
