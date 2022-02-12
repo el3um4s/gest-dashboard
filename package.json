@@ -10,6 +10,7 @@
     "nodemon": "nodemon",
     "dev": "rollup -c -w",
     "start": "npm run compile && electron .",
+    "electron-trace": "electron --trace-warnings .",
     "start:svelte": "rollup -c & npm run compile && electron .",
     "compile": "tsc",
     "out:win": "rollup -c && tsc && electron-builder build --win --publish never",
@@ -53,10 +54,12 @@
   "dependencies": {
     "@el3um4s/svelte-titlebar": "^0.0.11",
     "@el3um4s/to-try": "^0.0.5",
+    "@fortawesome/free-solid-svg-icons": "^6.0.0",
     "ansi-regex": "^6.0.1",
     "electron-reload": "^2.0.0-alpha.1",
     "electron-updater": "^4.6.5",
-    "sirv-cli": "^2.0.2"
+    "sirv-cli": "^2.0.2",
+    "svelte-fa": "^2.4.0"
   },
   "build": {
     "appId": "gest-dashboard",

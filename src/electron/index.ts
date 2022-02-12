@@ -31,10 +31,10 @@ app.on("window-all-closed", () => {
 
 async function createMainWindow() {
   const settings = {
-    title: "MEMENTO - Electron BrowserView",
+    title: "GEST DASHBOARD",
   };
   mainWindow = new CustomWindow(settings);
-  const urlPage = globals.get.mainUrl() + "#main";
+  const urlPage = globals.get.mainUrl();
   mainWindow.createWindow(urlPage);
 
   await mainWindow.setIpcMain([

@@ -1,10 +1,9 @@
 import { SW } from "./serviceWorker";
 
 const pickFolder = async (): Promise<FileSystemDirectoryHandle> => {
-  // const folderHandle: FileSystemDirectoryHandle = await window[
-  //   "showDirectoryPicker"
-  // ]();
-  const folderHandle = await window.showDirectoryPicker();
+  const folderHandle: FileSystemDirectoryHandle = await window[
+    "showDirectoryPicker"
+  ]();
   return folderHandle;
 };
 

@@ -67,10 +67,10 @@ class CustomWindow {
 
     this.window.setBrowserView(this.browserView);
     this.browserView.setBounds({
-      x: 1,
+      x: 65, // 1
       y: 32,
-      width: width - 2,
-      height: height - 33,
+      width: width - 66, // -2
+      height: height - 57, // -33
     });
     this.browserView.setAutoResize({
       width: true,

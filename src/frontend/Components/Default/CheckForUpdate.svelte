@@ -49,7 +49,12 @@
     log_message =
       log_message + " - Downloaded " + data.percent.toFixed(2) + "%";
     log_message =
-      log_message + " (" + data.transferred + "/" + data.total + ")";
+      log_message +
+      " (" +
+      data.transferred.toFixed(2) +
+      "/" +
+      data.total.toFixed(2) +
+      ")";
     downloadMessage = log_message;
   });
 
@@ -99,14 +104,5 @@
 <style lang="postcss">
   .message {
     @apply rounded-md text-lg m-1 p-2;
-  }
-
-  button {
-    @apply py-2 px-4 font-semibold rounded-lg border;
-  }
-
-  button:hover {
-    background-color: var(--text-color);
-    color: var(--background-color);
   }
 </style>

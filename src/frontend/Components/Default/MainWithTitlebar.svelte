@@ -1,6 +1,6 @@
 <script lang="ts">
   import { TitleBar } from "@el3um4s/svelte-titlebar";
-  export let title: string = "Title";
+  export let title: string = "GEST DASHBOARD";
 
   let outerW = globalThis.outerWidth - 8;
   let isMaximized = outerW >= globalThis.screen.availWidth;
@@ -38,23 +38,54 @@
       on:clickClose={close}
     />
   </div>
-  <div class="page">
-    <slot />
+  <div class="main">
+    <div class="leftbar">
+      <slot name="leftbar" />
+    </div>
+    <div class="page">
+      <slot name="page" />
+    </div>
+    <div class="statusbar">
+      <slot name="statusbar" />
+    </div>
   </div>
 </main>
 
 <style lang="postcss">
-  .titlebar {
-    --background-color: theme("colors.cyan.900");
-    --text-color: theme("colors.neutral.50");
-  }
   main {
     @apply w-full;
   }
-  .page {
-    @apply p-5 overflow-y-auto w-full border border-cyan-900;
-    overflow-y: overlay;
+
+  .titlebar {
+    --background-color: var(--titlebar-background-color);
+    --text-color: var(--titlebar-text-color);
+  }
+
+  .main {
+    @apply overflow-hidden w-full h-full grid;
+    border: 1px solid var(--window-border-color);
+    grid-template-columns: 64px auto;
+    grid-template-rows: calc(100% - 24px) 24px;
+    grid-template-areas:
+      "leftbar page"
+      "statusbar statusbar";
     height: calc(100% - theme("spacing.8"));
+  }
+
+  .page {
+    grid-area: page;
+    @apply overflow-y-auto w-full h-full;
+    overflow-y: overlay;
+  }
+
+  .leftbar {
+    grid-area: leftbar;
+    @apply w-14;
+  }
+
+  .statusbar {
+    grid-area: statusbar;
+    @apply h-6;
   }
 
   .page::-webkit-scrollbar {
@@ -62,23 +93,13 @@
   }
 
   .page::-webkit-scrollbar-track {
-    /* background-color: theme("colors.cyan.900"); */
-
-    border: 2px solid theme("colors.cyan.900");
-    border-left: 8px solid theme("colors.cyan.800");
-    background-color: inherit;
+    border: 2px solid var(--background-color);
+    border-left: 8px solid var(--background-color);
+    background-color: var(--background-color);
   }
 
   .page::-webkit-scrollbar-thumb {
-    background-color: theme("colors.cyan.700");
-    border-left: 8px solid theme("colors.cyan.800");
+    background-color: var(--hover-scrollbar-thumb);
+    border-left: 8px solid var(--background-color);
   }
-
-  .page::-webkit-scrollbar-thumb:hover {
-    background-color: theme("colors.cyan.600");
-    border: 0;
-  }
-  /* .page::-webkit-scrollbar-track:hover {
-    border: 2px solid theme("colors.cyan.900");
-  } */
 </style>

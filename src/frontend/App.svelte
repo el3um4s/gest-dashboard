@@ -1,65 +1,31 @@
 <script lang="ts">
   import "./css/tailwind.pcss";
 
-  import { slide } from "svelte/transition";
-
-  import CheckForUpdate from "./Components/Default/CheckForUpdate.svelte";
-  import InfoApp from "./Components/Default/InfoApp.svelte";
-  import MainWithTitlebar from "./Components/Default/MainWithTitlebar.svelte";
-
-  import Card from "./Components/Cards/Card.svelte";
-
-  let showInfo = false;
-
-  const hash = globalThis.location.hash.substring(1);
-
-  function openInNewWindow(e) {
-    globalThis.api.windowManager.send("openInNewWindow", e.detail);
-  }
-
-  // to do: change title page
-
-  const listCards = [
-    {
-      title: "Svelte",
-      link: "https://svelte.dev/",
-      description: "How to build Svelte apps",
-    },
-    {
-      title: "Repository",
-      link: "https://github.com/el3um4s/memento-electron-browser-view",
-      description: "View the source code",
-    },
-    {
-      title: "Electron",
-      link: "https://www.electronjs.org/",
-      description:
-        "Build cross-platform desktop apps with JavaScript, HTML, and CSS",
-    },
-    {
-      title: "Tailwind CSS",
-      link: "https://tailwindcss.com/docs/installation",
-      description: "Get started with Tailwind CSS",
-    },
-  ];
-
-  // ADDED
-
-  let isElectron = globalThis?.api?.systemInfo ? true : false;
-  $: console.log(isElectron);
-
-  import PickFolder from "./Components/Cards/PickFolder.svelte";
-
   import { onMount } from "svelte";
+  import { slide } from "svelte/transition";
+  import { tick } from "svelte";
 
   import { SW } from "./sw/serviceWorker";
   import { FolderHandle } from "./sw/folderHandler";
   import { handleFetch } from "./sw/fetchHandler";
 
+  import MainWithTitlebar from "./Components/Default/MainWithTitlebar.svelte";
+  import LeftBar from "./Components/Default/LeftBar.svelte";
+  import StatusBar from "./Components/Default/StatusBar.svelte";
+
+  import Iframe from "./Components/Pages/Iframe.svelte";
+  import Help from "./Components/Pages/Help.svelte";
+  import Info from "./Components/Pages/Info.svelte";
+  import Settings from "./Components/Pages/Settings.svelte";
+
+  let component;
+
   let folderHandle = null;
   let hostName = "";
   let swScope = null;
   let clientId = "";
+
+  $: src = swScope ? `${swScope}${hostName}/` : null;
 
   onMount(async () => {
     await SW.register();
@@ -93,64 +59,66 @@
     swScope = data.scope;
     clientId = data.clientId;
   }
+
+  let showIframe = false;
+
+  $: titleWindow = folderHandle?.name ? folderHandle.name : "GEST DASHBOARD";
+  $: status =
+    clientId && swScope && hostName
+      ? `CLIENT ID: ${clientId} - HOST: ${hostName} - SCOPE: ${swScope}`
+      : "";
 </script>
 
-<svelte:head>
-  <title>GEST DASHBOARD</title>
-</svelte:head>
+<MainWithTitlebar title={titleWindow}>
+  <LeftBar
+    slot="leftbar"
+    on:open-folder={async () => {
+      component = undefined;
+      showIframe = false;
+      folderHandle = null;
+      folderHandle = await FolderHandle.init();
+      showIframe = folderHandle ? true : false;
+    }}
+    on:show-settings={() => {
+      showIframe = false;
+      component = Settings;
+    }}
+    on:show-help={() => {
+      showIframe = false;
+      component = Help;
+    }}
+    on:show-info={() => {
+      showIframe = false;
+      component = Info;
+    }}
+    on:show-folder={() => {
+      showIframe = true;
+      component = undefined;
+    }}
+    on:reload-folder={async () => {
+      component = undefined;
+      src = null;
+      await tick();
+      src = `${swScope}${hostName}/`;
+      showIframe = true;
+    }}
+    on:open-new-window={() => {
+      const message = {
+        link: "https://svelte.dev/",
+      };
+      globalThis.api.windowManager.send("openInNewWindow", message);
+    }}
+  />
+  <main slot="page">
+    <svelte:component this={component} />
 
-<MainWithTitlebar title="GEST DASHBOARD">
-  {#if hash === "main"}
-    <section class="space-y-6">
-      <div class="list-cards">
-        <PickFolder
-          title={folderHandle?.name}
-          link="{swScope}{hostName}/"
-          on:click-pick-folder={async () => {
-            folderHandle = await FolderHandle.init();
-          }}
-          on:open-in-new-window={openInNewWindow}
-        />
-        {#each listCards as card (card.link)}
-          <Card
-            title={card.title}
-            link={card.link}
-            on:open-in-new-window={openInNewWindow}
-          >
-            <div slot="description">{card.description}</div>
-          </Card>
-        {/each}
-      </div>
-
-      <div>
-        <button on:click={() => (showInfo = !showInfo)}
-          >{showInfo ? "Hide Info" : "Show Info"}</button
-        >
-        {#if showInfo}
-          <div transition:slide>
-            <InfoApp />
-          </div>
-        {/if}
-        <CheckForUpdate />
-      </div>
-    </section>
-  {/if}
+    <Iframe title={folderHandle?.name} {src} hidden={!showIframe} />
+  </main>
+  <StatusBar slot="statusbar" {status} />
 </MainWithTitlebar>
 
 <style lang="postcss">
-  .list-cards {
-    display: grid;
-    gap: 1rem;
-    align-items: flex-start;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  }
-
-  button {
-    @apply py-2 px-4 font-semibold rounded-lg border;
-  }
-
-  button:hover {
-    background-color: var(--text-color);
-    color: var(--background-color);
+  main {
+    @apply h-full;
   }
 </style>

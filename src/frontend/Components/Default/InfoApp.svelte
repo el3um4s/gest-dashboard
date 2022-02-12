@@ -27,6 +27,3 @@
     <li>Electron: <b>{electron}</b></li>
   </ul>
 </div>
-
-<style>
-</style>

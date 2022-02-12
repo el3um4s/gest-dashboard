@@ -36,7 +36,7 @@ async function openInNewWindow(
 ) {
   let win = await createMainWindow();
   await win.addBrowserView(message.link);
-  win.setIpcMainView([windowControls]);
+  win.setIpcMainView([windowControls, windowManager]);
 }
 
 async function createMainWindow() {
@@ -47,10 +47,10 @@ async function createMainWindow() {
     y: Math.floor(Math.random() * 64),
   };
 
-  const urlPage = globals.get.mainUrl() + "#browserview";
+  const urlPage = globals.get.mainUrl();
   customWindow = new CustomWindow(settings);
   customWindow.createWindow(urlPage);
 
-  await customWindow.setIpcMain([windowControls]);
+  await customWindow.setIpcMain([windowControls, windowManager]);
   return customWindow;
 }
