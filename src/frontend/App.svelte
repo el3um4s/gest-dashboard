@@ -104,7 +104,7 @@
     }}
     on:open-new-window={() => {
       const message = {
-        link: "https://svelte.dev/",
+        link: undefined,
       };
       globalThis.api.windowManager.send("openInNewWindow", message);
     }}

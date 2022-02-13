@@ -1,12 +1,13 @@
 <script lang="ts">
+  import { slide } from "svelte/transition";
   import InfoApp from "../Default/InfoApp.svelte";
   import CheckForUpdate from "../Default/CheckForUpdate.svelte";
 
   const isElectron = globalThis?.api?.systemInfo ? true : false;
-  export let version = 0;
+  export let version = "0.0.1";
 </script>
 
-<section>
+<section transition:slide>
   <h1>Info</h1>
   <article>
     {#if isElectron}
