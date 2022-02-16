@@ -6,6 +6,8 @@ import IPC from "./General/IPC";
 import CustomWindow from "../customWindow";
 
 import windowControls from "./windowControls";
+import systemInfo from "./systemInfo";
+import updaterInfo from "./updaterInfo";
 
 import * as globals from "../globals";
 
@@ -35,8 +37,8 @@ async function openInNewWindow(
   message: any
 ) {
   let win = await createMainWindow();
-  await win.addBrowserView(message.link);
-  win.setIpcMainView([windowControls, windowManager]);
+  // await win.addBrowserView(message.link);
+  // win.setIpcMainView([windowControls, windowManager, systemInfo, updaterInfo]);
 }
 
 async function createMainWindow() {
@@ -51,6 +53,11 @@ async function createMainWindow() {
   customWindow = new CustomWindow(settings);
   customWindow.createWindow(urlPage);
 
-  await customWindow.setIpcMain([windowControls, windowManager]);
+  await customWindow.setIpcMain([
+    windowControls,
+    windowManager,
+    systemInfo,
+    updaterInfo,
+  ]);
   return customWindow;
 }

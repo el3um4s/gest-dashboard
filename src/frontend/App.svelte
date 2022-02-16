@@ -14,11 +14,15 @@
   import LeftBar from "./Components/Default/LeftBar.svelte";
 
   import Iframe from "./Components/Pages/Iframe.svelte";
-  status.isElectron(globalThis?.api?.systemInfo ? true : false);
-  status.tech($status.isElectron ? "browserview" : "iframe");
+
+  import { idbSettings } from "./IndexedDB/Settings";
 
   onMount(async () => {
     await SW.register();
+    status.isElectron(globalThis?.api?.systemInfo ? true : false);
+    const techDefault = $status.isElectron ? "browserview" : "iframe";
+    const tech = await idbSettings.getTech(techDefault);
+    await status.tech(tech);
   });
 
   window.addEventListener("unload", () => {

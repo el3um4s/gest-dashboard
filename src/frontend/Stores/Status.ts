@@ -2,7 +2,8 @@
 /// <reference lib="webworker" />
 // https://joshuatz.com/posts/2021/strongly-typed-service-workers/
 
-import { writable, get } from "svelte/store";
+import { writable } from "svelte/store";
+import { idbSettings } from "../IndexedDB/Settings";
 
 export interface StatusInterface {
   isElectron: boolean;
@@ -90,10 +91,11 @@ export const status = {
       const sw = { ...s.sw, clientId };
       return { ...s, sw };
     }),
-  tech: (t: "iframe" | "browserview") => {
+  tech: async (t: "iframe" | "browserview") => {
     statusStore.update((s) => {
       const tech = t;
       return { ...s, tech };
     });
+    await idbSettings.setTech(t);
   },
 };

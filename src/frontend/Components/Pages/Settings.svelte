@@ -41,8 +41,8 @@
         class="button-cancel">Discard</button
       >
       <button
-        on:click={() => {
-          status.tech(techSelected);
+        on:click={async () => {
+          await status.tech(techSelected);
         }}
         class="button-confirm">Save Changes</button
       >
