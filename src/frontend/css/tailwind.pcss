@@ -21,6 +21,15 @@
 
   --status-bar-background-color: #f0f0f0;
   --status-bar-text-color: #171717;
+
+  --color-confirm: theme("colors.emerald.200");
+  --color-confirm-hover: theme("colors.emerald.300");
+  --color-cancel: theme("colors.red.200");
+  --color-cancel-hover: theme("colors.red.300");
+  --color-action: theme("colors.blue.200");
+  --color-action-hover: theme("colors.blue.300");
+  --color-neutral: theme("colors.orange.200");
+  --color-neutral-hover: theme("colors.orange.300");
 }
 
 /** Modify your Tailwind layers etc. here **/
@@ -48,10 +57,36 @@
 
   a:hover,
   button:hover {
-    @apply no-underline bg-[color:var(--hover-background-color)] text-[color:var(--hover-color)];
+    @apply no-underline bg-[color:var(--hover-background-color)];
   }
 
   button {
     @apply py-2 px-4 font-semibold p-2 rounded border border-[color:var(--color)];
+  }
+}
+
+@layer components {
+  .button-confirm {
+    @apply py-2 px-4 font-semibold p-2 rounded border border-[color:var(--color-confirm)] bg-[color:var(--color-confirm)];
+
+    &:hover {
+      @apply no-underline bg-[color:var(--color-confirm-hover)];
+    }
+  }
+
+  .button-cancel {
+    @apply py-2 px-4 font-semibold p-2 rounded border border-[color:var(--color-cancel)] bg-[color:var(--color-cancel)];
+
+    &:hover {
+      @apply no-underline bg-[color:var(--color-cancel-hover)];
+    }
+  }
+
+  .button-action {
+    @apply py-2 px-4 font-semibold p-2 rounded border border-[color:var(--color-action)] bg-[color:var(--color-action)];
+
+    &:hover {
+      @apply no-underline bg-[color:var(--color-action-hover)];
+    }
   }
 }

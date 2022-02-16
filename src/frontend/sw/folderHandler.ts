@@ -7,11 +7,14 @@ const pickFolder = async (): Promise<FileSystemDirectoryHandle> => {
   return folderHandle;
 };
 
-const init = async (): Promise<FileSystemDirectoryHandle> => {
+const init = async (
+  hostName: string = ""
+): Promise<FileSystemDirectoryHandle> => {
   const folderHandle: FileSystemDirectoryHandle = await pickFolder();
   await SW.waitForReady();
   SW.post({
     type: "host-start",
+    hostName,
   });
   return folderHandle;
 };

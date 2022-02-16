@@ -73,13 +73,13 @@
 
 <div>
   {#if !checkingForUpdate && !updateAvailable && !downloading && !quitAndInstall && !isInstalling}
-    <button on:click={check}>Check for Update</button>
+    <button class="button-action" on:click={check}>Check for Update</button>
   {/if}
   {#if checkingForUpdate}
     <span class="message"> Checking for update... </span>
   {/if}
   {#if updateAvailable}
-    <button on:click={startDownloadUpdate}
+    <button class="button-action" on:click={startDownloadUpdate}
       >Updates are available. Click to download.</button
     >
   {/if}
@@ -92,7 +92,7 @@
     </span>
   {/if}
   {#if quitAndInstall}
-    <button on:click={install}
+    <button class="button-action" on:click={install}
       >The updates are ready. Click to quit and install.</button
     >
   {/if}

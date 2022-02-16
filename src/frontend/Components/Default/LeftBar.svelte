@@ -1,9 +1,13 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
+  import { tick } from "svelte";
 
-  const dispatch = createEventDispatcher();
+  import { status } from "../../Stores/Status";
+  import SideBar from "./SideBar.svelte";
+  import { FolderHandle } from "../../sw/folderHandler";
+  import Settings from "../Pages/Settings.svelte";
+  import Help from "../Pages/Help.svelte";
+  import Info from "../Pages/Info.svelte";
 
-  import Fa from "svelte-fa";
   import {
     faFolderOpen,
     faEye,
@@ -13,112 +17,113 @@
     faQuestionCircle,
     faInfoCircle,
   } from "@fortawesome/free-solid-svg-icons";
+
+  let listButtons = [
+    {
+      id: "openFolder",
+      icon: faFolderOpen,
+      visible: true,
+      title: "Open folder in this window",
+      onClick: async () => {
+        status.componentVisible(undefined);
+        status.showIframe(false);
+        status.folderHandle(null);
+        status.folderHandle(await FolderHandle.init($status.sw.hostName));
+        status.showIframe($status.sw.folderHandle ? true : false);
+      },
+    },
+    {
+      id: "showFolder",
+      icon: faEye,
+      visible: false,
+      title: "Show folder in this window",
+      onClick: () => {
+        status.showIframe(true);
+        status.componentVisible(undefined);
+      },
+    },
+    {
+      id: "reloadFolder",
+      icon: faRedoAlt,
+      visible: false,
+      title: "Reload folder in this window",
+      onClick: async () => {
+        status.componentVisible(undefined);
+
+        const tempSWScope = $status.sw.swScope;
+        const tempSWhostName = $status.sw.hostName;
+        status.swScope(null);
+        status.hostName("");
+
+        await tick();
+
+        status.swScope(tempSWScope);
+        status.hostName(tempSWhostName);
+        status.showIframe(true);
+      },
+    },
+    {
+      id: "openNewWindow",
+      icon: faExternalLinkSquareAlt,
+      visible: true,
+      title: "Open new window",
+      onClick: () => {
+        if ($status.isElectron) {
+          const message = {
+            link: undefined,
+          };
+          globalThis.api.windowManager.send("openInNewWindow", message);
+        } else {
+          window.open(window.location.href);
+        }
+      },
+    },
+    {
+      id: "openSettings",
+      icon: faCog,
+      visible: true,
+      title: "Settings",
+      onClick: () => {
+        status.showIframe(false);
+        status.componentVisible(Settings);
+      },
+    },
+    {
+      id: "openHelp",
+      icon: faQuestionCircle,
+      visible: true,
+      title: "Help",
+      onClick: () => {
+        status.showIframe(false);
+        status.componentVisible(Help);
+      },
+    },
+    {
+      id: "openInfo",
+      icon: faInfoCircle,
+      visible: true,
+      title: "Info",
+      onClick: () => {
+        status.showIframe(false);
+        status.componentVisible(Info);
+      },
+    },
+  ];
+
+  $: listButtons = [
+    ...listButtons.map((b) => {
+      if (
+        $status.sw.folderHandle &&
+        $status.sw.hostName != "" &&
+        $status.sw.clientId != ""
+      ) {
+        b.visible = true;
+      } else if (b.id == "showFolder" || b.id == "reloadFolder") {
+        b.visible = false;
+      }
+      return b;
+    }),
+  ];
 </script>
 
-<section>
-  <button
-    class="icon"
-    title="Open folder in this window"
-    on:click={() => {
-      dispatch("open-folder");
-    }}
-  >
-    <Fa icon={faFolderOpen} />
-  </button>
-  <button
-    class="icon"
-    title="Show folder in this window"
-    on:click={() => {
-      dispatch("show-folder");
-    }}
-  >
-    <Fa icon={faEye} />
-  </button>
-  <button
-    class="icon"
-    title="Reload folder in this window"
-    on:click={() => {
-      dispatch("reload-folder");
-    }}
-  >
-    <Fa icon={faRedoAlt} />
-  </button>
-  <button
-    class="icon"
-    title="Open new window"
-    on:click={() => {
-      dispatch("open-new-window");
-    }}
-  >
-    <Fa icon={faExternalLinkSquareAlt} />
-  </button>
-  <button
-    class="icon"
-    title="Settings"
-    on:click={() => {
-      dispatch("show-settings");
-    }}><Fa icon={faCog} /></button
-  >
-  <button
-    class="icon"
-    title="Help"
-    on:click={() => {
-      dispatch("show-help");
-    }}><Fa icon={faQuestionCircle} /></button
-  >
-  <button
-    class="icon"
-    title="Info"
-    on:click={() => {
-      dispatch("show-info");
-    }}><Fa icon={faInfoCircle} /></button
-  >
-</section>
-
-<style lang="postcss">
-  section {
-    @apply overflow-y-auto h-full w-14 items-center justify-start gap-1 p-2;
-    overflow-y: overlay;
-    background-color: var(--sidebar-background-color);
-    color: var(--sidebar-text-color);
-  }
-
-  button {
-    border: 0;
-  }
-  .icon {
-    @apply h-12 w-12  flex flex-col items-center justify-center;
-  }
-
-  .icon:hover {
-    background-color: var(--sidebar-hover-background-color);
-    color: var(--sidebar-hover-text-color);
-  }
-
-  section::-webkit-scrollbar {
-    @apply w-2;
-  }
-
-  section::-webkit-scrollbar-track {
-    border: 2px solid var(--background-color);
-    border-left: 4px solid var(--background-color);
-    background-color: var(--background-color);
-  }
-
-  section::-webkit-scrollbar-thumb {
-    background-color: var(--background-color);
-    border-left: 4px solid var(--background-color);
-  }
-
-  section::-webkit-scrollbar-thumb:hover {
-    background-color: var(--hover-scrollbar-thumb);
-    border: 0;
-    border-left: 4px solid var(--background-color);
-  }
-
-  section::-webkit-scrollbar-track:hover {
-    border: 2px solid var(--sidebar-text-color);
-    border-left: 4px solid var(--background-color);
-    background-color: var(--sidebar-text-color);
-  }
-</style>
+<SideBar {listButtons} slot="leftbar" />

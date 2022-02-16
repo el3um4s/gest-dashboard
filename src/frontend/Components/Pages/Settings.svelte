@@ -1,17 +1,19 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
-  const isElectron = globalThis?.api?.systemInfo ? true : false;
+  import { status } from "../../Stores/Status";
 
   const tech = [
-    { value: "iframe", text: "IFrame", visible: !isElectron },
+    { value: "iframe", text: "IFrame", visible: true },
     {
       value: "browserview",
       text: "BrowserView (ElectronJS)",
-      visible: isElectron,
+      visible: $status.isElectron,
     },
   ];
 
-  let techSelected = isElectron ? "browserview" : "iframe";
+  let techSelected = $status.tech;
+
+  $: valueChanged = techSelected != $status.tech;
 </script>
 
 <section transition:slide>
@@ -30,6 +32,22 @@
       {/each}
     </select>
   </div>
+  {#if valueChanged}
+    <div transition:slide>
+      <button
+        on:click={() => {
+          techSelected = $status.tech;
+        }}
+        class="button-cancel">Discard</button
+      >
+      <button
+        on:click={() => {
+          status.tech(techSelected);
+        }}
+        class="button-confirm">Save Changes</button
+      >
+    </div>
+  {/if}
 </section>
 
 <style lang="postcss">
