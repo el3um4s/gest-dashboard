@@ -62,13 +62,18 @@ async function StartHost(e) {
   }
 
   const hostKeys = storageLength();
-  const hostName = `host${hostKeys+1}`;
+  const hostName = e.data.hostName != "" ? e.data.hostName : `host${hostKeys+(1+Math.random()*10000).toFixed(0)}`;
   const clientId = e.source.id;
+
+  if (e.data.hostName != "") {
+    storageDelete(e.data.hostName);
+  }
 
   storeHosts.push({
     hostName,
     clientId
   })
+
   console.log("storeHosts", storeHosts);
   // Tell client it's now hosting.
   e.source.postMessage({
