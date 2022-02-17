@@ -18,6 +18,26 @@
     faInfoCircle,
   } from "@fortawesome/free-solid-svg-icons";
 
+  globalThis.api.windowManager.receive("showBrowserView", async (data) => {
+    const folderHandle = $status.sw.folderHandle;
+    const hostName = $status.sw.hostName;
+
+    if (folderHandle && data.present == "no") {
+      status.folderHandle(await FolderHandle.reInit(folderHandle, hostName));
+      show($status.sw.folderHandle ? true : false);
+    }
+  });
+
+  const show = (view: boolean, component: any = undefined) => {
+    status.componentVisible(component);
+    status.showIframe(view);
+    if ($status.isElectron && $status.tech === "browserview") {
+      globalThis.api.windowManager.send("showBrowserView", { show: view });
+    } else {
+      globalThis.api.windowManager.send("removeBrowserView");
+    }
+  };
+
   let listButtons = [
     {
       id: "openFolder",
@@ -25,27 +45,11 @@
       visible: true,
       title: "Open folder in this window",
       onClick: async () => {
-        status.componentVisible(undefined);
-        status.showIframe(false);
+        show(false);
         status.folderHandle(null);
+        tick();
         status.folderHandle(await FolderHandle.init($status.sw.hostName));
-        status.showIframe($status.sw.folderHandle ? true : false);
-
-        // if ($status.isElectron && $status.tech === "browserview") {
-        //   const folderHandle = await FolderHandle.init($status.sw.hostName);
-        //   status.folderHandle(folderHandle);
-
-        //   const message = {
-        //     folderHandle,
-        //     src,
-        //   };
-
-        //   await globalThis.api.windowManager.send("openInBrowserView", message);
-        //   // status.showIframe($status.sw.folderHandle ? true : false);
-        // } else {
-        //   status.folderHandle(await FolderHandle.init($status.sw.hostName));
-        //   status.showIframe($status.sw.folderHandle ? true : false);
-        // }
+        show($status.sw.folderHandle ? true : false);
       },
     },
     {
@@ -54,8 +58,7 @@
       visible: false,
       title: "Show folder in this window",
       onClick: () => {
-        status.showIframe(true);
-        status.componentVisible(undefined);
+        show(true);
       },
     },
     {
@@ -64,19 +67,23 @@
       visible: false,
       title: "Reload folder in this window",
       onClick: async () => {
-        // TODO: #1 un metodo migliore potrebbe essere richiamare il folderHandle da IndexedDB
-        status.componentVisible(undefined);
+        show(false);
 
-        const tempSWScope = $status.sw.swScope;
-        const tempSWhostName = $status.sw.hostName;
+        const folderHandle = $status.sw.folderHandle;
+        const hostName = $status.sw.hostName;
+
+        status.folderHandle(null);
         status.swScope(null);
         status.hostName("");
 
         await tick();
 
-        status.swScope(tempSWScope);
-        status.hostName(tempSWhostName);
-        status.showIframe(true);
+        if (folderHandle) {
+          status.folderHandle(
+            await FolderHandle.reInit(folderHandle, hostName)
+          );
+          show($status.sw.folderHandle ? true : false);
+        }
       },
     },
     {
@@ -101,8 +108,7 @@
       visible: true,
       title: "Settings",
       onClick: () => {
-        status.showIframe(false);
-        status.componentVisible(Settings);
+        show(false, Settings);
       },
     },
     {
@@ -111,8 +117,7 @@
       visible: true,
       title: "Help",
       onClick: () => {
-        status.showIframe(false);
-        status.componentVisible(Help);
+        show(false, Help);
       },
     },
     {
@@ -121,8 +126,7 @@
       visible: true,
       title: "Info",
       onClick: () => {
-        status.showIframe(false);
-        status.componentVisible(Info);
+        show(false, Info);
       },
     },
   ];

@@ -19,6 +19,19 @@ const init = async (
   return folderHandle;
 };
 
+const reInit = async (
+  folderHandle: FileSystemDirectoryHandle,
+  hostName: string = ""
+): Promise<FileSystemDirectoryHandle> => {
+  await SW.waitForReady();
+  SW.post({
+    type: "host-start",
+    hostName,
+  });
+  return folderHandle;
+};
+
 export const FolderHandle = {
   init,
+  reInit,
 };

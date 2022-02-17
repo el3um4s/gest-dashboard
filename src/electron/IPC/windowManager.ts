@@ -1,5 +1,4 @@
 import { BrowserWindow, BrowserView, ipcMain } from "electron";
-import path from "path";
 
 import { SendChannels } from "./General/channelsInterface";
 import IPC from "./General/IPC";
@@ -18,10 +17,12 @@ const nameAPI = "windowManager";
 const validSendChannel: SendChannels = {
   openInNewWindow: openInNewWindow,
   openInBrowserView: openInBrowserView,
+  showBrowserView: showBrowserView,
+  removeBrowserView: removeBrowserView,
 };
 
 // from Main
-const validReceiveChannel: string[] = [];
+const validReceiveChannel: string[] = ["showBrowserView"];
 
 const windowManager = new IPC({
   nameAPI,
@@ -39,9 +40,6 @@ async function openInNewWindow(
   message: any
 ) {
   await createMainWindow();
-  // let win = await createMainWindow();
-  // await win.addBrowserView(message.link);
-  // win.setIpcMainView([windowControls, windowManager, systemInfo, updaterInfo]);
 }
 
 async function openInBrowserView(
@@ -49,10 +47,6 @@ async function openInBrowserView(
   event: Electron.IpcMainEvent,
   message: any
 ) {
-  // console.log(message.src);
-  // console.log(customWindow);
-  // customWindow.addBrowserView(message.src);
-  // console.log(customWindow.getBrowserViews());
   setBrowserView(customWindow, message.src);
 }
 
@@ -75,6 +69,51 @@ async function createMainWindow() {
     updaterInfo,
   ]);
   return customWindow;
+}
+
+async function showBrowserView(
+  customWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  message: any
+) {
+  const browserView = customWindow.getBrowserView();
+
+  if (message.show) {
+    const present = browserView ? "yes" : "no";
+    customWindow.webContents.send("showBrowserView", {
+      present,
+    });
+  }
+  if (browserView && message.show) {
+    const [width, height] = customWindow.getSize();
+    browserView.setBounds({
+      x: 65, // 1
+      y: 33, // 32
+      width: width - 66, // -2
+      height: height - 58, // -33
+    });
+    browserView.setAutoResize({
+      width: true,
+      height: true,
+    });
+  } else if (browserView && !message.show) {
+    browserView.setBounds({ x: 0, y: 0, width: 0, height: 0 });
+    browserView.setAutoResize({
+      width: false,
+      height: false,
+    });
+  }
+}
+
+async function removeBrowserView(
+  customWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  message: any
+) {
+  const browserView = customWindow.getBrowserView();
+  if (browserView) {
+    customWindow.removeBrowserView(browserView);
+  }
 }
 
 async function setBrowserView(win: BrowserWindow, link: string) {

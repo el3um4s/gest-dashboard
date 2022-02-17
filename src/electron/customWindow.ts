@@ -80,7 +80,7 @@ class CustomWindow {
   }
 
   async setIpcMainView(api: Array<IPC>) {
-    api.forEach(async (el) => await el.initIpcMain(ipcMain, this.browserView));
+    api.forEach(async (el) => el.initIpcMain(ipcMain, this.browserView));
   }
 }
 
