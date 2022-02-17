@@ -3,10 +3,10 @@ import path from "path";
 import EventEmitter from "events";
 import IPC from "./IPC/General/IPC";
 
-const appName = "electron-browser-view";
+const appName = "gest-dashboard";
 
 const defaultSettings = {
-  title: "electron-browser-view",
+  title: "gest-dashboard",
   width: 854,
   height: 480,
   frame: false,

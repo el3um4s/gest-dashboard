@@ -1,4 +1,5 @@
-import { BrowserWindow } from "electron";
+import { BrowserWindow, BrowserView, ipcMain } from "electron";
+import path from "path";
 
 import { SendChannels } from "./General/channelsInterface";
 import IPC from "./General/IPC";
@@ -16,6 +17,7 @@ const nameAPI = "windowManager";
 // to Main
 const validSendChannel: SendChannels = {
   openInNewWindow: openInNewWindow,
+  openInBrowserView: openInBrowserView,
 };
 
 // from Main
@@ -36,9 +38,22 @@ async function openInNewWindow(
   event: Electron.IpcMainEvent,
   message: any
 ) {
-  let win = await createMainWindow();
+  await createMainWindow();
+  // let win = await createMainWindow();
   // await win.addBrowserView(message.link);
   // win.setIpcMainView([windowControls, windowManager, systemInfo, updaterInfo]);
+}
+
+async function openInBrowserView(
+  customWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  message: any
+) {
+  // console.log(message.src);
+  // console.log(customWindow);
+  // customWindow.addBrowserView(message.src);
+  // console.log(customWindow.getBrowserViews());
+  setBrowserView(customWindow, message.src);
 }
 
 async function createMainWindow() {
@@ -60,4 +75,44 @@ async function createMainWindow() {
     updaterInfo,
   ]);
   return customWindow;
+}
+
+async function setBrowserView(win: BrowserWindow, link: string) {
+  const [width, height] = win.getSize();
+  const urlPreload = globals.get.preloadjs();
+
+  let browserView = new BrowserView({
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+      nativeWindowOpen: true,
+      preload: urlPreload,
+    },
+  });
+
+  win.setBrowserView(browserView);
+  browserView.setBounds({
+    x: 65, // 1
+    y: 33, // 32
+    width: width - 66, // -2
+    height: height - 58, // -33
+  });
+  browserView.setAutoResize({
+    width: true,
+    height: true,
+  });
+  if (link) {
+    browserView.webContents.loadURL(link);
+  }
+
+  setIpcMainView(browserView, [
+    windowControls,
+    windowManager,
+    systemInfo,
+    updaterInfo,
+  ]);
+}
+
+async function setIpcMainView(browserView: BrowserView, api: Array<IPC>) {
+  api.forEach(async (el) => el.initIpcMain(ipcMain, browserView));
 }

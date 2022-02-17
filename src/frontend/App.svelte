@@ -56,6 +56,13 @@
     status.hostName(data.hostName);
     status.swScope(data.scope);
     status.clientId(data.clientId);
+    await tick();
+    if ($status.isElectron && $status.tech === "browserview") {
+      const link = $status.sw.swScope
+        ? `${$status.sw.swScope}${$status.sw.hostName}/`
+        : null;
+      globalThis.api.windowManager.send("openInBrowserView", { src });
+    }
   }
 
   $: titleWindow = $status.folderName ? $status.folderName : "GEST DASHBOARD";

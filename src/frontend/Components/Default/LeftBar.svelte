@@ -30,6 +30,22 @@
         status.folderHandle(null);
         status.folderHandle(await FolderHandle.init($status.sw.hostName));
         status.showIframe($status.sw.folderHandle ? true : false);
+
+        // if ($status.isElectron && $status.tech === "browserview") {
+        //   const folderHandle = await FolderHandle.init($status.sw.hostName);
+        //   status.folderHandle(folderHandle);
+
+        //   const message = {
+        //     folderHandle,
+        //     src,
+        //   };
+
+        //   await globalThis.api.windowManager.send("openInBrowserView", message);
+        //   // status.showIframe($status.sw.folderHandle ? true : false);
+        // } else {
+        //   status.folderHandle(await FolderHandle.init($status.sw.hostName));
+        //   status.showIframe($status.sw.folderHandle ? true : false);
+        // }
       },
     },
     {
@@ -48,6 +64,7 @@
       visible: false,
       title: "Reload folder in this window",
       onClick: async () => {
+        // TODO: #1 un metodo migliore potrebbe essere richiamare il folderHandle da IndexedDB
         status.componentVisible(undefined);
 
         const tempSWScope = $status.sw.swScope;

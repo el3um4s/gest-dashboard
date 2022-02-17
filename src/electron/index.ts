@@ -11,6 +11,7 @@ import windowManager from "./IPC/windowManager";
 import * as globals from "./globals";
 
 globals.set.mainURL(path.join(__dirname, "www", "index.html"));
+globals.set.preloadjs(path.join(__dirname, "preload.js"));
 
 require("electron-reload")(__dirname);
 
