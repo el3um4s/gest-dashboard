@@ -1,4 +1,4 @@
-# MEMENTO - ELECTRON BROWSER VIEW
+# GEST DASHBOARD
 
 ![screenshot-01](github-images/electron-browser-view-01.gif)
 

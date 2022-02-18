@@ -45,5 +45,13 @@ async function createMainWindow() {
     windowManager,
   ]);
 
+  mainWindow.addBrowserViewHidden();
+  mainWindow.setIpcMainView([
+    systemInfo,
+    updaterInfo,
+    windowControls,
+    windowManager,
+  ]);
+
   updaterInfo.initAutoUpdater(autoUpdater, mainWindow.window);
 }

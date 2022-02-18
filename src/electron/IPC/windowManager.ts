@@ -117,6 +117,49 @@ async function removeBrowserView(
 }
 
 async function setBrowserView(win: BrowserWindow, link: string) {
+  const browserView = win.getBrowserView();
+  if (browserView) {
+    browserView.webContents.loadURL(link);
+  } else {
+    addNewBrowserView(win, link);
+  }
+
+  // const [width, height] = win.getSize();
+  // const urlPreload = globals.get.preloadjs();
+
+  // let browserView = new BrowserView({
+  //   webPreferences: {
+  //     nodeIntegration: false,
+  //     contextIsolation: true,
+  //     nativeWindowOpen: true,
+  //     preload: urlPreload,
+  //   },
+  // });
+
+  // win.setBrowserView(browserView);
+  // browserView.setBounds({
+  //   x: 65, // 1
+  //   y: 33, // 32
+  //   width: width - 66, // -2
+  //   height: height - 58, // -33
+  // });
+  // browserView.setAutoResize({
+  //   width: true,
+  //   height: true,
+  // });
+  // if (link) {
+  //   browserView.webContents.loadURL(link);
+  // }
+
+  // setIpcMainView(browserView, [
+  //   windowControls,
+  //   windowManager,
+  //   systemInfo,
+  //   updaterInfo,
+  // ]);
+}
+
+async function addNewBrowserView(win: BrowserWindow, link: string) {
   const [width, height] = win.getSize();
   const urlPreload = globals.get.preloadjs();
 

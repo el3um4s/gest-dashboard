@@ -55,7 +55,7 @@ class CustomWindow {
     api.forEach(async (el) => await el.initIpcMain(ipcMain, this.window));
   }
 
-  async addBrowserView(link: string) {
+  async addBrowserView(link: string = "") {
     const [width, height] = this.window.getSize();
 
     this.browserView = new BrowserView({
@@ -78,7 +78,32 @@ class CustomWindow {
       width: true,
       height: true,
     });
-    this.browserView.webContents.loadURL(link);
+    if (link != "") {
+      this.browserView.webContents.loadURL(link);
+    }
+  }
+
+  async addBrowserViewHidden(link: string = "") {
+    this.browserView = new BrowserView({
+      webPreferences: {
+        nodeIntegration: false,
+        contextIsolation: true,
+        nativeWindowOpen: true,
+        preload: path.join(__dirname, "preload.js"),
+      },
+    });
+
+    this.window.setBrowserView(this.browserView);
+
+    this.browserView.setBounds({ x: 0, y: 0, width: 0, height: 0 });
+    this.browserView.setAutoResize({
+      width: false,
+      height: false,
+    });
+
+    if (link != "") {
+      this.browserView.webContents.loadURL(link);
+    }
   }
 
   async setIpcMainView(api: Array<IPC>) {
