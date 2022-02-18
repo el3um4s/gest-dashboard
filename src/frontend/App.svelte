@@ -84,8 +84,6 @@
   <LeftBar slot="leftbar" />
 
   <main slot="page">
-    prova - questa scritta deve essere visibile quando uso iframe ma invisibile
-    quando uso browserview
     <svelte:component this={$status.componentVisible} />
 
     {#if $status.tech == "iframe"}

@@ -65,9 +65,14 @@ export default {
 		// https://www.npmjs.com/package/rollup-plugin-copy
 		copy({
 			targets: [{
-				src: 'src/frontend/www/**/*',
-				dest: 'dist/www'
-			}]
+					src: 'src/frontend/www/**/*',
+					dest: 'dist/www'
+				},
+				{
+					src: 'src/frontend/icon.png',
+					dest: 'dist'
+				}
+			]
 		}),
 
 		// If you have external dependencies installed from

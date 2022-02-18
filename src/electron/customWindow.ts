@@ -29,8 +29,10 @@ class CustomWindow {
   createWindow(url: string) {
     let settings = { ...this.settings };
     app.name = appName;
+    const iconPath = path.join(__dirname, "icon.png");
     let window = new BrowserWindow({
       ...settings,
+      icon: iconPath,
       show: false,
       webPreferences: {
         nodeIntegration: false,
