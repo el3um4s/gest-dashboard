@@ -8,6 +8,7 @@ import CustomWindow from "../customWindow";
 import windowControls from "./windowControls";
 import systemInfo from "./systemInfo";
 import updaterInfo from "./updaterInfo";
+import nodeAdodb from "./nodeAdodb";
 
 import * as globals from "../globals";
 
@@ -67,6 +68,7 @@ async function createMainWindow() {
     windowManager,
     systemInfo,
     updaterInfo,
+    nodeAdodb,
   ]);
   return customWindow;
 }
@@ -123,40 +125,6 @@ async function setBrowserView(win: BrowserWindow, link: string) {
   } else {
     addNewBrowserView(win, link);
   }
-
-  // const [width, height] = win.getSize();
-  // const urlPreload = globals.get.preloadjs();
-
-  // let browserView = new BrowserView({
-  //   webPreferences: {
-  //     nodeIntegration: false,
-  //     contextIsolation: true,
-  //     nativeWindowOpen: true,
-  //     preload: urlPreload,
-  //   },
-  // });
-
-  // win.setBrowserView(browserView);
-  // browserView.setBounds({
-  //   x: 65, // 1
-  //   y: 33, // 32
-  //   width: width - 66, // -2
-  //   height: height - 58, // -33
-  // });
-  // browserView.setAutoResize({
-  //   width: true,
-  //   height: true,
-  // });
-  // if (link) {
-  //   browserView.webContents.loadURL(link);
-  // }
-
-  // setIpcMainView(browserView, [
-  //   windowControls,
-  //   windowManager,
-  //   systemInfo,
-  //   updaterInfo,
-  // ]);
 }
 
 async function addNewBrowserView(win: BrowserWindow, link: string) {
@@ -192,6 +160,7 @@ async function addNewBrowserView(win: BrowserWindow, link: string) {
     windowManager,
     systemInfo,
     updaterInfo,
+    nodeAdodb,
   ]);
 }
 

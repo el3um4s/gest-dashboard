@@ -7,8 +7,15 @@ import systemInfo from "./IPC/systemInfo";
 import updaterInfo from "./IPC/updaterInfo";
 import windowControls from "./IPC/windowControls";
 import windowManager from "./IPC/windowManager";
+import nodeAdodb from "./IPC/nodeAdodb";
 
 import * as globals from "./globals";
+
+import ADODB from "@el3um4s/node-adodb";
+
+if (app.isPackaged) {
+  ADODB.PATH = "./resources/adodb.js";
+}
 
 globals.set.mainURL(path.join(__dirname, "www", "index.html"));
 globals.set.preloadjs(path.join(__dirname, "preload.js"));
@@ -43,6 +50,7 @@ async function createMainWindow() {
     updaterInfo,
     windowControls,
     windowManager,
+    nodeAdodb,
   ]);
 
   mainWindow.addBrowserViewHidden();
@@ -51,6 +59,7 @@ async function createMainWindow() {
     updaterInfo,
     windowControls,
     windowManager,
+    nodeAdodb,
   ]);
 
   updaterInfo.initAutoUpdater(autoUpdater, mainWindow.window);
