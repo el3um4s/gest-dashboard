@@ -52,7 +52,7 @@ class CustomWindow {
   }
 
   async setIpcMain(api: Array<IPC>) {
-    api.forEach(async (el) => await el.initIpcMain(ipcMain, this.window));
+    api.forEach(async (el) => el.initIpcMain(ipcMain, this.window));
   }
 
   async addBrowserView(link: string = "") {

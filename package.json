@@ -4,7 +4,7 @@
   "description": "Template to create a desktop app with Svelte, Electron and TypeScript (with electron-updater, electron-reload and electron-builder)",
   "author": "Samuele de Tomasi <samuele@stranianelli.com>",
   "license": "MIT",
-  "version": "0.0.8",
+  "version": "0.0.11",
   "main": "dist/index.js",
   "scripts": {
     "nodemon": "nodemon",
@@ -52,6 +52,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
+    "@el3um4s/node-adodb": "^5.0.8",
     "@el3um4s/svelte-titlebar": "^0.0.11",
     "@el3um4s/to-try": "^0.0.5",
     "@fortawesome/free-solid-svg-icons": "^6.0.0",
@@ -80,6 +81,13 @@
       ],
       "icon": "icon.ico"
     },
+    "linux": {
+      "target": [
+        "AppImage",
+        "snap"
+      ],
+      "category": "productivity"
+    },
     "nsis": {
       "installerIcon": "icon.ico",
       "uninstallerIcon": "icon.ico",
@@ -87,6 +95,12 @@
       "license": "license.txt",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
-    }
+    },
+    "extraResources": [
+      {
+        "from": "./node_modules/@el3um4s/node-adodb/lib/adodb.js",
+        "to": "adodb.js"
+      }
+    ]
   }
 }
