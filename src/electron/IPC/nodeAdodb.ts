@@ -6,21 +6,29 @@ import { BrowserWindow } from "electron";
 import path from "path";
 
 import ADODB from "@el3um4s/node-adodb";
+import { getTypeDescription } from "./NodeAdodb/listTypeFieldEnum";
 
 const nameAPI = "nodeAdodb";
 
 // to Main
 const validSendChannel: SendChannels = {
-  open: open,
   query: query,
   execute: execute,
   transaction: transaction,
   schema: schema,
   listTables: listTables,
+  schemaTable: schemaTable,
 };
 
 // from Main
-const validReceiveChannel: string[] = ["queryResult", "listTablesResult"];
+const validReceiveChannel: string[] = [
+  "queryResult",
+  "listTablesResult",
+  "schemaResult",
+  "transactionResult",
+  "executeResult",
+  "schemaTableResult",
+];
 
 const nodeAdodb = new IPC({
   nameAPI,
@@ -32,24 +40,27 @@ export default nodeAdodb;
 
 // Enter here the functions for ElectronJS
 
-function open(
-  mainWindow: BrowserWindow,
-  event: Electron.IpcMainEvent,
-  message: any
-) {
-  //   mainWindow.webContents.send("getSystemInfo", result);
-}
-
 async function query(
   mainWindow: BrowserWindow,
   event: Electron.IpcMainEvent,
   message: any
 ) {
-  const { positionDB, sql } = message;
+  const { source, sql } = message;
 
-  const stringConnection = getStringConnection(positionDB);
+  const stringConnection = getStringConnection(source);
   const result = await ADODB.open(stringConnection).query(sql);
   mainWindow.webContents.send("queryResult", result);
+}
+
+async function schema(
+  mainWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  message: any
+) {
+  const { source, type, criteria, id } = message;
+  const stringConnection = getStringConnection(source);
+  const result = await ADODB.open(stringConnection).schema(type, criteria, id);
+  mainWindow.webContents.send("schemaResult", result);
 }
 
 async function listTables(
@@ -57,35 +68,54 @@ async function listTables(
   event: Electron.IpcMainEvent,
   message: any
 ) {
-  const { positionDB, sql } = message;
+  const { source } = message;
 
-  const stringConnection = getStringConnection(positionDB);
+  const stringConnection = getStringConnection(source);
   const result = await ADODB.open(stringConnection).schema(20);
   mainWindow.webContents.send("listTablesResult", result);
 }
 
-function execute(
+async function schemaTable(
   mainWindow: BrowserWindow,
   event: Electron.IpcMainEvent,
   message: any
 ) {
-  //   mainWindow.webContents.send("getSystemInfo", result);
+  const { source, tableName } = message;
+
+  const stringConnection = getStringConnection(source);
+  const columns: Array<any> = await ADODB.open(stringConnection).schema(4, [
+    null,
+    null,
+    tableName,
+  ]);
+  const result = columns.map((column) => {
+    const { DATA_TYPE } = column;
+    const DATA_TYPE_DESCRIPTION = getTypeDescription(DATA_TYPE);
+    return { ...column, DATA_TYPE_DESCRIPTION };
+  });
+  mainWindow.webContents.send("schemaTableResult", result);
 }
 
-function transaction(
+async function transaction(
   mainWindow: BrowserWindow,
   event: Electron.IpcMainEvent,
   message: any
 ) {
-  //   mainWindow.webContents.send("getSystemInfo", result);
+  const { source, sql } = message;
+  const stringConnection = getStringConnection(source);
+  const result = await ADODB.open(stringConnection).transaction(sql);
+  mainWindow.webContents.send("transactionResult", result);
 }
 
-function schema(
+async function execute(
   mainWindow: BrowserWindow,
   event: Electron.IpcMainEvent,
   message: any
 ) {
-  //   mainWindow.webContents.send("getSystemInfo", result);
+  const { source, sql, scalar } = message;
+  const stringConnection = getStringConnection(source);
+  const result = await ADODB.open(stringConnection).execute(sql, scalar);
+  mainWindow.webContents.send("executeResult", result);
 }
 
 function getStringConnection(positionDB: string): string {
@@ -96,17 +126,6 @@ function getStringConnection(positionDB: string): string {
     return `Provider=Microsoft.ACE.OLEDB.12.0;Data Source=${positionDB};Persist Security Info=False;`;
   }
 }
-
-// async function _query(connection: ADODB.open, sql: string) {
-//   try {
-//     const users = await connection.query(sql);
-//     console.log(JSON.stringify(users, null, 2));
-//     return users;
-//   } catch (error) {
-//     console.error(error);
-//     return error;
-//   }
-// }
 
 async function _listTables(connection: ADODB.open): Promise<any[]> {
   // TABLE, LINK, ACCESS TABLE, SYSTEM TABLE, VIEW
