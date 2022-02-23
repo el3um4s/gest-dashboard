@@ -65,6 +65,7 @@
     }
   }
 
+  let autoUpdateStatus = "";
   $: titleWindow = $status.folderName ? $status.folderName : "GEST DASHBOARD";
   $: statusLabel =
     $status.sw.clientId && $status.sw.swScope && $status.sw.hostName
@@ -74,6 +75,18 @@
   $: src = $status.sw.swScope
     ? `${$status.sw.swScope}${$status.sw.hostName}/`
     : null;
+
+  // AUTO UPDATER
+
+  globalThis.api.updaterInfo.receive("autoUpdateAvailable", (data) => {
+    console.log("autoUpdateAvailable");
+    console.log(data);
+    autoUpdateStatus = `A new version is available (${data.releaseName}) `;
+  });
+  globalThis.api.updaterInfo.receive("autoUpdateDownloaded", (data) => {
+    console.log("autoUpdateDownloaded");
+    autoUpdateStatus = `Version ${data.releaseName} downloaded. Close and restart the app to install it. `;
+  });
 </script>
 
 <svelte:head>
@@ -90,7 +103,7 @@
       <Iframe title={$status.folderName} {src} hidden={!$status.showIframe} />
     {/if}
   </main>
-  <StatusBar slot="statusbar" status={statusLabel} />
+  <StatusBar slot="statusbar" status={`${autoUpdateStatus}  ${statusLabel}`} />
 </MainWithTitlebar>
 
 <style lang="postcss">

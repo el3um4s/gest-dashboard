@@ -27,6 +27,13 @@ let mainWindow: CustomWindow;
 app.commandLine.appendSwitch("disable-gpu");
 app.commandLine.appendArgument("disable-gpu");
 
+(async () => {
+  const FOUR_HOURS = 1000 * 60 * 60 * 4;
+  setInterval(async () => {
+    await autoUpdater.checkForUpdates();
+  }, FOUR_HOURS);
+})();
+
 app.on("ready", async () => {
   await createMainWindow();
 });
@@ -63,4 +70,16 @@ async function createMainWindow() {
   ]);
 
   updaterInfo.initAutoUpdater(autoUpdater, mainWindow.window);
+
+  autoUpdater.checkForUpdates();
 }
+
+autoUpdater.on("update-available", (info) => {
+  console.log("autoupdater-update-available");
+  mainWindow.window.webContents.send("autoUpdateAvailable", info);
+});
+
+autoUpdater.on("update-downloaded", (info) => {
+  console.log("autoupdater-update-available");
+  mainWindow.window.webContents.send("autoUpdateDownloaded", info);
+});
