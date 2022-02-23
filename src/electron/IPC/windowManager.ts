@@ -20,6 +20,8 @@ const validSendChannel: SendChannels = {
   openInBrowserView: openInBrowserView,
   showBrowserView: showBrowserView,
   removeBrowserView: removeBrowserView,
+  openDevTools: openDevTools,
+  openBrowserViewDevTools: openBrowserViewDevTools,
 };
 
 // from Main
@@ -118,6 +120,24 @@ async function removeBrowserView(
   }
 }
 
+async function openDevTools(
+  customWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  message: any
+) {
+  customWindow.webContents.openDevTools();
+}
+
+async function openBrowserViewDevTools(
+  customWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  message: any
+) {
+  const browserView = customWindow.getBrowserView();
+  if (browserView) {
+    browserView.webContents.openDevTools();
+  }
+}
 async function setBrowserView(win: BrowserWindow, link: string) {
   const browserView = win.getBrowserView();
   if (browserView) {

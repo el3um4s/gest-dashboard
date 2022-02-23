@@ -4,7 +4,7 @@
   import CheckForUpdate from "../Default/CheckForUpdate.svelte";
 
   const isElectron = globalThis?.api?.systemInfo ? true : false;
-  export let version = "0.0.13";
+  export let version = "0.0.14";
 </script>
 
 <section transition:slide>

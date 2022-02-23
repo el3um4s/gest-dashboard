@@ -16,6 +16,7 @@
     faCog,
     faQuestionCircle,
     faInfoCircle,
+    faCode,
   } from "@fortawesome/free-solid-svg-icons";
 
   globalThis.api.windowManager.receive("showBrowserView", async (data) => {
@@ -36,6 +37,10 @@
     } else {
       globalThis.api.windowManager.send("removeBrowserView");
     }
+  };
+
+  const showDevTools = () => {
+    globalThis.api.windowManager.send("openBrowserViewDevTools");
   };
 
   let listButtons = [
@@ -127,6 +132,15 @@
       title: "Info",
       onClick: () => {
         show(false, Info);
+      },
+    },
+    {
+      id: "showDevTools",
+      icon: faCode,
+      visible: true,
+      title: "Show Dev Tools (BrowserView)",
+      onClick: () => {
+        showDevTools();
       },
     },
   ];
