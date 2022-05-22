@@ -52,7 +52,7 @@
     "typescript": "^4.6.4"
   },
   "dependencies": {
-    "@el3um4s/node-adodb": "^5.0.8",
+    "@el3um4s/node-adodb": "^5.0.9",
     "@el3um4s/svelte-titlebar": "^0.0.11",
     "@el3um4s/to-try": "^0.0.5",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
