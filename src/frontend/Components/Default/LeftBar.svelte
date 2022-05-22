@@ -17,6 +17,8 @@
     faQuestionCircle,
     faInfoCircle,
     faCode,
+    faPrint,
+    faFilePdf,
   } from "@fortawesome/free-solid-svg-icons";
 
   globalThis.api.windowManager.receive("showBrowserView", async (data) => {
@@ -55,6 +57,15 @@
         tick();
         status.folderHandle(await FolderHandle.init($status.sw.hostName));
         show($status.sw.folderHandle ? true : false);
+      },
+    },
+    {
+      id: "printBrowserView",
+      icon: faPrint,
+      visible: false,
+      title: "Print (BrowserView)",
+      onClick: () => {
+        globalThis.api.windowManager.send("printBrowserView");
       },
     },
     {
@@ -153,7 +164,11 @@
         $status.sw.clientId != ""
       ) {
         b.visible = true;
-      } else if (b.id == "showFolder" || b.id == "reloadFolder") {
+      } else if (
+        b.id == "showFolder" ||
+        b.id == "reloadFolder" ||
+        b.id == "printBrowserView"
+      ) {
         b.visible = false;
       }
       return b;

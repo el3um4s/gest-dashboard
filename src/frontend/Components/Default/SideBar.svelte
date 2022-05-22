@@ -24,6 +24,7 @@
   section {
     @apply overflow-y-auto h-full w-14 items-center justify-start gap-1 p-2;
     overflow-y: overlay;
+    overflow-x: hidden;
     background-color: var(--sidebar-background-color);
     color: var(--sidebar-text-color);
   }
