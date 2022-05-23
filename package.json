@@ -17,13 +17,9 @@
     "publish:win": "rollup -c && tsc && electron-builder build --win --publish always",
     "check-updates": "npx npm-check-updates",
     "check-updates:minor": "npx npm-check-updates --target minor",
-    "check-updates:patch": "npx npm-check-updates --target patch",
-    "test": "npx playwright test",
-    "test:update-screenshot": "npx playwright test --update-snapshots",
-    "test:show-trace": "npx playwright show-trace tests/tracing/trace.zip"
+    "check-updates:patch": "npx npm-check-updates --target patch"
   },
   "devDependencies": {
-    "@playwright/test": "^1.22.2",
     "@rollup/plugin-commonjs": "^22.0.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.3.2",
@@ -33,7 +29,6 @@
     "electron": "^18.2.4",
     "electron-builder": "^23.0.3",
     "nodemon": "^2.0.16",
-    "playwright": "^1.22.2",
     "postcss": "^8.4.14",
     "postcss-load-config": "^4.0.0",
     "rollup": "^2.74.1",
