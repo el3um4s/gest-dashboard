@@ -2,6 +2,7 @@ import { generateDirectoryListing } from "./directoryListening";
 
 export const handleFetch = async (
   folderHandle: FileSystemDirectoryHandle,
+  showIndexHtmlImmediately: boolean,
   e: MessageEvent<any>
 ) => {
   try {
@@ -32,13 +33,27 @@ export const handleFetch = async (
     // Check if the name is a directory or a file
     let file = null;
     const lastName = subfolderArr[subfolderArr.length - 1];
+
+    let hasIndex = false;
     if (!lastName) {
       // empty name, e.g. for root /, treated as folder
       file = await generateDirectoryListing(curFolderHandle, relativeUrl);
+
+      hasIndex = await hasIndexHtml(curFolderHandle);
+      if (hasIndex && showIndexHtmlImmediately) {
+        const fileHandle = await curFolderHandle.getFileHandle("index.html");
+        file = await fileHandle.getFile();
+      }
     } else {
       try {
         const listHandle = await curFolderHandle.getDirectoryHandle(lastName);
         file = await generateDirectoryListing(listHandle, relativeUrl);
+
+        hasIndex = await hasIndexHtml(listHandle);
+        if (hasIndex && showIndexHtmlImmediately) {
+          const fileHandle = await listHandle.getFileHandle("index.html");
+          file = await fileHandle.getFile();
+        }
       } catch {
         const fileHandle = await curFolderHandle.getFileHandle(lastName);
         file = await fileHandle.getFile();
@@ -58,3 +73,13 @@ export const handleFetch = async (
     });
   }
 };
+
+// Check if folder has index.html file
+async function hasIndexHtml(folderHandle: FileSystemDirectoryHandle) {
+  try {
+    await folderHandle.getFileHandle("index.html");
+    return true;
+  } catch {
+    return false;
+  }
+}

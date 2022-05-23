@@ -23,6 +23,11 @@
     const techDefault = $status.isElectron ? "browserview" : "iframe";
     const tech = await idbSettings.getTech(techDefault);
     await status.tech(tech);
+
+    const showIndexHtmlImmediately =
+      await idbSettings.getShowIndexHtmlImmediately(true);
+
+    await status.showIndexHtmlImmediately(showIndexHtmlImmediately);
   });
 
   window.addEventListener("unload", () => {
@@ -39,7 +44,11 @@
         await onHostStarted(e.data);
         break;
       case "fetch":
-        handleFetch($status.sw.folderHandle, e);
+        handleFetch(
+          $status.sw.folderHandle,
+          $status.showIndexHtmlImmediately,
+          e
+        );
         break;
       default:
         console.warn(`Unknown message from SW '${e.data.type}'`);

@@ -18,7 +18,6 @@
     faInfoCircle,
     faCode,
     faPrint,
-    faFilePdf,
   } from "@fortawesome/free-solid-svg-icons";
 
   globalThis.api.windowManager.receive("showBrowserView", async (data) => {

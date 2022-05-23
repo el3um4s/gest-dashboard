@@ -12,13 +12,22 @@
   ];
 
   let techSelected = $status.tech;
+  let showIndexHtmlImmediately = $status.showIndexHtmlImmediately;
 
-  $: valueChanged = techSelected != $status.tech;
+  $: valueChanged =
+    techSelected != $status.tech ||
+    showIndexHtmlImmediately != $status.showIndexHtmlImmediately;
 </script>
 
 <section transition:slide>
   <h1>Settings</h1>
 
+  <div>
+    <label>
+      <input type="checkbox" bind:checked={showIndexHtmlImmediately} />
+      Run <b>index.html</b> immediately
+    </label>
+  </div>
   <div>
     <label for="tech-select">Use:</label>
 
@@ -37,12 +46,14 @@
       <button
         on:click={() => {
           techSelected = $status.tech;
+          showIndexHtmlImmediately = $status.showIndexHtmlImmediately;
         }}
         class="button-cancel">Discard</button
       >
       <button
         on:click={async () => {
           await status.tech(techSelected);
+          await status.showIndexHtmlImmediately(showIndexHtmlImmediately);
         }}
         class="button-confirm">Save Changes</button
       >

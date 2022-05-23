@@ -37,7 +37,6 @@ class CustomWindow {
       webPreferences: {
         nodeIntegration: false,
         contextIsolation: true,
-        // nativeWindowOpen: true,
         preload: path.join(__dirname, "preload.js"),
       },
     });
@@ -62,7 +61,6 @@ class CustomWindow {
       webPreferences: {
         nodeIntegration: false,
         contextIsolation: true,
-        // nativeWindowOpen: true,
         preload: path.join(__dirname, "preload.js"),
       },
     });
@@ -88,7 +86,6 @@ class CustomWindow {
       webPreferences: {
         nodeIntegration: false,
         contextIsolation: true,
-        // nativeWindowOpen: true,
         preload: path.join(__dirname, "preload.js"),
       },
     });

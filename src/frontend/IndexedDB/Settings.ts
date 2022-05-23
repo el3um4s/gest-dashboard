@@ -19,4 +19,27 @@ const getTech = async (d: "iframe" | "browserview" = "iframe") => {
   return tech;
 };
 
-export const idbSettings = { setTech, getTech };
+const setShowIndexHtmlImmediately = async (show: boolean) => {
+  await set("showIndexHtmlImmediately", show, customStore);
+};
+
+const getShowIndexHtmlImmediately = async (show: boolean = true) => {
+  const showIndexHtmlImmediately = await get(
+    "showIndexHtmlImmediately",
+    customStore
+  );
+
+  if (showIndexHtmlImmediately === undefined) {
+    await setShowIndexHtmlImmediately(show);
+    return show;
+  }
+
+  return showIndexHtmlImmediately;
+};
+
+export const idbSettings = {
+  setTech,
+  getTech,
+  setShowIndexHtmlImmediately,
+  getShowIndexHtmlImmediately,
+};

@@ -19,6 +19,7 @@ export interface StatusInterface {
   };
   folderName: string;
   tech: "iframe" | "browserview";
+  showIndexHtmlImmediately: boolean;
 }
 
 const defaultStatus: StatusInterface = {
@@ -35,6 +36,7 @@ const defaultStatus: StatusInterface = {
   },
   folderName: "",
   tech: "iframe",
+  showIndexHtmlImmediately: true,
 };
 
 const statusStore = writable(defaultStatus);
@@ -97,5 +99,12 @@ export const status = {
       return { ...s, tech };
     });
     await idbSettings.setTech(t);
+  },
+  showIndexHtmlImmediately: async (show: boolean) => {
+    statusStore.update((s) => {
+      const showIndexHtmlImmediately = show;
+      return { ...s, showIndexHtmlImmediately };
+    });
+    await idbSettings.setShowIndexHtmlImmediately(show);
   },
 };
