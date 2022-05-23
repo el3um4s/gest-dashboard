@@ -28,6 +28,12 @@
       await idbSettings.getShowIndexHtmlImmediately(true);
 
     await status.showIndexHtmlImmediately(showIndexHtmlImmediately);
+
+    const urlBrowser = await idbSettings.getURLBrowser(
+      "http://www.example.com"
+    );
+
+    await status.urlBrowser(urlBrowser);
   });
 
   window.addEventListener("unload", () => {

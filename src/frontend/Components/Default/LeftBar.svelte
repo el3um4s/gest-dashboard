@@ -7,6 +7,7 @@
   import Settings from "../Pages/Settings.svelte";
   import Help from "../Pages/Help.svelte";
   import Info from "../Pages/Info.svelte";
+  import WebPage from "../Pages/WebPage.svelte";
 
   import {
     faFolderOpen,
@@ -18,6 +19,7 @@
     faInfoCircle,
     faCode,
     faPrint,
+    faGlobe,
   } from "@fortawesome/free-solid-svg-icons";
 
   globalThis.api.windowManager.receive("showBrowserView", async (data) => {
@@ -56,6 +58,15 @@
         tick();
         status.folderHandle(await FolderHandle.init($status.sw.hostName));
         show($status.sw.folderHandle ? true : false);
+      },
+    },
+    {
+      id: "openWebPage",
+      icon: faGlobe,
+      visible: true,
+      title: "Open Web Page (BrowserView)",
+      onClick: () => {
+        show(false, WebPage);
       },
     },
     {

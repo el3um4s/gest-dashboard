@@ -37,9 +37,26 @@ const getShowIndexHtmlImmediately = async (show: boolean = true) => {
   return showIndexHtmlImmediately;
 };
 
+const setURLBrowser = async (url: string) => {
+  await set("urlBrowser", url, customStore);
+};
+
+const getURLBrowser = async (url: string = "http://www.example.com") => {
+  const urlBrowser = await get("urlBrowser", customStore);
+
+  if (urlBrowser === undefined) {
+    await setURLBrowser(url);
+    return url;
+  }
+
+  return urlBrowser;
+};
+
 export const idbSettings = {
   setTech,
   getTech,
   setShowIndexHtmlImmediately,
   getShowIndexHtmlImmediately,
+  setURLBrowser,
+  getURLBrowser,
 };
