@@ -19,6 +19,7 @@
 
   onMount(async () => {
     await SW.register();
+
     status.isElectron(globalThis?.api?.systemInfo ? true : false);
     const techDefault = $status.isElectron ? "browserview" : "iframe";
     const tech = await idbSettings.getTech(techDefault);
@@ -26,14 +27,15 @@
 
     const showIndexHtmlImmediately =
       await idbSettings.getShowIndexHtmlImmediately(true);
-
     await status.showIndexHtmlImmediately(showIndexHtmlImmediately);
 
     const urlBrowser = await idbSettings.getURLBrowser(
       "http://www.example.com"
     );
-
     await status.urlBrowser(urlBrowser);
+
+    const historyBrowser = await idbSettings.getHistoryBrowser();
+    await status.historyBrowser(historyBrowser);
   });
 
   window.addEventListener("unload", () => {

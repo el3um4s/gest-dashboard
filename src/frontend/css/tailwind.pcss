@@ -3,24 +3,24 @@
 @import "tailwindcss/utilities";
 
 :root {
-  --background-color: #f0f0f0;
-  --color: #171717;
-  --titlebar-background-color: #f0f0f0;
-  --titlebar-text-color: #171717;
-  --window-border-color: #171717;
-  --hover-scrollbar-thumb: #aeaeae;
+  --background-color: theme("colors.neutral.50");
+  --color: theme("colors.neutral.900");
+  --titlebar-background-color: theme("colors.neutral.50");
+  --titlebar-text-color: theme("colors.neutral.900");
+  --window-border-color: theme("colors.neutral.900");
+  --hover-scrollbar-thumb: theme("colors.neutral.400");
 
   --hover-background-color: theme("colors.orange.200");
   --hover-color: theme("colors.orange.900");
 
-  --sidebar-background-color: #f0f0f0;
-  --sidebar-text-color: #aeaeae;
-  --sidebar-hover-background-color: #f0f0f0;
-  --sidebar-hover-text-color: #171717;
+  --sidebar-background-color: theme("colors.neutral.50");
+  --sidebar-text-color: theme("colors.neutral.400");
+  --sidebar-hover-background-color: theme("colors.neutral.50");
+  --sidebar-hover-text-color: theme("colors.neutral.900");
   --sidebar-border-color: #d1d1d1;
 
-  --status-bar-background-color: #f0f0f0;
-  --status-bar-text-color: #171717;
+  --status-bar-background-color: theme("colors.neutral.50");
+  --status-bar-text-color: theme("colors.neutral.900");
 
   --color-confirm: theme("colors.emerald.200");
   --color-confirm-hover: theme("colors.emerald.300");
@@ -30,6 +30,9 @@
   --color-action-hover: theme("colors.blue.300");
   --color-neutral: theme("colors.orange.200");
   --color-neutral-hover: theme("colors.orange.300");
+
+  --card-color-background: theme("colors.blue.50");
+  --card-color-background-hover: theme("colors.blue.100");
 }
 
 /** Modify your Tailwind layers etc. here **/
@@ -87,6 +90,26 @@
 
     &:hover {
       @apply no-underline bg-[color:var(--color-action-hover)];
+    }
+  }
+
+  .card {
+    @apply m-2 rounded overflow-hidden bg-[color:var(--card-color-background)] border border-[color:var(--card-color-background-hover)];
+
+    .header {
+      @apply bg-[color:var(--card-color-background-hover)] p-2 font-bold mb-2;
+    }
+    .link {
+      @apply w-full;
+    }
+    .actions {
+      @apply w-full flex flex-row mt-1;
+    }
+    .note {
+      @apply w-full p-2;
+    }
+    &:hover {
+      @apply bg-[color:var(--card-color-background-hover)];
     }
   }
 }

@@ -5,23 +5,10 @@
 import { writable } from "svelte/store";
 import { idbSettings } from "../IndexedDB/Settings";
 
-export interface StatusInterface {
-  isElectron: boolean;
-  hasIFRame: boolean;
-  showIframe: boolean;
-  hasBrowserView: boolean;
-  componentVisible: any;
-  sw: {
-    folderHandle: FileSystemDirectoryHandle;
-    hostName: string;
-    swScope: ServiceWorkerGlobalScope;
-    clientId: string;
-  };
-  folderName: string;
-  tech: "iframe" | "browserview";
-  showIndexHtmlImmediately: boolean;
-  urlBrowser: string;
-}
+import type {
+  StatusInterface,
+  HistoryBrowser,
+} from "../Interfaces/StatusInterface";
 
 const defaultStatus: StatusInterface = {
   isElectron: false,
@@ -39,6 +26,7 @@ const defaultStatus: StatusInterface = {
   tech: "iframe",
   showIndexHtmlImmediately: true,
   urlBrowser: "http://www.example.com",
+  historyBrowser: [],
 };
 
 const statusStore = writable(defaultStatus);
@@ -115,5 +103,30 @@ export const status = {
       return { ...s, urlBrowser };
     });
     await idbSettings.setURLBrowser(url);
+  },
+
+  historyBrowser: async (history: HistoryBrowser[]) => {
+    statusStore.update((s) => {
+      const historyBrowser = history;
+      return { ...s, historyBrowser };
+    });
+    await idbSettings.setHistoryBrowser(history);
+  },
+
+  historyBrowserAddNew: (item: HistoryBrowser) => {
+    statusStore.update((s) => {
+      const itemAlreadyListed = s.historyBrowser.filter(
+        (el) => el.url == item.url
+      );
+      const newItem = itemAlreadyListed.length > 0 ? itemAlreadyListed : [item];
+      const historyBrowser = [
+        ...newItem,
+        ...s.historyBrowser.filter((el) => el.url != item.url),
+      ];
+
+      idbSettings.setHistoryBrowser(historyBrowser);
+
+      return { ...s, historyBrowser };
+    });
   },
 };

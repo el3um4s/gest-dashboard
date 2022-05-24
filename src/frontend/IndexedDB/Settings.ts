@@ -1,4 +1,5 @@
 import { get, set, createStore } from "idb-keyval";
+import type { HistoryBrowser } from "../Interfaces/StatusInterface";
 
 const customDbName = "idb-settings";
 const customStoreName = "idb-settings-store";
@@ -52,11 +53,31 @@ const getURLBrowser = async (url: string = "http://www.example.com") => {
   return urlBrowser;
 };
 
+const setHistoryBrowser = async (history: HistoryBrowser[]) => {
+  await set("historyBrowser", history, customStore);
+};
+
+const getHistoryBrowser = async (history: HistoryBrowser[] = []) => {
+  const historyBrowser = await get("historyBrowser", customStore);
+
+  if (historyBrowser === undefined) {
+    await setHistoryBrowser(history);
+    return history;
+  }
+
+  return historyBrowser;
+};
+
 export const idbSettings = {
   setTech,
   getTech,
+
   setShowIndexHtmlImmediately,
   getShowIndexHtmlImmediately,
+
   setURLBrowser,
   getURLBrowser,
+
+  setHistoryBrowser,
+  getHistoryBrowser,
 };

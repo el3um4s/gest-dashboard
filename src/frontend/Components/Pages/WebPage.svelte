@@ -4,6 +4,8 @@
   import { slide } from "svelte/transition";
   import { status } from "../../Stores/Status";
 
+  import CardHistoryBrowser from "../Cards/CardHistoryBrowser.svelte";
+
   let src = $status.urlBrowser;
   let showSpinner = false;
 
@@ -12,6 +14,18 @@
   onMount(() => {
     showSpinner = false;
   });
+
+  const openWebPage = async (url: string) => {
+    showSpinner = true;
+    await globalThis.api.windowManager.send("openInBrowserView", {
+      src,
+    });
+    await globalThis.api.windowManager.send("showBrowserView", {
+      show: true,
+    });
+    await status.urlBrowser(url);
+    status.historyBrowserAddNew({ url: url, title: "", note: "" });
+  };
 </script>
 
 <section transition:slide>
@@ -21,14 +35,7 @@
     <input type="url" bind:value={src} placeholder="https://example.com" />
     <button
       on:click={async () => {
-        showSpinner = true;
-        await globalThis.api.windowManager.send("openInBrowserView", {
-          src,
-        });
-        await globalThis.api.windowManager.send("showBrowserView", {
-          show: true,
-        });
-        await status.urlBrowser(src);
+        openWebPage(src);
       }}
     >
       {#if showSpinner}
@@ -37,6 +44,14 @@
         <Fa icon={faPlay} />
       {/if}
     </button>
+  </div>
+  <div>
+    <h3>History</h3>
+    <ul>
+      {#each $status.historyBrowser as item}
+        <li><CardHistoryBrowser {item} /></li>
+      {/each}
+    </ul>
   </div>
 </section>
 
