@@ -21,4 +21,5 @@ export interface HistoryBrowser {
   url: string;
   title: string;
   note: string;
+  starred: boolean;
 }

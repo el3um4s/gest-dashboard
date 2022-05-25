@@ -97,6 +97,7 @@ export const status = {
     });
     await idbSettings.setShowIndexHtmlImmediately(show);
   },
+
   urlBrowser: async (url: string) => {
     statusStore.update((s) => {
       const urlBrowser = url;
@@ -121,6 +122,33 @@ export const status = {
       const newItem = itemAlreadyListed.length > 0 ? itemAlreadyListed : [item];
       const historyBrowser = [
         ...newItem,
+        ...s.historyBrowser.filter((el) => el.url != item.url),
+      ];
+
+      idbSettings.setHistoryBrowser(historyBrowser);
+
+      return { ...s, historyBrowser };
+    });
+  },
+
+  historyBrowserSetStarred: (item: HistoryBrowser, starred: boolean) => {
+    statusStore.update((s) => {
+      const historyBrowser = s.historyBrowser.map((i) => {
+        if (i.url === item.url) {
+          i.starred = starred;
+        }
+        return i;
+      });
+
+      idbSettings.setHistoryBrowser(historyBrowser);
+
+      return { ...s, historyBrowser };
+    });
+  },
+
+  historyBrowserDeleteItem: (item: HistoryBrowser) => {
+    statusStore.update((s) => {
+      const historyBrowser = [
         ...s.historyBrowser.filter((el) => el.url != item.url),
       ];
 
