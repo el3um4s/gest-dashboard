@@ -8,6 +8,7 @@
   import Help from "../Pages/Help.svelte";
   import Info from "../Pages/Info.svelte";
   import WebPage from "../Pages/WebPage.svelte";
+  import LoadingPage from "../Pages/LoadingPage.svelte";
 
   import {
     faFolderOpen,
@@ -169,9 +170,10 @@
   $: listButtons = [
     ...listButtons.map((b) => {
       if (
-        $status.sw.folderHandle &&
-        $status.sw.hostName != "" &&
-        $status.sw.clientId != ""
+        ($status.sw.folderHandle &&
+          $status.sw.hostName != "" &&
+          $status.sw.clientId != "") ||
+        $status.browserStarted
       ) {
         b.visible = true;
       } else if (

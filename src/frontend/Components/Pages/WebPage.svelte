@@ -1,22 +1,21 @@
 <script lang="ts">
+  import { flip } from "svelte/animate";
+  import { quintOut } from "svelte/easing";
+
   import Fa from "svelte-fa";
-  import { faPlay, faSpinner } from "@fortawesome/free-solid-svg-icons";
+  import { faPlay, faStar } from "@fortawesome/free-solid-svg-icons";
+  import { faStar as faStarLight } from "@fortawesome/free-regular-svg-icons";
   import { slide } from "svelte/transition";
   import { status } from "../../Stores/Status";
 
   import CardHistoryBrowser from "../Cards/CardHistoryBrowser.svelte";
+  import LoadingPage from "./LoadingPage.svelte";
 
   let src = $status.urlBrowser;
-  let showSpinner = false;
-
-  import { onMount } from "svelte";
-
-  onMount(() => {
-    showSpinner = false;
-  });
+  let onlyStarred = false;
 
   const openWebPage = async (url: string) => {
-    showSpinner = true;
+    status.componentVisible(LoadingPage);
     await globalThis.api.windowManager.send("openInBrowserView", {
       src,
     });
@@ -24,7 +23,13 @@
       show: true,
     });
     await status.urlBrowser(url);
-    status.historyBrowserAddNew({ url: url, title: "", note: "" });
+    status.browserStarted(true);
+    status.historyBrowserAddNew({
+      url: url,
+      title: "",
+      note: "",
+      starred: false,
+    });
   };
 </script>
 
@@ -38,18 +43,28 @@
         openWebPage(src);
       }}
     >
-      {#if showSpinner}
-        <Fa icon={faSpinner} spin />
-      {:else}
-        <Fa icon={faPlay} />
-      {/if}
+      <Fa icon={faPlay} />
     </button>
   </div>
   <div>
-    <h3>History</h3>
+    <div>
+      <button
+        on:click={() => {
+          onlyStarred = !onlyStarred;
+        }}
+        title="Show only Starred"
+        ><Fa icon={onlyStarred ? faStar : faStarLight} /></button
+      >
+    </div>
     <ul>
-      {#each $status.historyBrowser as item}
-        <li><CardHistoryBrowser {item} /></li>
+      {#each $status.historyBrowser as item (item.url)}
+        <li animate:flip={{ duration: 250, easing: quintOut }}>
+          {#if onlyStarred && item.starred}
+            <CardHistoryBrowser {item} />
+          {:else if !onlyStarred}
+            <CardHistoryBrowser {item} />
+          {/if}
+        </li>
       {/each}
     </ul>
   </div>

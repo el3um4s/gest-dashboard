@@ -25,6 +25,7 @@ const defaultStatus: StatusInterface = {
   folderName: "",
   tech: "iframe",
   showIndexHtmlImmediately: true,
+  browserStarted: false,
   urlBrowser: "http://www.example.com",
   historyBrowser: [],
 };
@@ -98,6 +99,13 @@ export const status = {
     await idbSettings.setShowIndexHtmlImmediately(show);
   },
 
+  browserStarted: async (started: boolean) => {
+    statusStore.update((s) => {
+      const browserStarted = started;
+      return { ...s, browserStarted };
+    });
+  },
+
   urlBrowser: async (url: string) => {
     statusStore.update((s) => {
       const urlBrowser = url;
@@ -136,6 +144,36 @@ export const status = {
       const historyBrowser = s.historyBrowser.map((i) => {
         if (i.url === item.url) {
           i.starred = starred;
+        }
+        return i;
+      });
+
+      idbSettings.setHistoryBrowser(historyBrowser);
+
+      return { ...s, historyBrowser };
+    });
+  },
+
+  historyBrowserSetTitle: (item: HistoryBrowser, title: string) => {
+    statusStore.update((s) => {
+      const historyBrowser = s.historyBrowser.map((i) => {
+        if (i.url === item.url) {
+          i.title = title;
+        }
+        return i;
+      });
+
+      idbSettings.setHistoryBrowser(historyBrowser);
+
+      return { ...s, historyBrowser };
+    });
+  },
+
+  historyBrowserSetNote: (item: HistoryBrowser, note: string) => {
+    statusStore.update((s) => {
+      const historyBrowser = s.historyBrowser.map((i) => {
+        if (i.url === item.url) {
+          i.note = note;
         }
         return i;
       });

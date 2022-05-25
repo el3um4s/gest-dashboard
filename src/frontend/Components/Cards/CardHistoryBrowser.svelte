@@ -8,17 +8,23 @@
     faTrash,
     faPen,
     faStar,
+    faCircleCheck,
   } from "@fortawesome/free-solid-svg-icons";
   import { faStar as faStarLight } from "@fortawesome/free-regular-svg-icons";
 
-  export let item: HistoryBrowser;
+  import LoadingPage from "../Pages/LoadingPage.svelte";
 
-  $: url = item?.url ? item.url : "https://example.com";
-  $: title = item?.title ? item.title : "";
-  $: note = item?.note ? item.note : "";
+  export let item: HistoryBrowser;
+  let editing: boolean = false;
+
+  let url = item?.url ? item.url : "https://example.com";
+  let title = item?.title ? item.title : "";
+  let note = item?.note ? item.note : "";
   $: starred = item?.starred ? item.starred : false;
 
   const openWebPage = async (url: string) => {
+    status.componentVisible(LoadingPage);
+    editing = false;
     await globalThis.api.windowManager.send("openInBrowserView", {
       src: url,
     });
@@ -26,7 +32,14 @@
       show: true,
     });
     await status.urlBrowser(url);
+    status.browserStarted(true);
     status.historyBrowserAddNew({ url, title, note, starred });
+  };
+
+  const titleLink = (title: string, url: string): string => {
+    return title.trim() == ""
+      ? new URL(url).hostname.replace("www.", "")
+      : title.trim();
   };
 </script>
 
@@ -52,15 +65,28 @@
     >
       <Fa icon={faPlay} />
     </button>
-    <button
-      class="link"
-      title="Open Page ({url})"
-      on:click={async () => {
-        openWebPage(url);
-      }}
-    >
-      Title
-    </button>
+    {#if editing}
+      <input
+        bind:value={title}
+        placeholder={titleLink(title, url)}
+        on:click={() => {
+          title = titleLink(title, url);
+        }}
+        on:change={() => {
+          status.historyBrowserSetTitle(item, title);
+        }}
+      />
+    {:else}
+      <button
+        class="link"
+        title="Open Page ({url})"
+        on:click={async () => {
+          openWebPage(url);
+        }}
+      >
+        {titleLink(title, url)}
+      </button>
+    {/if}
   </div>
 
   <div class="note">
@@ -73,16 +99,29 @@
     >
       {item.url}
     </button>
-    {#if note != ""}
+    {#if editing}
+      <input
+        bind:value={note}
+        placeholder="note"
+        on:change={() => {
+          status.historyBrowserSetNote(item, note);
+        }}
+      />
+    {:else if note.trim() != ""}
       <div>
-        Note: {note}
+        {note}
       </div>
     {/if}
   </div>
 
   <div class="actions">
-    <button title="Edit Note and Title">
-      <Fa icon={faPen} />
+    <button
+      title="Edit Note and Title"
+      on:click={() => {
+        editing = !editing;
+      }}
+    >
+      <Fa icon={editing ? faCircleCheck : faPen} />
     </button>
     <button
       title="Delete Page"

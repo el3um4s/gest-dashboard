@@ -13,6 +13,7 @@ export interface StatusInterface {
   folderName: string;
   tech: "iframe" | "browserview";
   showIndexHtmlImmediately: boolean;
+  browserStarted: boolean;
   urlBrowser: string;
   historyBrowser: HistoryBrowser[];
 }
