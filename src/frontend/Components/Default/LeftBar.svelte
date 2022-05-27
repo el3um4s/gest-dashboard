@@ -8,7 +8,7 @@
   import Help from "../Pages/Help.svelte";
   import Info from "../Pages/Info.svelte";
   import WebPage from "../Pages/WebPage.svelte";
-  import LoadingPage from "../Pages/LoadingPage.svelte";
+  import LocalFolder from "../Pages/LocalFolder.svelte";
 
   import {
     faFolderOpen,
@@ -53,12 +53,15 @@
       icon: faFolderOpen,
       visible: true,
       title: "Open folder in this window",
-      onClick: async () => {
-        show(false);
-        status.folderHandle(null);
-        tick();
-        status.folderHandle(await FolderHandle.init($status.sw.hostName));
-        show($status.sw.folderHandle ? true : false);
+      // onClick: async () => {
+      //   show(false);
+      //   status.folderHandle(null);
+      //   tick();
+      //   status.folderHandle(await FolderHandle.init($status.sw.hostName));
+      //   show($status.sw.folderHandle ? true : false);
+      // },
+      onClick: () => {
+        show(false, LocalFolder);
       },
     },
     {
@@ -170,12 +173,16 @@
   $: listButtons = [
     ...listButtons.map((b) => {
       if (
-        ($status.sw.folderHandle &&
-          $status.sw.hostName != "" &&
-          $status.sw.clientId != "") ||
-        $status.browserStarted
+        $status.sw.folderHandle &&
+        $status.sw.hostName != "" &&
+        $status.sw.clientId != ""
       ) {
         b.visible = true;
+      } else if ($status.browserStarted) {
+        b.visible = true;
+        if (b.id == "reloadFolder") {
+          b.visible = false;
+        }
       } else if (
         b.id == "showFolder" ||
         b.id == "reloadFolder" ||

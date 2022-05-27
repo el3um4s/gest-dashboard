@@ -4,6 +4,7 @@ const pickFolder = async (): Promise<FileSystemDirectoryHandle> => {
   const folderHandle: FileSystemDirectoryHandle = await window[
     "showDirectoryPicker"
   ]();
+  // https://github.com/electron/electron/issues/33647
   return folderHandle;
 };
 
