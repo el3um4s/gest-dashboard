@@ -1,24 +1,30 @@
 export const style = `
 <style>
-    body { 
-        display: grid;
-        justify-content: center;
-        justify-items: start;
-        background-color: #DFCDC3;
-        color: #333242;
+    html, body { 
+        display: flex;
+        position: relative;
+        width:100%;
+        height: 100%;
+        background-color: #FAFAFA;
+        color: #171717;
+        margin:0;
         box-sizing: border-box;
     }
 
     main {
-        width: 60ch;
-        max-width: 60ch;
+        height:100%;
+        width:100%;
+        display: flex;
+        flex-direction: column;
     }
 
-    .list { 
+    .list {
+        overflow-y: overlay;
+        overflow-x: hidden;
         display: grid;
         justify-content: start;
-        justify-items: start;
         padding: 4px;
+        padding-left: 64px;
         grid-row-gap: 8px;
     }
 
@@ -35,18 +41,18 @@ export const style = `
     }
 
     a {
-        color: #333242;
+        color: #171717;
         text-decoration: none;
     }
 
     .index {
         font-weight: 600;
-        border: 1px dotted #333242;
-        background-color: #DCB454;
+        border: 1px dotted #FAFAFA;
+        background-color: #a3a3a3;
     }
     a:hover, .item:hover {
-        background-color: #DCB454;
-        color: #1F6435;
+        background-color: #dedede;
+        color: #171717;
     }
 
     .icon {
@@ -56,5 +62,20 @@ export const style = `
         width: 24px;
         height: 24px;
     }
+
+    .list::-webkit-scrollbar {
+        width: 16px;
+    }
+
+    .list::-webkit-scrollbar-track {
+        border: 2px solid #fafafa;
+        border-left: 8px solid #fafafa;
+        background-color: #fafafa;
+    }
+
+    .list::-webkit-scrollbar-thumb {
+        background-color: #a3a3a3;
+        border-left: 8px solid #fafafa;
+  }
 </style>
 `;

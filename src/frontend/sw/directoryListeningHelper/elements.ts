@@ -9,7 +9,7 @@ export const head = (relativeUrl: string) => {
 
 export const goToUp = (relativeUrl: string) => {
   return (relativeUrl || "/") != "/"
-    ? `<div class="item go-up"><div class="icon">${goUp}</div><div class="link"><a href="../">../</a></div></div>`
+    ? `<div class="item go-up"><div class="icon"><a href="../">${goUp}</a></div><div class="link"><a href="../">../</a></div></div>`
     : "";
 };
 
@@ -26,7 +26,7 @@ export const li = async (dirHandle: FileSystemDirectoryHandle) => {
     const icon = handle.kind === "directory" ? folder : isIndex ? index : file;
     str += `<div class="item ${
       isIndex ? "index" : ""
-    }"><div class="icon">${icon}</div><div class="link"><a href="${name}${suffix}">${name}${suffix}</a></div></div>`;
+    }"><div class="icon"><a href="${name}${suffix}">${icon}</a></div><div class="link"><a href="${name}${suffix}">${name}${suffix}</a></div></div>`;
   }
   return str;
 };
