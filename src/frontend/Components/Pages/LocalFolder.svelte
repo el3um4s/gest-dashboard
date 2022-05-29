@@ -76,13 +76,13 @@
       const entry = await item.getAsFileSystemHandle();
       if (entry.kind === "directory") {
         status.folderHandle(null);
-        tick();
+        await tick();
         status.componentVisible(LoadingPage);
         await globalThis.api.windowManager.send("showBrowserView", {
           show: true,
         });
-
-        status.folderHandle(await FolderHandle.reInit(entry));
+        const hostName = $status.sw.hostName;
+        status.folderHandle(await FolderHandle.reInit(entry, hostName));
       }
     }
   }
