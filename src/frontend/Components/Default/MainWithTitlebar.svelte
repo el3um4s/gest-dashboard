@@ -7,14 +7,18 @@
 
   $: {
     isMaximized = outerW >= globalThis.screen.availWidth;
+    globalThis.api.windowManager.send(
+      isMaximized
+        ? "resizeBrowserViewToMaximized"
+        : "resizeBrowserViewToUnMaximized",
+      null
+    );
   }
 
   function minimize() {
-    console.log("minimize");
     globalThis.api.windowControls.send("minimize", null);
   }
   function maximize() {
-    console.log("maximize");
     globalThis.api.windowControls.send("maximize", null);
   }
   function close() {

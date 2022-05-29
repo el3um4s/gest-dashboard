@@ -31,6 +31,7 @@
       show: true,
     });
     await status.urlBrowser(url);
+
     status.browserStarted(true);
     status.historyBrowserAddNew({
       url: url,

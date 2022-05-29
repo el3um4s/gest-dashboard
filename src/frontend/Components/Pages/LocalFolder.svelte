@@ -71,6 +71,7 @@
   async function loadFolder(e) {
     const item = e.dataTransfer.items[0];
     console.log(e.dataTransfer.files[0].path);
+
     if (item.kind === "file") {
       const entry = await item.getAsFileSystemHandle();
       if (entry.kind === "directory") {
@@ -80,6 +81,7 @@
         await globalThis.api.windowManager.send("showBrowserView", {
           show: true,
         });
+
         status.folderHandle(await FolderHandle.reInit(entry));
       }
     }

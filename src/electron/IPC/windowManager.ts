@@ -23,6 +23,8 @@ const validSendChannel: SendChannels = {
   openDevTools: openDevTools,
   openBrowserViewDevTools: openBrowserViewDevTools,
   printBrowserView: printBrowserView,
+  resizeBrowserViewToMaximized: resizeBrowserViewToMaximized,
+  resizeBrowserViewToUnMaximized: resizeBrowserViewToUnMaximized,
 };
 
 // from Main
@@ -91,11 +93,13 @@ async function showBrowserView(
   }
   if (browserView && message.show) {
     const [width, height] = customWindow.getSize();
+    const browserViewBounds = globals.get.browserViewBounds();
+
     browserView.setBounds({
-      x: 65, // 1
-      y: 33, // 32
-      width: width - 66, // -2
-      height: height - 58, // -33
+      x: browserViewBounds.x, // 1
+      y: browserViewBounds.y, // 32
+      width: width - browserViewBounds.widthDelta, // -2
+      height: height - browserViewBounds.heightDelta, // -33
     });
     browserView.setAutoResize({
       width: true,
@@ -106,6 +110,44 @@ async function showBrowserView(
     browserView.setAutoResize({
       width: false,
       height: false,
+    });
+  }
+}
+
+async function resizeBrowserViewToMaximized(
+  customWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  message: any
+) {
+  const browserView = customWindow.getBrowserView();
+
+  if (browserView && browserView.getBounds().width > 0) {
+    const [width, height] = customWindow.getSize();
+    const browserViewBounds = globals.get.browserViewBounds();
+    browserView.setBounds({
+      x: browserViewBounds.x,
+      y: browserViewBounds.y,
+      width: width - browserViewBounds.widthDelta - 16,
+      height: height - browserViewBounds.heightDelta - 16,
+    });
+  }
+}
+
+async function resizeBrowserViewToUnMaximized(
+  customWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  message: any
+) {
+  const browserView = customWindow.getBrowserView();
+
+  if (browserView && browserView.getBounds().width > 0) {
+    const [width, height] = customWindow.getSize();
+    const browserViewBounds = globals.get.browserViewBounds();
+    browserView.setBounds({
+      x: browserViewBounds.x,
+      y: browserViewBounds.y,
+      width: width - browserViewBounds.widthDelta,
+      height: height - browserViewBounds.heightDelta,
     });
   }
 }

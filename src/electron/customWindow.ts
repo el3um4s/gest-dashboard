@@ -3,6 +3,8 @@ import path from "path";
 import EventEmitter from "events";
 import IPC from "./IPC/General/IPC";
 
+import * as globals from "./globals";
+
 const appName = "gest-dashboard";
 
 const defaultSettings = {
@@ -56,6 +58,7 @@ class CustomWindow {
 
   async addBrowserView(link: string = "") {
     const [width, height] = this.window.getSize();
+    const browserViewBounds = globals.get.browserViewBounds();
 
     this.browserView = new BrowserView({
       webPreferences: {
@@ -67,10 +70,10 @@ class CustomWindow {
 
     this.window.setBrowserView(this.browserView);
     this.browserView.setBounds({
-      x: 65, // 1
-      y: 32,
-      width: width - 66, // -2
-      height: height - 57, // -33
+      x: browserViewBounds.x, // 1
+      y: browserViewBounds.y,
+      width: width - browserViewBounds.widthDelta, // -2
+      height: height - browserViewBounds.heightDelta, // -33
     });
     this.browserView.setAutoResize({
       width: true,
