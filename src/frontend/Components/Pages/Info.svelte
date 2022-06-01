@@ -2,28 +2,17 @@
   import { slide } from "svelte/transition";
   import InfoApp from "../Default/InfoApp.svelte";
   import CheckForUpdate from "../Default/CheckForUpdate.svelte";
-
-  const isElectron = globalThis?.api?.systemInfo ? true : false;
-  export let version = "0.0.14";
 </script>
 
 <section transition:slide>
   <h1>Info</h1>
   <article>
-    {#if isElectron}
-      <div>
-        <InfoApp />
-      </div>
-      <div>
-        <CheckForUpdate />
-      </div>
-    {:else}
-      <div>
-        <ul>
-          <li>Version: <b>iframe - {version}</b></li>
-        </ul>
-      </div>
-    {/if}
+    <div>
+      <InfoApp />
+    </div>
+    <div>
+      <CheckForUpdate />
+    </div>
   </article>
 </section>
 

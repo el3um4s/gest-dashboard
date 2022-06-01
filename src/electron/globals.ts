@@ -17,8 +17,8 @@ const globals: Globals = {
   browserViewBounds: {
     x: 65,
     y: 33,
-    widthDelta: 66,
-    heightDelta: 58,
+    widthDelta: 131, // 66
+    heightDelta: 58, // 58
   },
 };
 

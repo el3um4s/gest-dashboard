@@ -1,7 +1,4 @@
 export interface StatusInterface {
-  isElectron: boolean;
-  hasIFRame: boolean;
-  showIframe: boolean;
   hasBrowserView: boolean;
   componentVisible: any;
   sw: {
@@ -11,7 +8,7 @@ export interface StatusInterface {
     clientId: string;
   };
   folderName: string;
-  tech: "iframe" | "browserview";
+
   showIndexHtmlImmediately: boolean;
   browserStarted: boolean;
   urlBrowser: string;

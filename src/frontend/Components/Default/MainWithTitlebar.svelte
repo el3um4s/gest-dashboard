@@ -46,6 +46,9 @@
     <div class="leftbar">
       <slot name="leftbar" />
     </div>
+    <div class="rightbar">
+      <slot name="rightbar" />
+    </div>
     <div class="page">
       <slot name="page" />
     </div>
@@ -68,11 +71,11 @@
   .main {
     @apply overflow-hidden w-full h-full grid;
     border: 1px solid var(--window-border-color);
-    grid-template-columns: 64px auto;
+    grid-template-columns: 64px auto 64px;
     grid-template-rows: calc(100% - 24px) 24px;
     grid-template-areas:
-      "leftbar page"
-      "statusbar statusbar";
+      "leftbar page rightbar"
+      "statusbar statusbar statusbar";
     height: calc(100% - theme("spacing.8"));
   }
 
@@ -87,6 +90,10 @@
     @apply w-14;
   }
 
+  .rightbar {
+    grid-area: rightbar;
+    @apply w-14;
+  }
   .statusbar {
     grid-area: statusbar;
     @apply h-6;

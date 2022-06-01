@@ -11,9 +11,6 @@ import type {
 } from "../Interfaces/StatusInterface";
 
 const defaultStatus: StatusInterface = {
-  isElectron: false,
-  hasIFRame: false,
-  showIframe: false,
   hasBrowserView: false,
   componentVisible: undefined,
   sw: {
@@ -23,7 +20,6 @@ const defaultStatus: StatusInterface = {
     clientId: "",
   },
   folderName: "",
-  tech: "iframe",
   showIndexHtmlImmediately: true,
   browserStarted: false,
   urlBrowser: "http://www.example.com",
@@ -34,21 +30,6 @@ const statusStore = writable(defaultStatus);
 
 export const status = {
   subscribe: statusStore.subscribe,
-  isElectron: (v: boolean) =>
-    statusStore.update((s) => {
-      const isElectron = v;
-      return { ...s, isElectron };
-    }),
-  hasIFrame: (v: boolean) =>
-    statusStore.update((s) => {
-      const hasIFRame = v;
-      return { ...s, hasIFRame };
-    }),
-  showIframe: (v: boolean) =>
-    statusStore.update((s) => {
-      const showIframe = v;
-      return { ...s, showIframe };
-    }),
   hasBrowserView: (v: boolean) =>
     statusStore.update((s) => {
       const hasBrowserView = v;
@@ -84,13 +65,6 @@ export const status = {
       const sw = { ...s.sw, clientId };
       return { ...s, sw };
     }),
-  tech: async (t: "iframe" | "browserview") => {
-    statusStore.update((s) => {
-      const tech = t;
-      return { ...s, tech };
-    });
-    await idbSettings.setTech(t);
-  },
   showIndexHtmlImmediately: async (show: boolean) => {
     statusStore.update((s) => {
       const showIndexHtmlImmediately = show;

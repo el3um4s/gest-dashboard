@@ -9,22 +9,16 @@
   import { SW } from "./sw/serviceWorker";
   import { handleFetch } from "./sw/fetchHandler";
 
+  import GlobalThisAPI from "./Components/Default/GlobalThisAPI.svelte";
   import MainWithTitlebar from "./Components/Default/MainWithTitlebar.svelte";
   import StatusBar from "./Components/Default/StatusBar.svelte";
   import LeftBar from "./Components/Default/LeftBar.svelte";
-
-  import Iframe from "./Components/Pages/Iframe.svelte";
+  import RightBar from "./Components/Default/RightBar.svelte";
 
   import { idbSettings } from "./IndexedDB/Settings";
 
   onMount(async () => {
     await SW.register();
-
-    status.isElectron(globalThis?.api?.systemInfo ? true : false);
-    const techDefault = $status.isElectron ? "browserview" : "iframe";
-    const tech = await idbSettings.getTech(techDefault);
-    await status.tech(tech);
-
     const showIndexHtmlImmediately =
       await idbSettings.getShowIndexHtmlImmediately(true);
     await status.showIndexHtmlImmediately(showIndexHtmlImmediately);
@@ -74,12 +68,11 @@
     status.swScope(data.scope);
     status.clientId(data.clientId);
     await tick();
-    if ($status.isElectron && $status.tech === "browserview") {
-      const link = $status.sw.swScope
-        ? `${$status.sw.swScope}${$status.sw.hostName}/`
-        : null;
-      globalThis.api.windowManager.send("openInBrowserView", { src });
-    }
+
+    const link = $status.sw.swScope
+      ? `${$status.sw.swScope}${$status.sw.hostName}/`
+      : null;
+    globalThis.api.windowManager.send("openInBrowserView", { src });
   }
 
   let autoUpdateStatus = "";
@@ -110,15 +103,13 @@
   <title>GEST DASHBOARD</title>
 </svelte:head>
 
+<GlobalThisAPI />
 <MainWithTitlebar title={titleWindow}>
   <LeftBar slot="leftbar" />
+  <RightBar slot="rightbar" />
 
   <main slot="page">
     <svelte:component this={$status.componentVisible} />
-
-    {#if $status.tech == "iframe"}
-      <Iframe title={$status.folderName} {src} hidden={!$status.showIframe} />
-    {/if}
   </main>
   <StatusBar slot="statusbar" status={`${autoUpdateStatus}  ${statusLabel}`} />
 </MainWithTitlebar>
