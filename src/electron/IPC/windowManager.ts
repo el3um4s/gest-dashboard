@@ -25,6 +25,9 @@ const validSendChannel: SendChannels = {
   printBrowserView: printBrowserView,
   resizeBrowserViewToMaximized: resizeBrowserViewToMaximized,
   resizeBrowserViewToUnMaximized: resizeBrowserViewToUnMaximized,
+  goBackBrowserView: goBackBrowserView,
+  goForwardBrowserView: goForwardBrowserView,
+  reloadCurrentPageBrowserView: reloadCurrentPageBrowserView,
 };
 
 // from Main
@@ -240,4 +243,37 @@ async function addNewBrowserView(win: BrowserWindow, link: string) {
 
 async function setIpcMainView(browserView: BrowserView, api: Array<IPC>) {
   api.forEach(async (el) => el.initIpcMain(ipcMain, browserView));
+}
+
+async function goBackBrowserView(
+  customWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  message: any
+) {
+  const browserView = customWindow.getBrowserView();
+  if (browserView && browserView?.webContents?.canGoBack()) {
+    browserView.webContents.goBack();
+  }
+}
+
+async function goForwardBrowserView(
+  customWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  message: any
+) {
+  const browserView = customWindow.getBrowserView();
+  if (browserView && browserView?.webContents?.canGoForward()) {
+    browserView.webContents.goForward();
+  }
+}
+
+async function reloadCurrentPageBrowserView(
+  customWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  message: any
+) {
+  const browserView = customWindow.getBrowserView();
+  if (browserView) {
+    browserView.webContents.reload();
+  }
 }

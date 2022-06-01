@@ -7,25 +7,22 @@
     showDevTools,
     reloadFolder,
     printBrowserView,
+    goBackBrowserView,
+    goForwardBrowserView,
+    reloadCurrentPageBrowserView,
   } from "../../Functions/show";
 
   import {
     faEye,
-    faRedoAlt,
+    faFolderTree,
     faCode,
     faPrint,
+    faArrowLeft,
+    faArrowRight,
+    faRotateRight,
   } from "@fortawesome/free-solid-svg-icons";
 
   let listButtons = [
-    {
-      id: "printBrowserView",
-      icon: faPrint,
-      visible: false,
-      title: "Print (BrowserView)",
-      onClick: () => {
-        printBrowserView();
-      },
-    },
     {
       id: "showFolder",
       icon: faEye,
@@ -37,11 +34,20 @@
     },
     {
       id: "reloadFolder",
-      icon: faRedoAlt,
+      icon: faFolderTree,
       visible: false,
       title: "Reload folder in this window",
       onClick: async () => {
         await reloadFolder();
+      },
+    },
+    {
+      id: "printBrowserView",
+      icon: faPrint,
+      visible: false,
+      title: "Print (BrowserView)",
+      onClick: () => {
+        printBrowserView();
       },
     },
 
@@ -52,6 +58,34 @@
       title: "Show Dev Tools (BrowserView)",
       onClick: () => {
         showDevTools();
+      },
+    },
+
+    {
+      id: "goBack",
+      icon: faArrowLeft,
+      visible: false,
+      title: "Makes the browser go back a page (BrowserView)",
+      onClick: () => {
+        goBackBrowserView();
+      },
+    },
+    {
+      id: "goForward",
+      icon: faArrowRight,
+      visible: false,
+      title: "Makes the browser go forward a web page (BrowserView)",
+      onClick: () => {
+        goForwardBrowserView();
+      },
+    },
+    {
+      id: "reloadCurrentPage",
+      icon: faRotateRight,
+      visible: false,
+      title: "Reloads the current page (BrowserView)",
+      onClick: () => {
+        reloadCurrentPageBrowserView();
       },
     },
   ];

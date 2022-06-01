@@ -39,3 +39,15 @@ export const reloadFolder = async () => {
     show(s.sw.folderHandle ? true : false);
   }
 };
+
+export const goBackBrowserView = () => {
+  globalThis.api.windowManager.send("goBackBrowserView");
+};
+
+export const goForwardBrowserView = () => {
+  globalThis.api.windowManager.send("goForwardBrowserView");
+};
+
+export const reloadCurrentPageBrowserView = () => {
+  globalThis.api.windowManager.send("reloadCurrentPageBrowserView");
+};

@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { flip } from "svelte/animate";
-
   import Fa from "svelte-fa";
   export let listButtons = [];
 
@@ -9,12 +7,7 @@
 
 <section>
   {#each list as button (button.id)}
-    <button
-      class="icon"
-      title={button.title}
-      on:click={button.onClick}
-      animate:flip
-    >
+    <button class="icon" title={button.title} on:click={button.onClick}>
       <Fa icon={button.icon} />
     </button>
   {/each}
