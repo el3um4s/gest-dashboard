@@ -4,7 +4,7 @@
   "description": "A desktop app to serve a local folder of files in your PC without having to run a server",
   "author": "Samuele de Tomasi <samuele@stranianelli.com>",
   "license": "MIT",
-  "version": "0.1.220530",
+  "version": "0.1.220531",
   "main": "dist/index.js",
   "scripts": {
     "nodemon": "nodemon",
@@ -26,7 +26,7 @@
     "@tsconfig/svelte": "^3.0.0",
     "@types/wicg-file-system-access": "^2020.9.5",
     "autoprefixer": "^10.4.7",
-    "electron": "^19.0.1",
+    "electron": "^19.0.2",
     "electron-builder": "^23.0.3",
     "nodemon": "^2.0.16",
     "postcss": "^8.4.14",

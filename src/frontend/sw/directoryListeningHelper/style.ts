@@ -9,6 +9,7 @@ export const style = `
         color: #171717;
         margin:0;
         box-sizing: border-box;
+        font-family: sans-serif;
     }
 
     main {
@@ -18,14 +19,33 @@ export const style = `
         flex-direction: column;
     }
 
-    .list {
-        overflow-y: overlay;
-        overflow-x: hidden;
-        display: grid;
-        justify-content: start;
-        padding: 4px;
-        padding-left: 64px;
-        grid-row-gap: 8px;
+        .list {
+            display: grid;
+            justify-content: start;
+        }
+
+    @media screen{
+        .list {
+            overflow-y: overlay;
+            overflow-x: hidden;
+            padding: 4px;
+            padding-left: 64px;
+            grid-row-gap: 8px;
+        }
+    }
+
+    @media print {
+        h1 {
+            font-size: 16px;
+        }
+
+        .go-up {
+            display: none;
+        }
+
+        .list {
+            grid-row-gap: 2px;
+        }
     }
 
     .item { 

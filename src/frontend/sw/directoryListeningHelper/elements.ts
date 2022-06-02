@@ -1,9 +1,10 @@
 import { folder, file, goUp, index } from "./icons";
 
-export const head = (relativeUrl: string) => {
+export const head = (relativeUrl: string, wwwPosition: string) => {
   return `<head>
 	<meta charset="utf-8">
 	<title>Directory listing for ${relativeUrl || "/"}</title>
+  <link rel='stylesheet' href='${wwwPosition}directory.css'>
 </head>`;
 };
 
