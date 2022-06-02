@@ -70,7 +70,7 @@
 
   async function loadFolder(e) {
     const item = e.dataTransfer.items[0];
-    console.log(e.dataTransfer.files[0].path);
+    const url = e.dataTransfer.files[0].path;
 
     if (item.kind === "file") {
       const entry = await item.getAsFileSystemHandle();
@@ -82,7 +82,16 @@
           show: true,
         });
         const hostName = $status.sw.hostName;
-        status.folderHandle(await FolderHandle.reInit(entry, hostName));
+        const folderHandle = await FolderHandle.reInit(entry, hostName);
+        status.folderHandle(folderHandle);
+
+        status.historyBrowserAddNew({
+          url: url,
+          title: $status.folderName,
+          note: "",
+          starred: false,
+          folderHandle: folderHandle,
+        });
       }
     }
   }
@@ -126,7 +135,7 @@
       {/if}
     </div>
   </div>
-  <!-- <div class="filterBar">
+  <div class="filterBar">
     <div>Shown {historyBrowser.length} of {$status.historyBrowser.length}</div>
     <div>
       <input type="text" bind:value={textSearch} placeholder="Search text" />
@@ -149,7 +158,7 @@
         </li>
       {/each}
     </ul>
-  </div> -->
+  </div>
 </section>
 
 <style lang="postcss">

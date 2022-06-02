@@ -1,4 +1,8 @@
 <script lang="ts">
+  import { tick } from "svelte";
+
+  import { FolderHandle } from "../../sw/folderHandler";
+
   import type { HistoryBrowser } from "../../Interfaces/StatusInterface";
   import { status } from "../../Stores/Status";
 
@@ -20,6 +24,8 @@
   let url = item?.url ? item.url : "https://example.com";
   let title = item?.title ? item.title : "";
   let note = item?.note ? item.note : "";
+  let folderHandle = item?.folderHandle ? item.folderHandle : undefined;
+
   $: starred = item?.starred ? item.starred : false;
 
   const openWebPage = async (url: string) => {
@@ -34,6 +40,23 @@
     await status.urlBrowser(url);
     status.browserStarted(true);
     status.historyBrowserAddNew({ url, title, note, starred });
+  };
+
+  const openFolderHandle = async (folderHandle: FileSystemDirectoryHandle) => {
+    editing = false;
+    status.folderHandle(null);
+    await tick();
+    status.componentVisible(LoadingPage);
+    await globalThis.api.windowManager.send("showBrowserView", {
+      show: true,
+    });
+    const hostName = $status.sw.hostName;
+    await folderHandle.requestPermission({
+      mode: "read",
+    });
+
+    const fh = await FolderHandle.reInit(folderHandle, hostName);
+    status.folderHandle(fh);
   };
 
   const titleLink = (title: string, url: string): string => {
@@ -60,7 +83,12 @@
     <button
       title="Open Page ({url})"
       on:click={async () => {
-        openWebPage(url);
+        console.log(folderHandle);
+        if (folderHandle) {
+          openFolderHandle(folderHandle);
+        } else {
+          openWebPage(url);
+        }
       }}
     >
       <Fa icon={faPlay} />
@@ -81,7 +109,12 @@
         class="link"
         title="Open Page ({url})"
         on:click={async () => {
-          openWebPage(url);
+          console.log(folderHandle);
+          if (folderHandle) {
+            openFolderHandle(folderHandle);
+          } else {
+            openWebPage(url);
+          }
         }}
       >
         {titleLink(title, url)}
@@ -94,7 +127,12 @@
       class="link"
       title="Open Page ({url})"
       on:click={async () => {
-        openWebPage(url);
+        console.log(folderHandle);
+        if (folderHandle) {
+          openFolderHandle(folderHandle);
+        } else {
+          openWebPage(url);
+        }
       }}
     >
       {item.url}

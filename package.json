@@ -4,7 +4,7 @@
   "description": "A desktop app to serve a local folder of files in your PC without having to run a server",
   "author": "Samuele de Tomasi <samuele@stranianelli.com>",
   "license": "MIT",
-  "version": "0.1.220531",
+  "version": "0.1.220601",
   "main": "dist/index.js",
   "scripts": {
     "nodemon": "nodemon",
@@ -40,14 +40,14 @@
     "rollup-plugin-terser": "^7.0.2",
     "semver": "^7.3.7",
     "svelte": "^3.48.0",
-    "svelte-check": "^2.7.1",
+    "svelte-check": "^2.7.2",
     "svelte-preprocess": "^4.10.6",
     "tailwindcss": "^3.0.24",
     "tslib": "^2.4.0",
     "typescript": "^4.7.2"
   },
   "dependencies": {
-    "@el3um4s/node-adodb": "^5.0.10",
+    "@el3um4s/node-adodb": "^5.0.11",
     "@el3um4s/svelte-titlebar": "^0.0.11",
     "@el3um4s/to-try": "^0.0.5",
     "@fortawesome/free-regular-svg-icons": "^6.1.1",

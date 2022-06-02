@@ -26,6 +26,7 @@ let mainWindow: CustomWindow;
 
 app.commandLine.appendSwitch("disable-gpu");
 app.commandLine.appendArgument("disable-gpu");
+app.commandLine.appendSwitch("enable-experimental-web-platform-features");
 
 (async () => {
   const FOUR_HOURS = 1000 * 60 * 60 * 4;

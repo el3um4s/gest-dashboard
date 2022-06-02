@@ -1,5 +1,5 @@
 import { head, goToUp, h1, li } from "./directoryListeningHelper/elements";
-import { style } from "./directoryListeningHelper/style";
+
 // For generating a directory listing page for a folder
 
 export const generateDirectoryListing = async (

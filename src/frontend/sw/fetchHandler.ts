@@ -37,6 +37,7 @@ export const handleFetch = async (
     let hasIndex = false;
     if (!lastName) {
       // empty name, e.g. for root /, treated as folder
+
       file = await generateDirectoryListing(curFolderHandle, relativeUrl);
 
       hasIndex = await hasIndexHtml(curFolderHandle);

@@ -40,13 +40,15 @@ export const status = {
       const componentVisible = v;
       return { ...s, componentVisible };
     }),
-  folderHandle: (v: FileSystemDirectoryHandle) =>
+  folderHandle: (v: FileSystemDirectoryHandle): FileSystemDirectoryHandle => {
     statusStore.update((s) => {
       const folderHandle = v;
       const sw = { ...s.sw, folderHandle };
       const folderName = folderHandle?.name;
       return { ...s, sw, folderName };
-    }),
+    });
+    return v;
+  },
   hostName: (v: string) =>
     statusStore.update((s) => {
       const hostName = v;

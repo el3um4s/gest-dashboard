@@ -20,4 +20,5 @@ export interface HistoryBrowser {
   title: string;
   note: string;
   starred: boolean;
+  folderHandle?: FileSystemDirectoryHandle;
 }

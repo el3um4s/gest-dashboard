@@ -75,6 +75,9 @@ async function StartHost(e) {
   })
 
   console.log("storeHosts", storeHosts);
+
+  console.log("self.registration.scope", self.registration.scope);
+
   // Tell client it's now hosting.
   e.source.postMessage({
     type: "start-ok",
@@ -116,6 +119,7 @@ self.addEventListener("fetch", (e) => {
 });
 
 async function HostFetch(hostName, url) {
+
   // Look up client from the host name.
   const clientId = storageGetClientId(hostName);
   if (!clientId) return HostNotFoundResponse(hostName);
