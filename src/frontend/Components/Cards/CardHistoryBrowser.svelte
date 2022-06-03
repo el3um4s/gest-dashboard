@@ -1,5 +1,6 @@
 <script lang="ts">
   import { tick } from "svelte";
+  import { slide } from "svelte/transition";
 
   import { FolderHandle } from "../../sw/folderHandler";
 
@@ -103,6 +104,7 @@
         on:change={() => {
           status.historyBrowserSetTitle(item, title);
         }}
+        transition:slide
       />
     {:else}
       <button
@@ -116,6 +118,7 @@
             openWebPage(url);
           }
         }}
+        transition:slide
       >
         {titleLink(title, url)}
       </button>
@@ -144,9 +147,10 @@
         on:change={() => {
           status.historyBrowserSetNote(item, note);
         }}
+        transition:slide
       />
     {:else if note.trim() != ""}
-      <div>
+      <div transition:slide>
         {note}
       </div>
     {/if}

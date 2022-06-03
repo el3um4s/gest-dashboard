@@ -98,43 +98,77 @@
 
   const noHistory = false;
   let isDragOver = false;
+  let tabActive = "localFolder";
 </script>
 
 <section transition:slide>
-  <h1>Open Local Folder</h1>
+  <h1>Open</h1>
 
-  <div>
-    <div class="chooseFolder" class:isDragOver>
-      <Fa icon={faFolderOpen} />
-      <div>Drag'n'Drop Folder</div>
-      <input
-        type="file"
-        class="inputfile"
-        on:drop={async (e) => {
-          console.log("dropped");
-          isDragOver = false;
-          await loadFolder(e);
-        }}
-        on:click|preventDefault={() =>
-          console.log("Function disabled. Drop folders!")}
-        on:dragenter={() => (isDragOver = true)}
-        on:dragover={() => (isDragOver = true)}
-        on:dragend={() => (isDragOver = false)}
-        on:dragleave={() => (isDragOver = false)}
-      />
+  <div class="tab-component">
+    <div class="tab-list">
+      <button
+        on:click={() => (tabActive = "localFolder")}
+        class:selected={tabActive === "localFolder"}>Local Folder</button
+      >
+      <button
+        on:click={() => (tabActive = "webPage")}
+        class:selected={tabActive === "webPage"}>Web Page</button
+      >
+    </div>
+    <div class="tab-panel">
+      {#if tabActive == "localFolder"}
+        <div class="chooseFolder" class:isDragOver transition:slide>
+          <Fa icon={faFolderOpen} />
+          <div>Drag'n'Drop Folder</div>
+          <input
+            type="file"
+            class="inputfile"
+            on:drop={async (e) => {
+              console.log("dropped");
+              isDragOver = false;
+              await loadFolder(e);
+            }}
+            on:click|preventDefault={() =>
+              console.log("Function disabled. Drop folders!")}
+            on:dragenter={() => (isDragOver = true)}
+            on:dragover={() => (isDragOver = true)}
+            on:dragend={() => (isDragOver = false)}
+            on:dragleave={() => (isDragOver = false)}
+          />
 
-      {#if noHistory}
-        <button
-          on:click={async () => {
-            status.folderHandle(null);
-            tick();
-            status.folderHandle(await FolderHandle.init($status.sw.hostName));
-          }}
-          ><Fa icon={faFolderOpen} /> Choose Folder
-        </button>
+          {#if noHistory}
+            <button
+              on:click={async () => {
+                status.folderHandle(null);
+                tick();
+                status.folderHandle(
+                  await FolderHandle.init($status.sw.hostName)
+                );
+              }}
+              ><Fa icon={faFolderOpen} /> Choose Folder
+            </button>
+          {/if}
+        </div>
+      {:else}
+        <div class="chooseUrl" transition:slide>
+          <input
+            class="inputUrl"
+            type="url"
+            bind:value={src}
+            placeholder="https://example.com"
+          />
+          <button
+            on:click={async () => {
+              openWebPage(src);
+            }}
+          >
+            <Fa icon={faPlay} />
+          </button>
+        </div>
       {/if}
     </div>
   </div>
+
   <div class="filterBar">
     <div>Shown {historyBrowser.length} of {$status.historyBrowser.length}</div>
     <div>
@@ -168,7 +202,7 @@
 
   .chooseFolder {
     @apply p-2 relative flex flex-col h-32 border-4 border-dotted m-2;
-    width: calc(100% - 64px);
+    width: calc(100% - 1rem);
     background-color: var(--sidebar-background-color);
     color: var(--sidebar-text-color);
     border-color: var(--sidebar-border-color);
@@ -193,10 +227,15 @@
     position: absolute;
     top: 0;
     left: 0;
-    /* z-index: -1; */
+  }
+
+  .chooseUrl {
+    @apply p-2 relative flex flex-row h-16 border-4 border-dotted m-2;
+    width: calc(100% - 1rem);
   }
 
   .inputUrl {
+    @apply p-1;
     width: calc(100% - 64px);
   }
 
@@ -205,7 +244,9 @@
   }
 
   .listHistory {
-    @apply h-full;
+    @apply h-full border;
+    border-radius: 0 0 0.25rem 0.25rem;
+    border-color: var(--sidebar-text-color);
     overflow-y: overlay;
     overflow-x: hidden;
   }
