@@ -120,6 +120,52 @@
     }
   }
 
+  .filterBar {
+    @apply flex flex-row gap-2 items-center mt-2;
+    button {
+      background: none;
+      border: none;
+      border-bottom: 2px solid var(--sidebar-background-color);
+      border-radius: 0;
+      margin: 0;
+      color: var(--sidebar-text-color);
+    }
+    button:hover {
+      color: var(--sidebar-hover-text-color);
+    }
+    .selected {
+      border-bottom: 2px solid var(--sidebar-hover-text-color);
+      color: var(--sidebar-hover-text-color);
+    }
+  }
+
+  .listHistory {
+    @apply h-full border;
+    border-radius: 0 0 0.25rem 0.25rem;
+    border-color: var(--sidebar-text-color);
+    overflow-y: overlay;
+    overflow-x: hidden;
+
+    ul {
+      width: calc(100% - 8px);
+    }
+
+    &::-webkit-scrollbar {
+      @apply w-4;
+    }
+
+    &::-webkit-scrollbar-track {
+      border: 2px solid var(--background-color);
+      border-left: 8px solid var(--background-color);
+      background-color: var(--background-color);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--hover-scrollbar-thumb);
+      border-left: 8px solid var(--background-color);
+    }
+  }
+
   .card {
     @apply m-2 rounded overflow-hidden  border;
     background-color: var(--sidebar-background-color);

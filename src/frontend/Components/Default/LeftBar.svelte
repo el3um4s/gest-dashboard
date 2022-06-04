@@ -4,8 +4,8 @@
   import Settings from "../Pages/Settings.svelte";
   import Help from "../Pages/Help.svelte";
   import Info from "../Pages/Info.svelte";
-  import WebPage from "../Pages/WebPage.svelte";
   import LocalFolder from "../Pages/LocalFolder.svelte";
+  import Bookmark from "../Pages/Bookmark.svelte";
 
   import { show, openNewWindow } from "../../Functions/show";
 
@@ -15,7 +15,7 @@
     faCog,
     faQuestionCircle,
     faInfoCircle,
-    faGlobe,
+    faBookmark,
   } from "@fortawesome/free-solid-svg-icons";
 
   let listButtons = [
@@ -29,12 +29,12 @@
       },
     },
     {
-      id: "openWebPage",
-      icon: faGlobe,
+      id: "openBookmark",
+      icon: faBookmark,
       visible: true,
-      title: "Open Web Page (BrowserView)",
+      title: "Open bookamrks",
       onClick: () => {
-        show(false, WebPage);
+        show(false, Bookmark);
       },
     },
     {
