@@ -4,7 +4,7 @@
   "description": "A desktop app to serve a local folder of files in your PC without having to run a server",
   "author": "Samuele de Tomasi <samuele@stranianelli.com>",
   "license": "MIT",
-  "version": "0.1.220601",
+  "version": "0.1.220602",
   "main": "dist/index.js",
   "scripts": {
     "nodemon": "nodemon",
@@ -30,7 +30,7 @@
     "electron-builder": "^23.0.3",
     "nodemon": "^2.0.16",
     "postcss": "^8.4.14",
-    "postcss-load-config": "^3.1.4",
+    "postcss-load-config": "^4.0.1",
     "rollup": "^2.75.5",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-css-only": "^3.1.0",
@@ -41,7 +41,7 @@
     "semver": "^7.3.7",
     "svelte": "^3.48.0",
     "svelte-check": "^2.7.2",
-    "svelte-preprocess": "^4.10.6",
+    "svelte-preprocess": "^4.10.7",
     "tailwindcss": "^3.0.24",
     "tslib": "^2.4.0",
     "typescript": "^4.7.3"
