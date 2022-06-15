@@ -5,8 +5,9 @@ import { BrowserWindow, dialog, OpenDialogSyncOptions } from "electron";
 import path from "path";
 import sqlite3 from "sqlite3";
 
-import { getOriginPrivateDirectory } from "native-file-system-adapter";
-import nodeAdapter from "native-file-system-adapter/src/adapters/node.js";
+// @ts-ignore
+import { getOriginPrivateDirectory } from "native-file-system-adapter/src/es6.js";
+// import nodeAdapter from "native-file-system-adapter/src/adapters/node.js";
 // https://github.com/jimmywarting/native-file-system-adapter
 
 import { toTry } from "@el3um4s/to-try";
@@ -140,7 +141,17 @@ async function loadHistoryBrowser(
           //   row.url
           // );
           // console.log(dirHandler);
-          // const nodeDirHandle = await getOriginPrivateDirectory(nodeAdapter, './real-dir')
+          // const nodeDirHandle = await getOriginPrivateDirectory(
+          //   nodeAdapter,
+          //   row.folderHandle
+          // );
+          await getOriginPrivateDirectory().catch(async (err: Error | null) => {
+            const handle = await getOriginPrivateDirectory(
+              // @ts-ignore
+              import("native-file-system-adapter/lib/adapters/node.js"),
+              row.folderHandle
+            );
+          });
         }
       }
     );

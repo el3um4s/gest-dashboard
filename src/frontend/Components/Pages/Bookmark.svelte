@@ -114,7 +114,7 @@
         class:selected={onlyStarred}><Fa icon={faStar} /></button
       >
       <input type="text" bind:value={textSearch} placeholder="Search text" />
-      <!-- <button
+      <button
         on:click={() => {
           // const jsonString = JSON.stringify(historyBrowser);
           // const blob = new Blob([jsonString], { type: "application/json" });
@@ -132,7 +132,7 @@
         }}
       >
         <Fa icon={faUpload} />
-      </button> -->
+      </button>
       <!-- <input
         title="Load Custom Bookmark"
         type="file"
