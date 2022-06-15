@@ -70,10 +70,12 @@
   $: onFileCustomBookmarkSelected(customBookmark);
 
   const onFileCustomBookmarkSelected = async (fileList: FileList) => {
-    const fileData = fileList[0];
-    const text = await fileData.text();
-    const newList = JSON.parse(text);
-    status.historyBrowserReplaceList(newList);
+    if (fileList) {
+      const fileData = fileList[0];
+      const text = await fileData.text();
+      const newList = JSON.parse(text);
+      status.historyBrowserReplaceList(newList);
+    }
   };
 
   // import { testSQLite, loadHistoryBrowser } from "../../Functions/sqlite";
@@ -113,19 +115,20 @@
         title="Show only Starred"
         class:selected={onlyStarred}><Fa icon={faStar} /></button
       >
-      <input type="text" bind:value={textSearch} placeholder="Search text" />
-      <button
+      <div>
+        <input type="text" bind:value={textSearch} placeholder="Search text" />
+      </div>
+      <!-- <button
         on:click={() => {
-          const jsonString = JSON.stringify(historyBrowser);
+          const jsonString = JSON.stringify($status.historyBrowser);
           const blob = new Blob([jsonString], { type: "application/json" });
-          // type: "text/plain";
           saveAs(blob, "bookmark.json");
 
           // testSQLite({ historyBrowser: historyBrowser });
         }}
       >
         <Fa icon={faDownload} />
-      </button>
+      </button> -->
       <!-- <button
         on:click={() => {
           loadHistoryBrowser();
@@ -133,16 +136,30 @@
       >
         <Fa icon={faUpload} />
       </button> -->
-      <input
-        title="Load Custom Bookmark"
-        type="file"
-        id="input-file-bookamrk"
-        accept=".json"
-        bind:files={customBookmark}
-      />
-      <label title="Load Custom Bookmark" for="input-file-bookamrk"
-        ><Fa icon={faUpload} /></label
+
+      <button
+        title="Download Bookmarks"
+        on:click={() => {
+          const jsonString = JSON.stringify($status.historyBrowser);
+          const blob = new Blob([jsonString], { type: "application/json" });
+          saveAs(blob, "bookmark.json");
+        }}
       >
+        <Fa icon={faDownload} />
+      </button>
+      <div class="loadCustomBookmark">
+        <Fa icon={faUpload} class="iconInputFileBookamrk" />
+        <input
+          title="Load Custom Bookmark"
+          type="file"
+          accept=".json"
+          bind:files={customBookmark}
+          class="inputFileBookamrk"
+        />
+        <!-- <label title="Load Custom Bookmark" for="input-file-bookamrk"
+          ><Fa icon={faUpload} /></label
+        > -->
+      </div>
     </div>
   </div>
 
@@ -162,5 +179,28 @@
 <style lang="postcss">
   section {
     @apply p-2 h-full flex flex-col;
+  }
+
+  .loadCustomBookmark {
+    @apply relative flex flex-col h-12;
+    background-color: var(--sidebar-background-color);
+    color: var(--sidebar-text-color);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .loadCustomBookmark:hover {
+    color: var(--sidebar-hover-text-color);
+    cursor: pointer;
+  }
+
+  .inputFileBookamrk {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 </style>

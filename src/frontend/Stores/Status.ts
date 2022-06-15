@@ -104,6 +104,11 @@ export const status = {
         (el) => el.url == item.url
       );
       const newItem = itemAlreadyListed.length > 0 ? itemAlreadyListed : [item];
+      if (item?.folderHandle) {
+        const folderHandle = item.folderHandle;
+        newItem[0] = { ...newItem[0], folderHandle };
+      }
+
       const historyBrowser = [
         ...newItem,
         ...s.historyBrowser.filter((el) => el.url != item.url),

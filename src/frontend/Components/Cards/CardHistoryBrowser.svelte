@@ -14,6 +14,7 @@
     faCircleCheck,
     faFolderOpen,
     faGlobe,
+    faTriangleExclamation,
   } from "@fortawesome/free-solid-svg-icons";
   import { faStar as faStarLight } from "@fortawesome/free-regular-svg-icons";
 
@@ -26,6 +27,11 @@
   let title = item?.title ? item.title : "";
   let note = item?.note ? item.note : "";
   let folderHandle = item?.folderHandle ? item.folderHandle : undefined;
+
+  $: folderHandleWrong =
+    folderHandle &&
+    Object.entries(folderHandle).length === 0 &&
+    folderHandle.constructor === Object;
 
   $: starred = item?.starred ? item.starred : false;
 
@@ -126,10 +132,11 @@
 
   <div class="note">
     <button
-      class="link"
+      class="link url-with-icons"
       title="Open Page ({url})"
       on:click={async () => {
-        // console.log(folderHandle);
+        console.log(folderHandle);
+
         if (folderHandle) {
           openFolderHandle(folderHandle);
         } else {
@@ -137,7 +144,11 @@
         }
       }}
     >
-      <Fa icon={folderHandle ? faFolderOpen : faGlobe} />
+      {#if folderHandleWrong}
+        <Fa icon={faTriangleExclamation} class="error" />
+      {:else}
+        <Fa icon={folderHandle ? faFolderOpen : faGlobe} />
+      {/if}
       {item.url}
     </button>
     {#if editing}
