@@ -5,11 +5,8 @@ import updaterInfo from "./IPC/updaterInfo";
 import windowControls from "./IPC/windowControls";
 import windowManager from "./IPC/windowManager";
 import nodeAdodb from "./IPC/nodeAdodb";
+import sqlite from "./IPC/sqlite";
 
-generateContextBridge([
-  systemInfo,
-  updaterInfo,
-  windowControls,
-  windowManager,
-  nodeAdodb,
-]);
+import listAPI from "./IPC/listAPI";
+
+generateContextBridge(listAPI);

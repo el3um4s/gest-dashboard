@@ -115,6 +115,21 @@ export const status = {
     });
   },
 
+  historyBrowserReplaceList: (list: HistoryBrowser[]) => {
+    const checkedList = list.map((el) => {
+      if (el.folderHandle && typeof el.folderHandle === "string") {
+        el.folderHandle = JSON.parse(el.folderHandle);
+      }
+
+      return el;
+    });
+
+    statusStore.update((s) => {
+      idbSettings.setHistoryBrowser(checkedList);
+      return { ...s, historyBrowser: checkedList };
+    });
+  },
+
   historyBrowserSetStarred: (item: HistoryBrowser, starred: boolean) => {
     statusStore.update((s) => {
       const historyBrowser = s.historyBrowser.map((i) => {

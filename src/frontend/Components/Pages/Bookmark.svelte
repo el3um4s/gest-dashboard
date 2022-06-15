@@ -1,5 +1,7 @@
 <script lang="ts">
   import type { HistoryBrowser } from "../../Interfaces/StatusInterface";
+  import { Blob } from "blob-polyfill";
+  import { saveAs } from "file-saver";
 
   import { flip } from "svelte/animate";
   import { quintOut } from "svelte/easing";
@@ -9,6 +11,8 @@
     faFolderOpen,
     faStar,
     faGlobe,
+    faDownload,
+    faUpload,
   } from "@fortawesome/free-solid-svg-icons";
   import { slide } from "svelte/transition";
   import { status } from "../../Stores/Status";
@@ -60,6 +64,25 @@
     }
     return history;
   }
+
+  // let customBookmark;
+
+  // $: onFileCustomBookmarkSelected(customBookmark);
+
+  // const onFileCustomBookmarkSelected = async (fileList: FileList) => {
+  //   const fileData = fileList[0];
+  //   const text = await fileData.text();
+  //   const newList = JSON.parse(text);
+  //   status.historyBrowserReplaceList(newList);
+  // };
+
+  import { testSQLite, loadHistoryBrowser } from "../../Functions/sqlite";
+
+  globalThis.api.sqlite.receive("loadHistoryBrowser", (data) => {
+    console.log(data);
+    let customBookmark = data;
+    status.historyBrowserReplaceList(customBookmark);
+  });
 </script>
 
 <section transition:slide>
@@ -91,18 +114,49 @@
         class:selected={onlyStarred}><Fa icon={faStar} /></button
       >
       <input type="text" bind:value={textSearch} placeholder="Search text" />
+      <!-- <button
+        on:click={() => {
+          // const jsonString = JSON.stringify(historyBrowser);
+          // const blob = new Blob([jsonString], { type: "application/json" });
+          // type: "text/plain"
+          // saveAs(blob, "bookmark.json");
+
+          testSQLite({ historyBrowser: historyBrowser });
+        }}
+      >
+        <Fa icon={faDownload} />
+      </button>
+      <button
+        on:click={() => {
+          loadHistoryBrowser();
+        }}
+      >
+        <Fa icon={faUpload} />
+      </button> -->
+      <!-- <input
+        title="Load Custom Bookmark"
+        type="file"
+        id="input-file-bookamrk"
+        accept=".json"
+        bind:files={customBookmark}
+      />
+      <label title="Load Custom Bookmark" for="input-file-bookamrk"
+        ><Fa icon={faUpload} /></label
+      > -->
     </div>
   </div>
 
-  <div class="listHistory">
-    <ul>
-      {#each historyBrowser as item (item.url)}
-        <li animate:flip={{ duration: 250, easing: quintOut }}>
-          <CardHistoryBrowser {item} />
-        </li>
-      {/each}
-    </ul>
-  </div>
+  {#if historyBrowser.length > 0}
+    <div class="listHistory">
+      <ul>
+        {#each historyBrowser as item (item.url)}
+          <li animate:flip={{ duration: 250, easing: quintOut }}>
+            <CardHistoryBrowser {item} />
+          </li>
+        {/each}
+      </ul>
+    </div>
+  {/if}
 </section>
 
 <style lang="postcss">

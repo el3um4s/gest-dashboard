@@ -8,6 +8,9 @@ import updaterInfo from "./IPC/updaterInfo";
 import windowControls from "./IPC/windowControls";
 import windowManager from "./IPC/windowManager";
 import nodeAdodb from "./IPC/nodeAdodb";
+import sqlite from "./IPC/sqlite";
+
+import listAPI from "./IPC/listAPI";
 
 import * as globals from "./globals";
 
@@ -53,22 +56,10 @@ async function createMainWindow() {
   const urlPage = globals.get.mainUrl();
   mainWindow.createWindow(urlPage);
 
-  await mainWindow.setIpcMain([
-    systemInfo,
-    updaterInfo,
-    windowControls,
-    windowManager,
-    nodeAdodb,
-  ]);
+  await mainWindow.setIpcMain(listAPI);
 
   mainWindow.addBrowserViewHidden();
-  mainWindow.setIpcMainView([
-    systemInfo,
-    updaterInfo,
-    windowControls,
-    windowManager,
-    nodeAdodb,
-  ]);
+  mainWindow.setIpcMainView(listAPI);
 
   updaterInfo.initAutoUpdater(autoUpdater, mainWindow.window);
 

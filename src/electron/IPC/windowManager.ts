@@ -9,6 +9,9 @@ import windowControls from "./windowControls";
 import systemInfo from "./systemInfo";
 import updaterInfo from "./updaterInfo";
 import nodeAdodb from "./nodeAdodb";
+import sqlite from "./sqlite";
+
+import listAPI from "./listAPI";
 
 import * as globals from "../globals";
 
@@ -71,13 +74,7 @@ async function createMainWindow() {
   customWindow = new CustomWindow(settings);
   customWindow.createWindow(urlPage);
 
-  await customWindow.setIpcMain([
-    windowControls,
-    windowManager,
-    systemInfo,
-    updaterInfo,
-    nodeAdodb,
-  ]);
+  await customWindow.setIpcMain(listAPI);
   return customWindow;
 }
 
@@ -232,13 +229,7 @@ async function addNewBrowserView(win: BrowserWindow, link: string) {
     browserView.webContents.loadURL(link);
   }
 
-  setIpcMainView(browserView, [
-    windowControls,
-    windowManager,
-    systemInfo,
-    updaterInfo,
-    nodeAdodb,
-  ]);
+  setIpcMainView(browserView, listAPI);
 }
 
 async function setIpcMainView(browserView: BrowserView, api: Array<IPC>) {
