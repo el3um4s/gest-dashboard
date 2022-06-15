@@ -1,7 +1,5 @@
 <script lang="ts">
   import { tick } from "svelte";
-  import { slide } from "svelte/transition";
-
   import { FolderHandle } from "../../sw/folderHandler";
 
   import type { HistoryBrowser } from "../../Interfaces/StatusInterface";
@@ -14,6 +12,8 @@
     faPen,
     faStar,
     faCircleCheck,
+    faFolderOpen,
+    faGlobe,
   } from "@fortawesome/free-solid-svg-icons";
   import { faStar as faStarLight } from "@fortawesome/free-regular-svg-icons";
 
@@ -81,6 +81,7 @@
         <Fa icon={faStarLight} />
       {/if}
     </button>
+
     <button
       title="Open Page ({url})"
       on:click={async () => {
@@ -104,7 +105,6 @@
         on:change={() => {
           status.historyBrowserSetTitle(item, title);
         }}
-        transition:slide
       />
     {:else}
       <button
@@ -118,7 +118,6 @@
             openWebPage(url);
           }
         }}
-        transition:slide
       >
         {titleLink(title, url)}
       </button>
@@ -130,7 +129,7 @@
       class="link"
       title="Open Page ({url})"
       on:click={async () => {
-        console.log(folderHandle);
+        // console.log(folderHandle);
         if (folderHandle) {
           openFolderHandle(folderHandle);
         } else {
@@ -138,6 +137,7 @@
         }
       }}
     >
+      <Fa icon={folderHandle ? faFolderOpen : faGlobe} />
       {item.url}
     </button>
     {#if editing}
@@ -147,10 +147,9 @@
         on:change={() => {
           status.historyBrowserSetNote(item, note);
         }}
-        transition:slide
       />
     {:else if note.trim() != ""}
-      <div transition:slide>
+      <div>
         {note}
       </div>
     {/if}

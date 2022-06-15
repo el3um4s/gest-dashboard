@@ -65,24 +65,24 @@
     return history;
   }
 
-  // let customBookmark;
+  let customBookmark;
 
-  // $: onFileCustomBookmarkSelected(customBookmark);
+  $: onFileCustomBookmarkSelected(customBookmark);
 
-  // const onFileCustomBookmarkSelected = async (fileList: FileList) => {
-  //   const fileData = fileList[0];
-  //   const text = await fileData.text();
-  //   const newList = JSON.parse(text);
-  //   status.historyBrowserReplaceList(newList);
-  // };
+  const onFileCustomBookmarkSelected = async (fileList: FileList) => {
+    const fileData = fileList[0];
+    const text = await fileData.text();
+    const newList = JSON.parse(text);
+    status.historyBrowserReplaceList(newList);
+  };
 
-  import { testSQLite, loadHistoryBrowser } from "../../Functions/sqlite";
+  // import { testSQLite, loadHistoryBrowser } from "../../Functions/sqlite";
 
-  globalThis.api.sqlite.receive("loadHistoryBrowser", (data) => {
-    console.log(data);
-    let customBookmark = data;
-    status.historyBrowserReplaceList(customBookmark);
-  });
+  // globalThis.api.sqlite.receive("loadHistoryBrowser", (data) => {
+  //   console.log(data);
+  //   let customBookmark = data;
+  //   status.historyBrowserReplaceList(customBookmark);
+  // });
 </script>
 
 <section transition:slide>
@@ -116,24 +116,24 @@
       <input type="text" bind:value={textSearch} placeholder="Search text" />
       <button
         on:click={() => {
-          // const jsonString = JSON.stringify(historyBrowser);
-          // const blob = new Blob([jsonString], { type: "application/json" });
-          // type: "text/plain"
-          // saveAs(blob, "bookmark.json");
+          const jsonString = JSON.stringify(historyBrowser);
+          const blob = new Blob([jsonString], { type: "application/json" });
+          // type: "text/plain";
+          saveAs(blob, "bookmark.json");
 
-          testSQLite({ historyBrowser: historyBrowser });
+          // testSQLite({ historyBrowser: historyBrowser });
         }}
       >
         <Fa icon={faDownload} />
       </button>
-      <button
+      <!-- <button
         on:click={() => {
           loadHistoryBrowser();
         }}
       >
         <Fa icon={faUpload} />
-      </button>
-      <!-- <input
+      </button> -->
+      <input
         title="Load Custom Bookmark"
         type="file"
         id="input-file-bookamrk"
@@ -142,7 +142,7 @@
       />
       <label title="Load Custom Bookmark" for="input-file-bookamrk"
         ><Fa icon={faUpload} /></label
-      > -->
+      >
     </div>
   </div>
 

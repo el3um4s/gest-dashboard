@@ -5,11 +5,6 @@ import { BrowserWindow, dialog, OpenDialogSyncOptions } from "electron";
 import path from "path";
 import sqlite3 from "sqlite3";
 
-// @ts-ignore
-import { getOriginPrivateDirectory } from "native-file-system-adapter/src/es6.js";
-// import nodeAdapter from "native-file-system-adapter/src/adapters/node.js";
-// https://github.com/jimmywarting/native-file-system-adapter
-
 import { toTry } from "@el3um4s/to-try";
 
 import { statSync, unlinkSync } from "node:fs";
@@ -82,16 +77,6 @@ async function testSQLite(
 
       db.run("CREATE TABLE lorem (info TEXT)");
 
-      // const stmt = db.prepare("INSERT INTO lorem VALUES (?)");
-      // for (let i = 0; i < 10; i++) {
-      //   stmt.run("Ipsum " + i);
-      // }
-      // stmt.finalize();
-
-      // db.each("SELECT rowid AS id, info FROM lorem", (err, row) => {
-      //   console.log(row.id, " : ", row.info);
-      // });
-
       db.each(
         "SELECT rowid AS id, url, title, note, starred, folderHandle FROM historyBrowser",
         (err, row) => {
@@ -125,10 +110,6 @@ async function loadHistoryBrowser(
     console.log(loadFile[0]);
 
     const db = new sqlite3.Database(loadFile[0]);
-    // db.serialize(() => {
-    // db.each("SELECT rowid AS id, info FROM lorem", (err, row) => {
-    //   console.log(row.id, " : ", row.info);
-    // });
 
     db.each(
       "SELECT rowid AS id, url, title, note, starred, folderHandle FROM historyBrowser",
@@ -136,22 +117,6 @@ async function loadHistoryBrowser(
         console.log(row.id, " : ", row.url);
         if (row?.folderHandle) {
           console.log(row.folderHandle);
-          // const dirHandler = await getOriginPrivateDirectory(
-          //   nodeAdapter,
-          //   row.url
-          // );
-          // console.log(dirHandler);
-          // const nodeDirHandle = await getOriginPrivateDirectory(
-          //   nodeAdapter,
-          //   row.folderHandle
-          // );
-          await getOriginPrivateDirectory().catch(async (err: Error | null) => {
-            const handle = await getOriginPrivateDirectory(
-              // @ts-ignore
-              import("native-file-system-adapter/lib/adapters/node.js"),
-              row.folderHandle
-            );
-          });
         }
       }
     );
@@ -160,8 +125,6 @@ async function loadHistoryBrowser(
       console.log(rows);
       // mainWindow.webContents.send("loadHistoryBrowser", rows);
     });
-    // });
-
     db.close();
   }
 }
