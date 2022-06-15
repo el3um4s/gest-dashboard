@@ -1,6 +1,6 @@
 <script lang="ts">
   import { status } from "../../Stores/Status";
-  import { show } from "../../Functions/show";
+  import { show, reloadCurrentPageBrowserView } from "../../Functions/show";
   import { FolderHandle } from "../../sw/folderHandler";
 
   globalThis.api.windowManager.receive("showBrowserView", async (data) => {
@@ -20,5 +20,12 @@
       status.folderHandle(await FolderHandle.reInit(folderHandle, hostName));
       show($status.sw.folderHandle ? true : false);
     }
+  });
+
+  globalThis.api.chokidarAPI.receive("folderChanged", async (data) => {
+    const { path, eventName, nameWatcher } = data;
+    console.log(path, eventName, nameWatcher);
+    reloadCurrentPageBrowserView();
+    //  await reloadFolder();
   });
 </script>

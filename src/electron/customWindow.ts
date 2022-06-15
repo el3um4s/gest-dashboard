@@ -1,4 +1,10 @@
-import { app, BrowserWindow, BrowserView, ipcMain } from "electron";
+import {
+  app,
+  BrowserWindow,
+  BrowserView,
+  ipcMain,
+  nativeTheme,
+} from "electron";
 import path from "path";
 import EventEmitter from "events";
 import IPC from "./IPC/General/IPC";
@@ -44,6 +50,9 @@ class CustomWindow {
     });
 
     window.loadURL(url);
+
+    nativeTheme.themeSource = "light";
+
     window.once("ready-to-show", () => {
       window.show();
     });

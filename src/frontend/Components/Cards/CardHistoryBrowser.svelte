@@ -64,6 +64,11 @@
 
     const fh = await FolderHandle.reInit(folderHandle, hostName);
     status.folderHandle(fh);
+
+    await globalThis.api.chokidarAPI.send("watchFolder", {
+      nameWatcher: "gestDashboard",
+      folderPath: url,
+    });
   };
 
   const titleLink = (title: string, url: string): string => {

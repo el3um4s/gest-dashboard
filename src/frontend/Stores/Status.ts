@@ -21,6 +21,8 @@ const defaultStatus: StatusInterface = {
   },
   folderName: "",
   showIndexHtmlImmediately: true,
+  reloadCurrentPageWhenFolderChange: false,
+  reloadLocalFolderWhenFolderChange: false,
   browserStarted: false,
   urlBrowser: "http://www.example.com",
   historyBrowser: [],

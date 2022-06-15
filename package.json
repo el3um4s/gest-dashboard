@@ -4,7 +4,7 @@
   "description": "A desktop app to serve a local folder of files in your PC without having to run a server",
   "author": "Samuele de Tomasi <samuele@stranianelli.com>",
   "license": "MIT",
-  "version": "0.1.2206003",
+  "version": "0.1.2206005",
   "main": "dist/index.js",
   "scripts": {
     "nodemon": "nodemon",
@@ -58,6 +58,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "ansi-regex": "^6.0.1",
     "blob-polyfill": "^7.0.20220408",
+    "chokidar": "^3.5.3",
     "electron-reload": "^2.0.0-alpha.1",
     "electron-updater": "^5.0.1",
     "file-saver": "^2.0.5",

@@ -48,6 +48,11 @@
         const folderHandle = await FolderHandle.reInit(entry, hostName);
         status.folderHandle(folderHandle);
 
+        await globalThis.api.chokidarAPI.send("watchFolder", {
+          nameWatcher: "gestDashboard",
+          folderPath: url,
+        });
+
         status.historyBrowserAddNew({
           url: url,
           title: $status.folderName,
