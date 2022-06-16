@@ -38,6 +38,28 @@ const getShowIndexHtmlImmediately = async (show: boolean = true) => {
   return showIndexHtmlImmediately;
 };
 
+const setReloadWhenFolderChange = async (
+  reload: "no" | "current page" | "local folder"
+) => {
+  await set("reloadWhenFolderChange", reload, customStore);
+};
+
+const getReloadWhenFolderChange = async (
+  reload: "no" | "current page" | "local folder" = "no"
+) => {
+  const reloadWhenFolderChange = await get(
+    "reloadWhenFolderChange",
+    customStore
+  );
+
+  if (reloadWhenFolderChange === undefined) {
+    await setReloadWhenFolderChange(reload);
+    return reload;
+  }
+
+  return reloadWhenFolderChange;
+};
+
 const setURLBrowser = async (url: string) => {
   await set("urlBrowser", url, customStore);
 };
@@ -74,6 +96,9 @@ export const idbSettings = {
 
   setShowIndexHtmlImmediately,
   getShowIndexHtmlImmediately,
+
+  setReloadWhenFolderChange,
+  getReloadWhenFolderChange,
 
   setURLBrowser,
   getURLBrowser,

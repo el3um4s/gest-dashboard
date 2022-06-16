@@ -23,6 +23,11 @@
       await idbSettings.getShowIndexHtmlImmediately(true);
     await status.showIndexHtmlImmediately(showIndexHtmlImmediately);
 
+    const reloadWhenFolderChange = await idbSettings.getReloadWhenFolderChange(
+      "no"
+    );
+    await status.reloadWhenFolderChange(reloadWhenFolderChange);
+
     const urlBrowser = await idbSettings.getURLBrowser(
       "http://www.example.com"
     );

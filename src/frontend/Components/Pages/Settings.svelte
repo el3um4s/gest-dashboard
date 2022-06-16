@@ -3,9 +3,11 @@
   import { status } from "../../Stores/Status";
 
   let showIndexHtmlImmediately = $status.showIndexHtmlImmediately;
+  let reloadWhenFolderChange = $status.reloadWhenFolderChange;
 
   $: valueChanged =
-    showIndexHtmlImmediately != $status.showIndexHtmlImmediately;
+    showIndexHtmlImmediately != $status.showIndexHtmlImmediately ||
+    reloadWhenFolderChange != $status.reloadWhenFolderChange;
 </script>
 
 <section transition:slide>
@@ -17,17 +19,44 @@
       Run <b>index.html</b> immediately
     </label>
   </div>
+  <div>
+    <h3>Watch for changes and <b>auto reload</b> the local folder</h3>
+    <label>
+      <input type="radio" bind:group={reloadWhenFolderChange} value="no" />
+      No
+    </label>
+
+    <label>
+      <input
+        type="radio"
+        bind:group={reloadWhenFolderChange}
+        value="current page"
+      />
+      Reload the current page
+    </label>
+
+    <label>
+      <input
+        type="radio"
+        bind:group={reloadWhenFolderChange}
+        value="local folder"
+      />
+      Reload the local folder
+    </label>
+  </div>
   {#if valueChanged}
     <div transition:slide>
       <button
         on:click={() => {
           showIndexHtmlImmediately = $status.showIndexHtmlImmediately;
+          reloadWhenFolderChange = $status.reloadWhenFolderChange;
         }}
         class="button-cancel">Discard</button
       >
       <button
         on:click={async () => {
           await status.showIndexHtmlImmediately(showIndexHtmlImmediately);
+          await status.reloadWhenFolderChange(reloadWhenFolderChange);
         }}
         class="button-confirm">Save Changes</button
       >

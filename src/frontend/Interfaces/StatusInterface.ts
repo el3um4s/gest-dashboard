@@ -10,8 +10,7 @@ export interface StatusInterface {
   folderName: string;
 
   showIndexHtmlImmediately: boolean;
-  reloadCurrentPageWhenFolderChange: boolean;
-  reloadLocalFolderWhenFolderChange: boolean;
+  reloadWhenFolderChange: "no" | "current page" | "local folder";
   browserStarted: boolean;
   urlBrowser: string;
   historyBrowser: HistoryBrowser[];

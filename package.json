@@ -4,7 +4,7 @@
   "description": "A desktop app to serve a local folder of files in your PC without having to run a server",
   "author": "Samuele de Tomasi <samuele@stranianelli.com>",
   "license": "MIT",
-  "version": "0.1.2206005",
+  "version": "0.1.220610",
   "main": "dist/index.js",
   "scripts": {
     "nodemon": "nodemon",
@@ -51,6 +51,7 @@
     "typescript": "^4.7.3"
   },
   "dependencies": {
+    "@el3um4s/match": "^0.0.2",
     "@el3um4s/node-adodb": "^5.0.11",
     "@el3um4s/svelte-titlebar": "^0.0.11",
     "@el3um4s/to-try": "^0.0.5",

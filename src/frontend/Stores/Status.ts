@@ -21,8 +21,7 @@ const defaultStatus: StatusInterface = {
   },
   folderName: "",
   showIndexHtmlImmediately: true,
-  reloadCurrentPageWhenFolderChange: false,
-  reloadLocalFolderWhenFolderChange: false,
+  reloadWhenFolderChange: "no",
   browserStarted: false,
   urlBrowser: "http://www.example.com",
   historyBrowser: [],
@@ -75,6 +74,16 @@ export const status = {
       return { ...s, showIndexHtmlImmediately };
     });
     await idbSettings.setShowIndexHtmlImmediately(show);
+  },
+
+  reloadWhenFolderChange: async (
+    reload: "no" | "current page" | "local folder"
+  ) => {
+    statusStore.update((s) => {
+      const reloadWhenFolderChange = reload;
+      return { ...s, reloadWhenFolderChange };
+    });
+    await idbSettings.setReloadWhenFolderChange(reload);
   },
 
   browserStarted: async (started: boolean) => {
