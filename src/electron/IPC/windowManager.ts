@@ -5,12 +5,6 @@ import IPC from "./General/IPC";
 
 import CustomWindow from "../customWindow";
 
-import windowControls from "./windowControls";
-import systemInfo from "./systemInfo";
-import updaterInfo from "./updaterInfo";
-import nodeAdodb from "./nodeAdodb";
-import sqlite from "./sqlite";
-
 import listAPI from "./listAPI";
 
 import * as globals from "../globals";

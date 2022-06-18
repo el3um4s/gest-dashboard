@@ -1,27 +1,26 @@
 import { app } from "electron";
 import { autoUpdater } from "electron-updater";
 import path from "path";
+import { pathToFileURL } from "node:url";
+
 import CustomWindow from "./customWindow";
-
-import systemInfo from "./IPC/systemInfo";
 import updaterInfo from "./IPC/updaterInfo";
-import windowControls from "./IPC/windowControls";
-import windowManager from "./IPC/windowManager";
-import nodeAdodb from "./IPC/nodeAdodb";
-import sqlite from "./IPC/sqlite";
-
 import listAPI from "./IPC/listAPI";
-
 import * as globals from "./globals";
-
 import ADODB from "@el3um4s/node-adodb";
 
 if (app.isPackaged) {
   ADODB.PATH = "./resources/adodb.js";
 }
 
-globals.set.mainURL(path.join(__dirname, "www", "index.html"));
-globals.set.preloadjs(path.join(__dirname, "preload.js"));
+const mainURLPATH = pathToFileURL(path.join(__dirname, "www", "index.html"));
+const preloadjsPATH = pathToFileURL(path.join(__dirname, "www", "index.html"));
+
+globals.set.mainURL(mainURLPATH.href);
+globals.set.preloadjs(preloadjsPATH.href);
+
+// globals.set.mainURL(path.join(__dirname, "www", "index.html"));
+// globals.set.preloadjs(path.join(__dirname, "preload.js"));
 
 require("electron-reload")(__dirname);
 
@@ -31,12 +30,14 @@ app.commandLine.appendSwitch("disable-gpu");
 app.commandLine.appendArgument("disable-gpu");
 app.commandLine.appendSwitch("enable-experimental-web-platform-features");
 
-(async () => {
-  const FOUR_HOURS = 1000 * 60 * 60 * 4;
-  setInterval(async () => {
-    await autoUpdater.checkForUpdates();
-  }, FOUR_HOURS);
-})();
+if (process.platform === "win32") {
+  (async () => {
+    const FOUR_HOURS = 1000 * 60 * 60 * 4;
+    setInterval(async () => {
+      await autoUpdater.checkForUpdates();
+    }, FOUR_HOURS);
+  })();
+}
 
 app.on("ready", async () => {
   await createMainWindow();
@@ -61,9 +62,10 @@ async function createMainWindow() {
   mainWindow.addBrowserViewHidden();
   mainWindow.setIpcMainView(listAPI);
 
-  updaterInfo.initAutoUpdater(autoUpdater, mainWindow.window);
-
-  autoUpdater.checkForUpdates();
+  if (process.platform === "win32") {
+    updaterInfo.initAutoUpdater(autoUpdater, mainWindow.window);
+    autoUpdater.checkForUpdates();
+  }
 }
 
 autoUpdater.on("update-available", (info) => {

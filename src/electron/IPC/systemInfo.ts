@@ -7,10 +7,11 @@ const nameAPI = "systemInfo";
 // to Main
 const validSendChannel: SendChannels = {
   requestSystemInfo: requestSystemInfo,
+  requestIsWindows: requestIsWindows,
 };
 
 // from Main
-const validReceiveChannel: string[] = ["getSystemInfo"];
+const validReceiveChannel: string[] = ["getSystemInfo", "getIsWindows"];
 
 const systemInfo = new IPC({
   nameAPI,
@@ -36,4 +37,16 @@ function requestSystemInfo(
     electron: versionElectron,
   };
   mainWindow.webContents.send("getSystemInfo", result);
+}
+
+function requestIsWindows(
+  mainWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  message: any
+) {
+  const isWindows = process.platform === "win32";
+  const result = {
+    isWindows,
+  };
+  mainWindow.webContents.send("getIsWindows", result);
 }
