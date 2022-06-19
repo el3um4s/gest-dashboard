@@ -20,6 +20,21 @@ const getTech = async (d: "iframe" | "browserview" = "iframe") => {
   return tech;
 };
 
+const setLang = async (l: "en" | "it") => {
+  await set("lang", l, customStore);
+};
+
+const getLang = async (l: "en" | "it") => {
+  const lang = await get("lang", customStore);
+
+  if (lang === undefined) {
+    await setLang(l);
+    return l;
+  }
+
+  return lang;
+};
+
 const setShowIndexHtmlImmediately = async (show: boolean) => {
   await set("showIndexHtmlImmediately", show, customStore);
 };
@@ -93,6 +108,9 @@ const getHistoryBrowser = async (history: HistoryBrowser[] = []) => {
 export const idbSettings = {
   setTech,
   getTech,
+
+  setLang,
+  getLang,
 
   setShowIndexHtmlImmediately,
   getShowIndexHtmlImmediately,

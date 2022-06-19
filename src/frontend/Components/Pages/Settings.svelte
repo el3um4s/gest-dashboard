@@ -4,10 +4,17 @@
 
   let showIndexHtmlImmediately = $status.showIndexHtmlImmediately;
   let reloadWhenFolderChange = $status.reloadWhenFolderChange;
+  let lang = $status.lang;
 
   $: valueChanged =
     showIndexHtmlImmediately != $status.showIndexHtmlImmediately ||
-    reloadWhenFolderChange != $status.reloadWhenFolderChange;
+    reloadWhenFolderChange != $status.reloadWhenFolderChange ||
+    lang != $status.lang;
+
+  let languages = [
+    { id: "en", text: `English` },
+    { id: "it", text: `Italiano` },
+  ];
 </script>
 
 <section transition:slide>
@@ -44,12 +51,25 @@
       Reload the local folder
     </label>
   </div>
+  <div>
+    <label>
+      Language
+      <select bind:value={lang}>
+        {#each languages as language}
+          <option value={language.id}>
+            {language.text}
+          </option>
+        {/each}
+      </select>
+    </label>
+  </div>
   {#if valueChanged}
     <div transition:slide>
       <button
         on:click={() => {
           showIndexHtmlImmediately = $status.showIndexHtmlImmediately;
           reloadWhenFolderChange = $status.reloadWhenFolderChange;
+          lang = $status.lang;
         }}
         class="button-cancel">Discard</button
       >
@@ -57,6 +77,7 @@
         on:click={async () => {
           await status.showIndexHtmlImmediately(showIndexHtmlImmediately);
           await status.reloadWhenFolderChange(reloadWhenFolderChange);
+          await status.lang(lang);
         }}
         class="button-confirm">Save Changes</button
       >

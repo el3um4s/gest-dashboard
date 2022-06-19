@@ -20,6 +20,7 @@ const defaultStatus: StatusInterface = {
     clientId: "",
   },
   folderName: "",
+  lang: "en",
   showIndexHtmlImmediately: true,
   reloadWhenFolderChange: "no",
   browserStarted: false,
@@ -68,6 +69,13 @@ export const status = {
       const sw = { ...s.sw, clientId };
       return { ...s, sw };
     }),
+  lang: async (l: "en" | "it") => {
+    statusStore.update((s) => {
+      const lang = l;
+      return { ...s, lang };
+    });
+    await idbSettings.setLang(l);
+  },
   showIndexHtmlImmediately: async (show: boolean) => {
     statusStore.update((s) => {
       const showIndexHtmlImmediately = show;

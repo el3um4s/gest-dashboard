@@ -10,6 +10,7 @@
   import { status } from "../../Stores/Status";
 
   import LoadingPage from "./LoadingPage.svelte";
+  import Lang from "../Default/Lang.svelte";
 
   let src = $status.urlBrowser;
 
@@ -70,24 +71,26 @@
 </script>
 
 <section transition:slide>
-  <h1>Open</h1>
+  <h1><Lang c="loadLocalFolder" v="title" /></h1>
 
   <div class="tab-component">
     <div class="tab-list">
       <button
         on:click={() => (tabActive = "localFolder")}
-        class:selected={tabActive === "localFolder"}>Local Folder</button
+        class:selected={tabActive === "localFolder"}
+        ><Lang c="loadLocalFolder" v="openLocalFolder" /></button
       >
       <button
         on:click={() => (tabActive = "webPage")}
-        class:selected={tabActive === "webPage"}>Web Page</button
+        class:selected={tabActive === "webPage"}
+        ><Lang c="loadLocalFolder" v="openWebPage" /></button
       >
     </div>
     <div class="tab-panel">
       {#if tabActive == "localFolder"}
         <div class="chooseFolder" class:isDragOver transition:slide>
           <Fa icon={faFolderOpen} />
-          <div>Drag'n'Drop Folder</div>
+          <div><Lang c="loadLocalFolder" v="Drag'n'Drop Folder" /></div>
           <input
             type="file"
             class="inputfile"

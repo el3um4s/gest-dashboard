@@ -1,11 +1,12 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
+  import Lang from "../Default/Lang.svelte";
 </script>
 
 <section transition:slide>
-  <h1>Help</h1>
+  <h1><Lang c="help" v="help" /></h1>
 
-  <p>TO DO...</p>
+  <p><Lang c="help" v="toDo" /></p>
 </section>
 
 <style lang="postcss">

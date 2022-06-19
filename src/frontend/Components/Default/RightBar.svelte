@@ -22,12 +22,15 @@
     faRotateRight,
   } from "@fortawesome/free-solid-svg-icons";
 
+  import languages from "../../Languages/languages";
+  let lang = $status.lang;
+
   let listButtons = [
     {
       id: "showFolder",
       icon: faEye,
       visible: false,
-      title: "Show folder in this window",
+      title: languages.rightBar.showFolder[lang],
       onClick: () => {
         show(true);
       },
@@ -36,7 +39,7 @@
       id: "reloadFolder",
       icon: faFolderTree,
       visible: false,
-      title: "Reload folder in this window",
+      title: languages.rightBar.reloadFolder[lang],
       onClick: async () => {
         await reloadFolder();
       },
@@ -45,7 +48,7 @@
       id: "printBrowserView",
       icon: faPrint,
       visible: false,
-      title: "Print (BrowserView)",
+      title: languages.rightBar.printBrowserView[lang],
       onClick: () => {
         printBrowserView();
       },
@@ -55,7 +58,7 @@
       id: "showDevTools",
       icon: faCode,
       visible: true,
-      title: "Show Dev Tools (BrowserView)",
+      title: languages.rightBar.showDevTools[lang],
       onClick: () => {
         showDevTools();
       },
@@ -65,7 +68,7 @@
       id: "goBack",
       icon: faArrowLeft,
       visible: false,
-      title: "Makes the browser go back a page (BrowserView)",
+      title: languages.rightBar.goBack[lang],
       onClick: () => {
         goBackBrowserView();
       },
@@ -74,7 +77,7 @@
       id: "goForward",
       icon: faArrowRight,
       visible: false,
-      title: "Makes the browser go forward a web page (BrowserView)",
+      title: languages.rightBar.goForward[lang],
       onClick: () => {
         goForwardBrowserView();
       },
@@ -83,7 +86,7 @@
       id: "reloadCurrentPage",
       icon: faRotateRight,
       visible: false,
-      title: "Reloads the current page (BrowserView)",
+      title: languages.rightBar.reloadCurrentPage[lang],
       onClick: () => {
         reloadCurrentPageBrowserView();
       },
@@ -110,6 +113,13 @@
       ) {
         b.visible = false;
       }
+      return b;
+    }),
+  ];
+
+  $: listButtons = [
+    ...listButtons.map((b) => {
+      b.title = languages.rightBar[b.id][$status.lang];
       return b;
     }),
   ];

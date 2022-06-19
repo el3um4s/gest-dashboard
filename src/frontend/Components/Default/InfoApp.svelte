@@ -1,4 +1,6 @@
 <script lang="ts">
+  import Lang from "./Lang.svelte";
+
   let app: string = "-";
 
   let chrome: string = "-";
@@ -21,9 +23,9 @@
 
 <div>
   <ul>
-    <li>Version: <b>{app}</b></li>
-    <li>Node.js: <b>{node}</b></li>
-    <li>Chromium: <b>{chrome}</b></li>
-    <li>Electron: <b>{electron}</b></li>
+    <li><Lang c="infoApp" v="version" />: <b>{app}</b></li>
+    <li><Lang c="infoApp" v="nodeJs" />: <b>{node}</b></li>
+    <li><Lang c="infoApp" v="chromium" />: <b>{chrome}</b></li>
+    <li><Lang c="infoApp" v="electron" />: <b>{electron}</b></li>
   </ul>
 </div>

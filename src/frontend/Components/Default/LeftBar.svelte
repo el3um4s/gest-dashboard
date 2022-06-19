@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { status } from "../../Stores/Status";
+
   import SideBar from "./SideBar.svelte";
 
   import Settings from "../Pages/Settings.svelte";
@@ -18,12 +20,15 @@
     faBookmark,
   } from "@fortawesome/free-solid-svg-icons";
 
+  import languages from "../../Languages/languages";
+  let lang = $status.lang;
+
   let listButtons = [
     {
       id: "openFolder",
       icon: faFolderOpen,
       visible: true,
-      title: "Open folder in this window",
+      title: languages.leftBar.openFolder[lang],
       onClick: () => {
         show(false, LocalFolder);
       },
@@ -32,7 +37,7 @@
       id: "openBookmark",
       icon: faBookmark,
       visible: true,
-      title: "Open bookamrks",
+      title: languages.leftBar.openBookmark[lang],
       onClick: () => {
         show(false, Bookmark);
       },
@@ -41,7 +46,7 @@
       id: "openNewWindow",
       icon: faExternalLinkSquareAlt,
       visible: true,
-      title: "Open new window",
+      title: languages.leftBar.openNewWindow[lang],
       onClick: () => {
         openNewWindow();
       },
@@ -50,7 +55,7 @@
       id: "openSettings",
       icon: faCog,
       visible: true,
-      title: "Settings",
+      title: languages.leftBar.openSettings[lang],
       onClick: () => {
         show(false, Settings);
       },
@@ -59,7 +64,7 @@
       id: "openHelp",
       icon: faQuestionCircle,
       visible: true,
-      title: "Help",
+      title: languages.leftBar.openHelp[lang],
       onClick: () => {
         show(false, Help);
       },
@@ -68,11 +73,18 @@
       id: "openInfo",
       icon: faInfoCircle,
       visible: true,
-      title: "Info",
+      title: languages.leftBar.openInfo[lang],
       onClick: () => {
         show(false, Info);
       },
     },
+  ];
+
+  $: listButtons = [
+    ...listButtons.map((b) => {
+      b.title = languages.leftBar[b.id][$status.lang];
+      return b;
+    }),
   ];
 </script>
 

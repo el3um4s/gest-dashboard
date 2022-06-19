@@ -8,7 +8,7 @@ export interface StatusInterface {
     clientId: string;
   };
   folderName: string;
-
+  lang: "en" | "it";
   showIndexHtmlImmediately: boolean;
   reloadWhenFolderChange: "no" | "current page" | "local folder";
   browserStarted: boolean;

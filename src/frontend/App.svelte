@@ -19,6 +19,10 @@
 
   onMount(async () => {
     await SW.register();
+
+    const lang = await idbSettings.getLang("en");
+    await status.lang(lang);
+
     const showIndexHtmlImmediately =
       await idbSettings.getShowIndexHtmlImmediately(true);
     await status.showIndexHtmlImmediately(showIndexHtmlImmediately);
