@@ -38,7 +38,7 @@
     "nodemon": "^2.0.16",
     "postcss": "^8.4.14",
     "postcss-load-config": "^4.0.1",
-    "rollup": "^2.75.6",
+    "rollup": "^2.75.7",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.5",
@@ -66,7 +66,7 @@
     "electron-reload": "^2.0.0-alpha.1",
     "electron-updater": "^5.0.1",
     "file-saver": "^2.0.5",
-    "idb-keyval": "^6.1.0",
+    "idb-keyval": "^6.2.0",
     "sirv-cli": "^2.0.2",
     "sqlite3": "^5.0.8",
     "svelte-fa": "^3.0.2"
