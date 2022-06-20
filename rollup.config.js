@@ -39,7 +39,7 @@ function serve() {
 export default {
 	input: 'src/frontend/main.ts', // check!
 	output: {
-		sourcemap: true,
+		sourcemap: !production,
 		format: 'iife',
 		name: 'app',
 		file: 'dist/www/build/bundle.js' // check!
