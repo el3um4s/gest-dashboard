@@ -101,6 +101,78 @@ const languages = {
       it: "Trascina e rilascia la cartella",
     },
   },
+  settings: {
+    title: {
+      en: "Settings",
+      it: "Impostazioni",
+    },
+    runHtmlImmediately: {
+      en: "Run <b>index.html</b> immediately",
+      it: "Esegui i file <b>index.html</b> immediatamente",
+    },
+    watchForChanges: {
+      en: "Watch for changes and <b>auto reload</b> the local folder",
+      it: "<b>Ricarica automaticamente</b> la cartella locale quando cambiano i file",
+    },
+    no: {
+      en: "No",
+      it: "No",
+    },
+    reloadCurrentPage: {
+      en: "Reload the current page",
+      it: "Ricarica la pagina visualizzata",
+    },
+    reloadLocalFolder: {
+      en: "Reload the local folder",
+      it: "Ricarica la cartella",
+    },
+    language: {
+      en: "Language",
+      it: "lingua",
+    },
+    discard: {
+      en: "Discard",
+      it: "Annulla ",
+    },
+    saveChanges: {
+      en: "Save Changes",
+      it: "Salva le modifiche",
+    },
+  },
+  bookmarks: {
+    title: {
+      en: "Bookmarks",
+      it: "Cartelle Recenti e Segnalibri",
+    },
+    shown: {
+      en: "Shown",
+      it: "Visualizzati",
+    },
+    showLocalFolders: {
+      en: "Show Local Folders",
+      it: "Mostra Cartelle Locali",
+    },
+    showWebPages: {
+      en: "Show Web Pages",
+      it: "Mostra Pagine Online",
+    },
+    showOnlyStarred: {
+      en: "Show Only Starred",
+      it: "Mostra Solo i Preferiti",
+    },
+    searchText: {
+      en: "Search text",
+      it: "Testo da cercare",
+    },
+    downloadBookmarks: {
+      en: "Download Bookmarks",
+      it: "Scarica l'Elenco Completo",
+    },
+    loadCustomBookmarks: {
+      en: "Load Custom Bookmarks",
+      it: "Carica un Nuovo Elenco",
+    },
+  },
 };
 
 export default languages;

@@ -2,6 +2,8 @@
   import { slide } from "svelte/transition";
   import { status } from "../../Stores/Status";
 
+  import Lang from "../Default/Lang.svelte";
+
   let showIndexHtmlImmediately = $status.showIndexHtmlImmediately;
   let reloadWhenFolderChange = $status.reloadWhenFolderChange;
   let lang = $status.lang;
@@ -18,19 +20,19 @@
 </script>
 
 <section transition:slide>
-  <h1>Settings</h1>
+  <h1><Lang c="settings" v="title" /></h1>
 
   <div>
     <label>
       <input type="checkbox" bind:checked={showIndexHtmlImmediately} />
-      Run <b>index.html</b> immediately
+      <Lang c="settings" v="runHtmlImmediately" />
     </label>
   </div>
   <div>
-    <h3>Watch for changes and <b>auto reload</b> the local folder</h3>
+    <h3><Lang c="settings" v="watchForChanges" /></h3>
     <label>
       <input type="radio" bind:group={reloadWhenFolderChange} value="no" />
-      No
+      <Lang c="settings" v="no" />
     </label>
 
     <label>
@@ -39,7 +41,7 @@
         bind:group={reloadWhenFolderChange}
         value="current page"
       />
-      Reload the current page
+      <Lang c="settings" v="reloadCurrentPage" />
     </label>
 
     <label>
@@ -48,12 +50,12 @@
         bind:group={reloadWhenFolderChange}
         value="local folder"
       />
-      Reload the local folder
+      <Lang c="settings" v="reloadLocalFolder" />
     </label>
   </div>
   <div>
     <label>
-      Language
+      <Lang c="settings" v="language" />
       <select bind:value={lang}>
         {#each languages as language}
           <option value={language.id}>
@@ -71,7 +73,7 @@
           reloadWhenFolderChange = $status.reloadWhenFolderChange;
           lang = $status.lang;
         }}
-        class="button-cancel">Discard</button
+        class="button-cancel"><Lang c="settings" v="discard" /></button
       >
       <button
         on:click={async () => {
@@ -79,7 +81,7 @@
           await status.reloadWhenFolderChange(reloadWhenFolderChange);
           await status.lang(lang);
         }}
-        class="button-confirm">Save Changes</button
+        class="button-confirm"><Lang c="settings" v="saveChanges" /></button
       >
     </div>
   {/if}

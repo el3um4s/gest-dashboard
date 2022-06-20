@@ -20,7 +20,7 @@
     faBookmark,
   } from "@fortawesome/free-solid-svg-icons";
 
-  import languages from "../../Languages/languages";
+  import languages from "../../Languages/Languages";
   let lang = $status.lang;
 
   let listButtons = [

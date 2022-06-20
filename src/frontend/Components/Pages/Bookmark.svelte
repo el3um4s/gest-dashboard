@@ -19,6 +19,11 @@
 
   import CardHistoryBrowser from "../Cards/CardHistoryBrowser.svelte";
 
+  import Lang from "../Default/Lang.svelte";
+
+  import languages from "../../Languages/Languages";
+  let lang = $status.lang;
+
   let onlyStarred = false;
   let textSearch = "";
   let showLocalFolders = true;
@@ -88,21 +93,22 @@
 </script>
 
 <section transition:slide>
-  <h1>Bookmarks</h1>
+  <h1><Lang c="bookmarks" v="title" /></h1>
   <div>
-    Shown {historyBrowser.length} of {$status.historyBrowser.length}
+    <Lang c="bookmarks" v="shown" />
+    {historyBrowser.length} / {$status.historyBrowser.length}
   </div>
   <div class="tab-component">
     <div class="tab-list">
       <button
-        title="Show Local Folder"
+        title={languages.bookmarks.showLocalFolders[lang]}
         class:selected={showLocalFolders}
         on:click={() => {
           showLocalFolders = !showLocalFolders;
         }}><Fa icon={faFolderOpen} /></button
       >
       <button
-        title="Show Web Page"
+        title={languages.bookmarks.showWebPages[lang]}
         class:selected={showWebPages}
         on:click={() => {
           showWebPages = !showWebPages;
@@ -112,11 +118,15 @@
         on:click={() => {
           onlyStarred = !onlyStarred;
         }}
-        title="Show only Starred"
+        title={languages.bookmarks.showOnlyStarred[lang]}
         class:selected={onlyStarred}><Fa icon={faStar} /></button
       >
       <div>
-        <input type="text" bind:value={textSearch} placeholder="Search text" />
+        <input
+          type="text"
+          bind:value={textSearch}
+          placeholder={languages.bookmarks.searchText[lang]}
+        />
       </div>
       <!-- <button
         on:click={() => {
@@ -138,7 +148,7 @@
       </button> -->
 
       <button
-        title="Download Bookmarks"
+        title={languages.bookmarks.downloadBookmarks[lang]}
         on:click={() => {
           const jsonString = JSON.stringify($status.historyBrowser);
           const blob = new Blob([jsonString], { type: "application/json" });
@@ -150,15 +160,12 @@
       <div class="loadCustomBookmark">
         <Fa icon={faUpload} class="iconInputFileBookamrk" />
         <input
-          title="Load Custom Bookmark"
+          title={languages.bookmarks.loadCustomBookmarks[lang]}
           type="file"
           accept=".json"
           bind:files={customBookmark}
           class="inputFileBookamrk"
         />
-        <!-- <label title="Load Custom Bookmark" for="input-file-bookamrk"
-          ><Fa icon={faUpload} /></label
-        > -->
       </div>
     </div>
   </div>
