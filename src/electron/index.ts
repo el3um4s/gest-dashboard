@@ -17,10 +17,10 @@ const mainURLPATH = pathToFileURL(path.join(__dirname, "www", "index.html"));
 const preloadjsPATH = pathToFileURL(path.join(__dirname, "www", "index.html"));
 
 globals.set.mainURL(mainURLPATH.href);
-globals.set.preloadjs(preloadjsPATH.href);
+// globals.set.preloadjs(preloadjsPATH.href);
 
 // globals.set.mainURL(path.join(__dirname, "www", "index.html"));
-// globals.set.preloadjs(path.join(__dirname, "preload.js"));
+globals.set.preloadjs(path.join(__dirname, "preload.js"));
 
 require("electron-reload")(__dirname);
 
