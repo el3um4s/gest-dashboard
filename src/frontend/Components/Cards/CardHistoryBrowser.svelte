@@ -1,5 +1,7 @@
 <script lang="ts">
   import { tick } from "svelte";
+  import { marked } from "marked";
+
   import { FolderHandle } from "../../sw/folderHandler";
 
   import type { HistoryBrowser } from "../../Interfaces/StatusInterface";
@@ -169,7 +171,7 @@
       />
     {:else if note.trim() != ""}
       <div>
-        {note}
+        {@html marked(note)}
       </div>
     {/if}
   </div>
