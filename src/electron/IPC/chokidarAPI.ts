@@ -30,12 +30,10 @@ const sendMessage = (
   nameMessage: string,
   message: { path: string; eventName: string; nameWatcher: string }
 ) => {
-  console.log(message.eventName, message.path);
   const [ok, ko] = toTry(() =>
     mainWindow.webContents.send(nameMessage, message)
   );
   if (ko) {
-    console.log("close watcher");
     watcher.close();
   }
 };
@@ -46,7 +44,6 @@ async function watchFolder(
   message: any
 ) {
   const { folderPath, nameWatcher } = message;
-  console.log("chokidarAPI", folderPath);
   const watcher = chokidar.watch(folderPath, {
     ignored: /(^|[\/\\])\../, // ignore dotfiles
     ignoreInitial: true,

@@ -17,10 +17,13 @@
 
   import { idbSettings } from "./IndexedDB/Settings";
 
+  import languages from "./Languages/Languages";
+  let lang: "en" | "it" = "en";
+
   onMount(async () => {
     await SW.register();
 
-    const lang = await idbSettings.getLang("en");
+    lang = await idbSettings.getLang("en");
     await status.lang(lang);
 
     const showIndexHtmlImmediately =
@@ -100,11 +103,11 @@
   globalThis.api.updaterInfo.receive("autoUpdateAvailable", (data) => {
     console.log("autoUpdateAvailable");
     console.log(data);
-    autoUpdateStatus = `A new version is available (${data.releaseName}) `;
+    autoUpdateStatus = `${languages.appSvelte.newVersionAvailable[lang]} (${data.releaseName}) `;
   });
   globalThis.api.updaterInfo.receive("autoUpdateDownloaded", (data) => {
     console.log("autoUpdateDownloaded");
-    autoUpdateStatus = `Version ${data.releaseName} downloaded. Close and restart the app to install it. `;
+    autoUpdateStatus = `${data.releaseName} ${languages.appSvelte.newVersionDownloaded[lang]}`;
   });
 </script>
 

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import Lang from "./Lang.svelte";
+
   let version: string = "-";
 
   let checkingForUpdate: boolean = false;
@@ -73,18 +75,24 @@
 
 <div>
   {#if !checkingForUpdate && !updateAvailable && !downloading && !quitAndInstall && !isInstalling}
-    <button class="button-action" on:click={check}>Check for Update</button>
+    <button class="button-action" on:click={check}
+      ><Lang c="checkForUpdate" v="checkForUpdate" /></button
+    >
   {/if}
   {#if checkingForUpdate}
-    <span class="message"> Checking for update... </span>
+    <span class="message">
+      <Lang c="checkForUpdate" v="checkingForUpdate" />
+    </span>
   {/if}
   {#if updateAvailable}
     <button class="button-action" on:click={startDownloadUpdate}
-      >Updates are available. Click to download.</button
+      ><Lang c="checkForUpdate" v="updatesAvailable" /></button
     >
   {/if}
   {#if updateNotAvailable && !checkingForUpdate}
-    <span class="message"> Update not available </span>
+    <span class="message"
+      ><Lang c="checkForUpdate" v="updateNotAvailable" /></span
+    >
   {/if}
   {#if downloading}
     <span class="message">
@@ -93,11 +101,11 @@
   {/if}
   {#if quitAndInstall}
     <button class="button-action" on:click={install}
-      >The updates are ready. Click to quit and install.</button
+      ><Lang c="checkForUpdate" v="updatesReady" /></button
     >
   {/if}
   {#if isInstalling}
-    <span class="message"> Installing... </span>
+    <span class="message"><Lang c="checkForUpdate" v="installing" /></span>
   {/if}
 </div>
 

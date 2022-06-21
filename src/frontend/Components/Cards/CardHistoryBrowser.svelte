@@ -20,6 +20,9 @@
 
   import LoadingPage from "../Pages/LoadingPage.svelte";
 
+  import languages from "../../Languages/Languages";
+  let lang = $status.lang;
+
   export let item: HistoryBrowser;
   let editing: boolean = false;
 
@@ -81,7 +84,7 @@
 <section class="card">
   <div class="header">
     <button
-      title="Star this page"
+      title={languages.cardHistoryBrowser.starThisPage[lang]}
       on:click={() => {
         status.historyBrowserSetStarred(item, !starred);
       }}
@@ -94,7 +97,7 @@
     </button>
 
     <button
-      title="Open Page ({url})"
+      title="{languages.cardHistoryBrowser.open[lang]} ({url})"
       on:click={async () => {
         console.log(folderHandle);
         if (folderHandle) {
@@ -120,7 +123,7 @@
     {:else}
       <button
         class="link"
-        title="Open Page ({url})"
+        title="{languages.cardHistoryBrowser.open[lang]} ({url})"
         on:click={async () => {
           console.log(folderHandle);
           if (folderHandle) {
@@ -138,7 +141,7 @@
   <div class="note">
     <button
       class="link url-with-icons"
-      title="Open Page ({url})"
+      title="{languages.cardHistoryBrowser.open[lang]} ({url})"
       on:click={async () => {
         console.log(folderHandle);
 
@@ -173,7 +176,7 @@
 
   <div class="actions">
     <button
-      title="Edit Note and Title"
+      title={languages.cardHistoryBrowser.edit[lang]}
       on:click={() => {
         editing = !editing;
       }}
@@ -181,7 +184,7 @@
       <Fa icon={editing ? faCircleCheck : faPen} />
     </button>
     <button
-      title="Delete Page"
+      title={languages.cardHistoryBrowser.delete[lang]}
       on:click={async () => {
         status.historyBrowserDeleteItem(item);
       }}

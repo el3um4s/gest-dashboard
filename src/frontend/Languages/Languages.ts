@@ -173,6 +173,60 @@ const languages = {
       it: "Carica un Nuovo Elenco",
     },
   },
+  cardHistoryBrowser: {
+    starThisPage: {
+      en: "Star this Page",
+      it: "Segnala come Preferito",
+    },
+    open: {
+      en: "Open",
+      it: "Apri",
+    },
+    edit: {
+      en: "Edit Note and Title",
+      it: "Modifica Titolo e Note",
+    },
+    delete: {
+      en: "Delete",
+      it: "Elimina",
+    },
+  },
+  checkForUpdate: {
+    checkForUpdate: {
+      en: "Check for Update",
+      it: "Controlla Aggiornamenti",
+    },
+    checkingForUpdate: {
+      en: "Checking for update...",
+      it: "Controllo degli aggiornamenti in corso...",
+    },
+    updatesAvailable: {
+      en: "Updates are available. Click to download.",
+      it: "Aggiornamenti disponibili. Clicca per scaricarli.",
+    },
+    updateNotAvailable: {
+      en: "Update not available",
+      it: "Nessun aggiornamento disponibile",
+    },
+    updatesReady: {
+      en: "The updates are ready. Click to quit and install.",
+      it: "Download completato. Clicca per completare l'aggiornamento.",
+    },
+    installing: {
+      en: "Installing...",
+      it: "Aggiornamento in corso...",
+    },
+  },
+  appSvelte: {
+    newVersionAvailable: {
+      en: "A new version is available",
+      it: "Nuova versione disponibile",
+    },
+    newVersionDownloaded: {
+      en: " The updates are ready. Close and restart the app to install it. ",
+      it: " Download Completato. Chiudi e riavvia l'app per completare l'aggiornamento.",
+    },
+  },
 };
 
 export default languages;
