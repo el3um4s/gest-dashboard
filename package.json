@@ -97,7 +97,8 @@
         "deb",
         "AppImage",
         "rpm",
-        "tar.xz"
+        "tar.xz",
+        "pacman"
       ],
       "category": "productivity"
     },
