@@ -1,5 +1,6 @@
 <script lang="ts">
   import Lang from "./Lang.svelte";
+  import updaterInfo from "../../Functions/Events/updaterInfo";
 
   let version: string = "-";
 
@@ -12,11 +13,15 @@
 
   let downloadMessage: string = "";
 
-  globalThis.api.updaterInfo.send("requestVersionNumber", null);
-
-  globalThis.api.updaterInfo.receive("getVersionNumber", (data) => {
+  updaterInfo.requestVersionNumber((data) => {
     version = data.version;
   });
+
+  // globalThis.api.updaterInfo.send("requestVersionNumber", null);
+
+  // globalThis.api.updaterInfo.receive("getVersionNumber", (data) => {
+  //   version = data.version;
+  // });
 
   function check() {
     checkingForUpdate = true;
