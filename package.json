@@ -57,7 +57,7 @@
   "dependencies": {
     "@el3um4s/match": "^0.0.5",
     "@el3um4s/node-adodb": "^5.0.17",
-    "@el3um4s/svelte-titlebar": "^0.0.13",
+    "@el3um4s/svelte-titlebar": "^0.1.0",
     "@el3um4s/to-try": "^0.0.8",
     "@fortawesome/free-regular-svg-icons": "^6.1.2",
     "@fortawesome/free-solid-svg-icons": "^6.1.2",
