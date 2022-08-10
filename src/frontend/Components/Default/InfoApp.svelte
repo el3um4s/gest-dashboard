@@ -1,7 +1,7 @@
 <script lang="ts">
   import Lang from "./Lang.svelte";
   import systemInfo from "../../Functions/Events/systemInfo";
-  import updaterInfo from "../../Functions/Events/updaterInfo";
+  // import updaterInfo from "../../Functions/Events/updaterInfo";
 
   let app: string = "-";
 
@@ -21,12 +21,13 @@
     chrome = data.chrome;
     node = data.node;
     electron = data.electron;
+    app = data.app;
   });
 
   // systemInfo.requestSystemInfo();
-  updaterInfo.requestVersionNumber((data) => {
-    app = data.version;
-  });
+  // updaterInfo.requestVersionNumber((data) => {
+  //   app = data.version;
+  // });
 
   // systemInfo.on.getSystemInfo().then((data) => {
   //   chrome = data.chrome;

@@ -2,6 +2,7 @@ interface SystemInfo {
   chrome: string;
   node: string;
   electron: string;
+  app: string;
 }
 
 const getSystemInfo = async (
@@ -9,11 +10,11 @@ const getSystemInfo = async (
 ): Promise<SystemInfo> => {
   return new Promise((resolve, reject) => {
     globalThis.api.systemInfo.receive("getSystemInfo", async (data) => {
-      const { chrome, node, electron } = await data;
+      const { chrome, node, electron, app } = await data;
       if (callback) {
-        callback({ chrome, node, electron });
+        callback({ chrome, node, electron, app });
       }
-      resolve({ chrome, node, electron });
+      resolve({ chrome, node, electron, app });
     });
   });
 };
