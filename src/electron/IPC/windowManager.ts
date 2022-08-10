@@ -1,7 +1,5 @@
+import { IPC, SendChannels } from "@el3um4s/ipc-for-electron";
 import { BrowserWindow, BrowserView, ipcMain } from "electron";
-
-import { SendChannels } from "./General/channelsInterface";
-import IPC from "./General/IPC";
 
 import CustomWindow from "../customWindow";
 

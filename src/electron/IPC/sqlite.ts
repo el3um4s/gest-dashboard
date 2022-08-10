@@ -1,5 +1,4 @@
-import { SendChannels } from "./General/channelsInterface";
-import IPC from "./General/IPC";
+import { IPC, SendChannels } from "@el3um4s/ipc-for-electron";
 import { BrowserWindow, dialog, OpenDialogSyncOptions } from "electron";
 
 import path from "path";
