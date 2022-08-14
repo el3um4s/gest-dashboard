@@ -202,6 +202,7 @@ async function addNewBrowserView(win: BrowserWindow, link: string) {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      sandbox: false,
       preload: urlPreload,
     },
   });
