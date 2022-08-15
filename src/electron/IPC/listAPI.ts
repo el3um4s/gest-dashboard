@@ -1,7 +1,7 @@
 import windowManager from "./windowManager";
 import windowControls from "./windowControls";
 
-import { systemInfo } from "@el3um4s/ipc-for-electron-system-info";
+import systemInfo from "@el3um4s/ipc-for-electron-system-info";
 
 import updaterInfo from "./updaterInfo";
 import nodeAdodb from "./nodeAdodb";
