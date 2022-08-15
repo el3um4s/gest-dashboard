@@ -12,6 +12,8 @@ import copy from 'rollup-plugin-copy';
 import postcss from 'rollup-plugin-postcss';
 import json from "@rollup/plugin-json";
 
+import nodePolyfills from 'rollup-plugin-polyfill-node';
+
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -45,6 +47,7 @@ export default {
 		file: 'dist/www/build/bundle.js' // check!
 	},
 	plugins: [
+
 		svelte({
 			preprocess: sveltePreprocess({
 				sourceMap: !production
@@ -64,6 +67,7 @@ export default {
 		css({
 			output: 'bundle.css'
 		}),
+		nodePolyfills(),
 
 		// https://www.npmjs.com/package/rollup-plugin-copy
 		copy({
