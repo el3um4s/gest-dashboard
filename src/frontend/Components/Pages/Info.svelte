@@ -3,7 +3,7 @@
   import InfoApp from "../Default/InfoApp.svelte";
   import CheckForUpdate from "../Default/CheckForUpdate.svelte";
 
-  import { renderer as systemInfo } from "@el3um4s/ipc-for-electron-system-info";
+  import systemInfo from "@el3um4s/renderer-for-electron-system-info";
   let isWindows = false;
 
   systemInfo.requestIsWindows({

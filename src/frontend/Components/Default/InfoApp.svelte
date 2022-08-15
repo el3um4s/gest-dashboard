@@ -1,6 +1,6 @@
 <script lang="ts">
   import Lang from "./Lang.svelte";
-  import { renderer as systemInfo } from "@el3um4s/ipc-for-electron-system-info";
+  import systemInfo from "@el3um4s/renderer-for-electron-system-info";
 
   let app: string = "-";
   let chrome: string = "-";
