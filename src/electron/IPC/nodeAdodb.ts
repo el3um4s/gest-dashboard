@@ -1,5 +1,4 @@
-import { SendChannels } from "./General/channelsInterface";
-import IPC from "./General/IPC";
+import { IPC, SendChannels } from "@el3um4s/ipc-for-electron";
 import { BrowserWindow } from "electron";
 
 // ragiona come con l'updater (e guarda access-c3)

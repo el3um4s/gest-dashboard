@@ -3,12 +3,14 @@
   import InfoApp from "../Default/InfoApp.svelte";
   import CheckForUpdate from "../Default/CheckForUpdate.svelte";
 
+  import { renderer as systemInfo } from "@el3um4s/ipc-for-electron-system-info";
   let isWindows = false;
 
-  globalThis.api.systemInfo.send("requestIsWindows", null);
-
-  globalThis.api.systemInfo.receive("getIsWindows", (data) => {
-    isWindows = data.isWindows;
+  systemInfo.requestIsWindows({
+    apiKey: "api",
+    callback: (data) => {
+      isWindows = data.isWindows;
+    },
   });
 </script>
 

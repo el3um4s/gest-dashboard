@@ -1,23 +1,20 @@
 <script lang="ts">
   import Lang from "./Lang.svelte";
+  import { renderer as systemInfo } from "@el3um4s/ipc-for-electron-system-info";
 
   let app: string = "-";
-
   let chrome: string = "-";
   let node: string = "-";
   let electron: string = "-";
 
-  globalThis.api.systemInfo.send("requestSystemInfo", null);
-  globalThis.api.systemInfo.receive("getSystemInfo", (data) => {
-    chrome = data.chrome;
-    node = data.node;
-    electron = data.electron;
-  });
-
-  globalThis.api.updaterInfo.send("requestVersionNumber", null);
-
-  globalThis.api.updaterInfo.receive("getVersionNumber", (data) => {
-    app = data.version;
+  systemInfo.requestSystemInfo({
+    apiKey: "api",
+    callback: (data) => {
+      chrome = data.chrome;
+      node = data.node;
+      electron = data.electron;
+      app = data.app;
+    },
   });
 </script>
 

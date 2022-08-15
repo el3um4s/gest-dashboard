@@ -1,7 +1,6 @@
+import { IPC, SendChannels } from "@el3um4s/ipc-for-electron";
 import { BrowserWindow, app } from "electron";
 import { AppUpdater, autoUpdater } from "electron-updater";
-import { SendChannels } from "./General/channelsInterface";
-import IPC from "./General/IPC";
 
 const nameAPI = "updaterInfo";
 

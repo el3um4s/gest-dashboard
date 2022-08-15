@@ -7,7 +7,7 @@ import {
 } from "electron";
 import path from "path";
 import EventEmitter from "events";
-import IPC from "./IPC/General/IPC";
+import { IPC } from "@el3um4s/ipc-for-electron";
 
 import * as globals from "./globals";
 
