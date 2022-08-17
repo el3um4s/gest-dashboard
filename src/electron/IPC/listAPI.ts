@@ -1,8 +1,7 @@
-import windowManager from "./windowManager";
-import windowControls from "./windowControls";
-
+import windowControls from "@el3um4s/ipc-for-electron-window-controls";
 import systemInfo from "@el3um4s/ipc-for-electron-system-info";
 
+import windowManager from "./windowManager";
 import updaterInfo from "./updaterInfo";
 import nodeAdodb from "./nodeAdodb";
 import chokidarAPI from "./chokidarAPI";

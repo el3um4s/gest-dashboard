@@ -1,5 +1,7 @@
 <script lang="ts">
   import { TitleBar } from "@el3um4s/svelte-titlebar";
+  import windowControls from "@el3um4s/renderer-for-electron-window-controls";
+
   export let title: string = "GEST DASHBOARD";
 
   let outerW = globalThis.outerWidth - 8;
@@ -14,19 +16,6 @@
       null
     );
   }
-
-  function minimize() {
-    globalThis.api.windowControls.send("minimize", null);
-  }
-  function maximize() {
-    globalThis.api.windowControls.send("maximize", null);
-  }
-  function close() {
-    globalThis.api.windowControls.send("close", null);
-  }
-  function unmaximize() {
-    globalThis.api.windowControls.send("unmaximize", null);
-  }
 </script>
 
 <svelte:window bind:outerWidth={outerW} />
@@ -36,10 +25,10 @@
     <TitleBar
       {title}
       {isMaximized}
-      on:clickMinimize={minimize}
-      on:clickUnmaximize={unmaximize}
-      on:clickMaximize={maximize}
-      on:clickClose={close}
+      on:clickMinimize={() => windowControls.minimize({ apiKey: "api" })}
+      on:clickUnmaximize={() => windowControls.unmaximize({ apiKey: "api" })}
+      on:clickMaximize={() => windowControls.maximize({ apiKey: "api" })}
+      on:clickClose={() => windowControls.close({ apiKey: "api" })}
     />
   </div>
   <div class="main">
