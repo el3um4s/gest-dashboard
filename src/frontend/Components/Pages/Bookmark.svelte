@@ -82,14 +82,6 @@
       status.historyBrowserReplaceList(newList);
     }
   };
-
-  // import { testSQLite, loadHistoryBrowser } from "../../Functions/sqlite";
-
-  // globalThis.api.sqlite.receive("loadHistoryBrowser", (data) => {
-  //   console.log(data);
-  //   let customBookmark = data;
-  //   status.historyBrowserReplaceList(customBookmark);
-  // });
 </script>
 
 <section transition:slide>
