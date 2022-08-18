@@ -55,13 +55,13 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "@el3um4s/ipc-for-electron": "^1.0.2",
-    "@el3um4s/ipc-for-electron-chokidar": "^0.0.2",
-    "@el3um4s/ipc-for-electron-system-info": "^2.0.1",
-    "@el3um4s/ipc-for-electron-window-controls": "^1.0.1",
+    "@el3um4s/ipc-for-electron": "^1.0.4",
+    "@el3um4s/ipc-for-electron-chokidar": "^1.0.0",
+    "@el3um4s/ipc-for-electron-system-info": "^2.0.2",
+    "@el3um4s/ipc-for-electron-window-controls": "^1.0.2",
     "@el3um4s/match": "^0.0.5",
     "@el3um4s/node-adodb": "^5.0.17",
-    "@el3um4s/renderer-for-electron-chokidar": "^0.0.2",
+    "@el3um4s/renderer-for-electron-chokidar": "^1.0.0",
     "@el3um4s/renderer-for-electron-system-info": "^2.0.0",
     "@el3um4s/renderer-for-electron-window-controls": "^1.0.0",
     "@el3um4s/svelte-titlebar": "^0.1.0",
