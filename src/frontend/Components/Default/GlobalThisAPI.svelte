@@ -1,4 +1,6 @@
 <script lang="ts">
+  import chokidar from "@el3um4s/renderer-for-electron-chokidar";
+
   import { status } from "../../Stores/Status";
   import {
     show,
@@ -28,13 +30,16 @@
     }
   });
 
-  globalThis.api.chokidarAPI.receive("folderChanged", async (data) => {
-    const { path, eventName, nameWatcher } = data;
-    console.log(path, eventName, nameWatcher);
-    const reloadWhenFolderChange = $status.reloadWhenFolderChange;
+  chokidar.on.folderChanged({
+    apiKey: "api",
+    callback: (data) => {
+      const { path, eventName, nameWatcher } = data;
+      console.log(path, eventName, nameWatcher);
+      const reloadWhenFolderChange = $status.reloadWhenFolderChange;
 
-    match(reloadWhenFolderChange)
-      .on("current page", () => reloadCurrentPageBrowserView())
-      .on("local folder", () => reloadFolder());
+      match(reloadWhenFolderChange)
+        .on("current page", () => reloadCurrentPageBrowserView())
+        .on("local folder", () => reloadFolder());
+    },
   });
 </script>

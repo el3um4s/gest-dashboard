@@ -1,4 +1,6 @@
 <script lang="ts">
+  import chokidar from "@el3um4s/renderer-for-electron-chokidar";
+
   import { tick } from "svelte";
 
   import { FolderHandle } from "../../sw/folderHandler";
@@ -49,9 +51,10 @@
         const folderHandle = await FolderHandle.reInit(entry, hostName);
         status.folderHandle(folderHandle);
 
-        await globalThis.api.chokidarAPI.send("watchFolder", {
-          nameWatcher: "gestDashboard",
+        chokidar.watchFolder({
           folderPath: url,
+          nameWatcher: "gestDashboard",
+          apiKey: "api",
         });
 
         status.historyBrowserAddNew({
