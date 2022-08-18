@@ -2,6 +2,7 @@ import { IPC, SendChannels } from "@el3um4s/ipc-for-electron";
 import { BrowserWindow, BrowserView, ipcMain } from "electron";
 
 import CustomWindow from "../customWindow";
+import ElectronWindow from "../electronWindow";
 
 import listAPI from "./listAPI";
 
@@ -195,6 +196,9 @@ async function printBrowserView(
 }
 
 async function addNewBrowserView(win: BrowserWindow, link: string) {
+  console.log("addNewBrowserView");
+  console.log(win);
+  console.log("addNewBrowserView");
   const [width, height] = win.getSize();
   const urlPreload = globals.get.preloadjs();
 
