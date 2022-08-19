@@ -180,16 +180,6 @@ class ElectronWindow {
   async addAutoUpdater() {
     updaterInfo.initAutoUpdater(autoUpdater, this.window);
     autoUpdater.checkForUpdates();
-
-    autoUpdater.on("update-available", (info) => {
-      console.log("autoupdater-update-available");
-      this.window.webContents.send("autoUpdateAvailable", info);
-    });
-
-    autoUpdater.on("update-downloaded", (info) => {
-      console.log("autoupdater-update-available");
-      this.window.webContents.send("autoUpdateDownloaded", info);
-    });
   }
 }
 
