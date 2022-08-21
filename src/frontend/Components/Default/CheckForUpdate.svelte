@@ -1,6 +1,6 @@
 <script lang="ts">
   import Lang from "./Lang.svelte";
-  import updaterInfo from "../../Functions/Events/updaterInfo";
+  import autoUpdater from "@el3um4s/renderer-for-electron-auto-updater";
 
   let version: string = "-";
 
@@ -13,8 +13,15 @@
 
   let downloadMessage: string = "";
 
-  updaterInfo.requestVersionNumber((data) => {
-    version = data.version;
+  // updaterInfo.requestVersionNumber((data) => {
+  //   version = data.version;
+  // });
+
+  autoUpdater.requestVersionNumber({
+    apiKey: "api",
+    callback: (data) => {
+      version = data.version;
+    },
   });
 
   // globalThis.api.updaterInfo.send("requestVersionNumber", null);
@@ -25,54 +32,111 @@
 
   function check() {
     checkingForUpdate = true;
-    globalThis.api.updaterInfo.send("checkForUpdate", { version });
+    // globalThis.api.updaterInfo.send("checkForUpdate", { version });
+    autoUpdater.checkForUpdates({
+      apiKey: "api",
+    });
   }
 
-  globalThis.api.updaterInfo.receive("checkingForUpdate", (data) => {
-    checkingForUpdate = true;
+  autoUpdater.on.checkingForUpdate({
+    apiKey: "api",
+    callback: () => {
+      checkingForUpdate = true;
+    },
+  });
+  // globalThis.api.updaterInfo.receive("checkingForUpdate", (data) => {
+  //   checkingForUpdate = true;
+  // });
+
+  autoUpdater.on.updateAvailable({
+    apiKey: "api",
+    callback: (data) => {
+      checkingForUpdate = false;
+      updateAvailable = true;
+    },
   });
 
-  globalThis.api.updaterInfo.receive("updateAvailable", (data) => {
-    checkingForUpdate = false;
-    updateAvailable = true;
+  // globalThis.api.updaterInfo.receive("updateAvailable", (data) => {
+  //   checkingForUpdate = false;
+  //   updateAvailable = true;
+  // });
+
+  autoUpdater.on.updateNotAvailable({
+    apiKey: "api",
+    callback: (data) => {
+      checkingForUpdate = false;
+      updateAvailable = false;
+      updateNotAvailable = true;
+    },
   });
 
-  globalThis.api.updaterInfo.receive("updateNotAvailable", (data) => {
-    checkingForUpdate = false;
-    updateAvailable = false;
-    updateNotAvailable = true;
-  });
+  // globalThis.api.updaterInfo.receive("updateNotAvailable", (data) => {
+  //   checkingForUpdate = false;
+  //   updateAvailable = false;
+  //   updateNotAvailable = true;
+  // });
 
   function startDownloadUpdate() {
-    globalThis.api.updaterInfo.send("startDownloadUpdate", null);
+    autoUpdater.startDownloadUpdate({
+      apiKey: "api",
+    });
+    // globalThis.api.updaterInfo.send("startDownloadUpdate", null);
     updateAvailable = false;
     downloading = true;
   }
 
-  globalThis.api.updaterInfo.receive("downloadProgress", (data) => {
-    downloading = true;
-    updateAvailable = false;
-    let log_message = "Download speed: " + data.bytesPerSecond;
-    log_message =
-      log_message + " - Downloaded " + data.percent.toFixed(2) + "%";
-    log_message =
-      log_message +
-      " (" +
-      data.transferred.toFixed(2) +
-      "/" +
-      data.total.toFixed(2) +
-      ")";
-    downloadMessage = log_message;
+  autoUpdater.on.downloadProgress({
+    apiKey: "api",
+    callback: (data) => {
+      downloading = true;
+      updateAvailable = false;
+
+      const bytesPerSecond = data.bytesPerSecond;
+      const percent = data.percent.toFixed(2);
+      const transferred = data.transferred.toFixed(2);
+      const total = data.total.toFixed(2);
+      const log_message = `Download: ${bytesPerSecond} bytes/sec, ${percent}% (${transferred}/${total})`;
+
+      downloadMessage = log_message;
+    },
   });
 
-  globalThis.api.updaterInfo.receive("updateDownloaded", (data) => {
-    downloading = false;
-    updateAvailable = false;
-    quitAndInstall = true;
+  // globalThis.api.updaterInfo.receive("downloadProgress", (data) => {
+  //   downloading = true;
+  //   updateAvailable = false;
+  //   let log_message = "Download speed: " + data.bytesPerSecond;
+  //   log_message =
+  //     log_message + " - Downloaded " + data.percent.toFixed(2) + "%";
+  //   log_message =
+  //     log_message +
+  //     " (" +
+  //     data.transferred.toFixed(2) +
+  //     "/" +
+  //     data.total.toFixed(2) +
+  //     ")";
+  //   downloadMessage = log_message;
+  // });
+
+  autoUpdater.on.updateDownloaded({
+    apiKey: "api",
+    callback: (data) => {
+      downloading = false;
+      updateAvailable = false;
+      quitAndInstall = true;
+    },
   });
+
+  // globalThis.api.updaterInfo.receive("updateDownloaded", (data) => {
+  //   downloading = false;
+  //   updateAvailable = false;
+  //   quitAndInstall = true;
+  // });
 
   function install() {
-    globalThis.api.updaterInfo.send("quitAndInstall", null);
+    // globalThis.api.updaterInfo.send("quitAndInstall", null);
+    autoUpdater.quitAndInstall({
+      apiKey: "api",
+    });
     quitAndInstall = false;
     isInstalling = true;
   }

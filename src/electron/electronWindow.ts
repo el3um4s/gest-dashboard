@@ -6,12 +6,14 @@ import {
   nativeTheme,
 } from "electron";
 
-import { autoUpdater } from "electron-updater";
-import updaterInfo from "./IPC/updaterInfo";
-
 import path from "path";
 import EventEmitter from "events";
+
+// import { autoUpdater } from "electron-updater";
+import autoUpdater from "@el3um4s/ipc-for-electron-auto-updater";
 import { IPC } from "@el3um4s/ipc-for-electron";
+
+// import updaterInfo from "./IPC/updaterInfo";
 
 interface CreateWindow {
   url: string;
@@ -178,7 +180,8 @@ class ElectronWindow {
   }
 
   async addAutoUpdater() {
-    updaterInfo.initAutoUpdater(autoUpdater, this.window);
+    autoUpdater.initAutoUpdater(this.window);
+    // updaterInfo.initAutoUpdater(autoUpdater, this.window);
     autoUpdater.checkForUpdates();
   }
 }
