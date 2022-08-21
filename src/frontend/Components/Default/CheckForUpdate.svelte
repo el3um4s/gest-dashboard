@@ -2,7 +2,7 @@
   import Lang from "./Lang.svelte";
   import autoUpdater from "@el3um4s/renderer-for-electron-auto-updater";
 
-  let version: string = "-";
+  // let version: string = "-";
 
   let checkingForUpdate: boolean = false;
   let updateAvailable: boolean = false;
@@ -17,12 +17,12 @@
   //   version = data.version;
   // });
 
-  autoUpdater.requestVersionNumber({
-    apiKey: "api",
-    callback: (data) => {
-      version = data.version;
-    },
-  });
+  // autoUpdater.requestVersionNumber({
+  //   apiKey: "api",
+  //   callback: (data) => {
+  //     version = data.version;
+  //   },
+  // });
 
   // globalThis.api.updaterInfo.send("requestVersionNumber", null);
 

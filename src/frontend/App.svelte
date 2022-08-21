@@ -1,5 +1,6 @@
 <script lang="ts">
   import "./css/tailwind.pcss";
+  import autoUpdater from "@el3um4s/renderer-for-electron-auto-updater";
 
   import { onMount } from "svelte";
   import { tick } from "svelte";
@@ -100,14 +101,31 @@
 
   // AUTO UPDATER
 
-  globalThis.api.updaterInfo.receive("autoUpdateAvailable", (data) => {
-    console.log("autoUpdateAvailable");
-    console.log(data);
-    autoUpdateStatus = `${languages.appSvelte.newVersionAvailable[lang]} (${data.releaseName}) `;
+  // globalThis.api.updaterInfo.receive("autoUpdateAvailable", (data) => {
+  //   console.log("autoUpdateAvailable");
+  //   console.log(data);
+  //   autoUpdateStatus = `${languages.appSvelte.newVersionAvailable[lang]} (${data.releaseName}) `;
+  // });
+  // globalThis.api.updaterInfo.receive("autoUpdateDownloaded", (data) => {
+  //   console.log("autoUpdateDownloaded");
+  //   autoUpdateStatus = `${data.releaseName} ${languages.appSvelte.newVersionDownloaded[lang]}`;
+  // });
+
+  autoUpdater.on.updateAvailable({
+    apiKey: "api",
+    callback: (data) => {
+      console.log("autoUpdateAvailable");
+      console.log(data);
+      autoUpdateStatus = `${languages.appSvelte.newVersionAvailable[lang]} (${data.releaseName}) `;
+    },
   });
-  globalThis.api.updaterInfo.receive("autoUpdateDownloaded", (data) => {
-    console.log("autoUpdateDownloaded");
-    autoUpdateStatus = `${data.releaseName} ${languages.appSvelte.newVersionDownloaded[lang]}`;
+
+  autoUpdater.on.updateDownloaded({
+    apiKey: "api",
+    callback: (data) => {
+      console.log("autoUpdateDownloaded");
+      autoUpdateStatus = `${data.releaseName} ${languages.appSvelte.newVersionDownloaded[lang]}`;
+    },
   });
 </script>
 
