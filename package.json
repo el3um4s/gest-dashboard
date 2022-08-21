@@ -20,7 +20,8 @@
     "publish:win": "rollup -c && tsc && electron-builder build --win --publish always",
     "check-updates": "npx npm-check-updates",
     "check-updates:minor": "npx npm-check-updates --target minor",
-    "check-updates:patch": "npx npm-check-updates --target patch"
+    "check-updates:patch": "npx npm-check-updates --target patch",
+    "postinstall": "electron-builder install-app-deps"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.2",
