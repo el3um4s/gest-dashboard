@@ -1,7 +1,7 @@
 import { IPC, SendChannels } from "@el3um4s/ipc-for-electron";
 import { BrowserWindow, BrowserView, ipcMain } from "electron";
 
-import CustomWindow from "../customWindow";
+import createWindow from "../createWindow";
 import ElectronWindow from "../electronWindow";
 
 import listAPI from "./listAPI";
@@ -56,19 +56,29 @@ async function openInBrowserView(
 }
 
 async function createMainWindow() {
-  let customWindow: CustomWindow;
-  const settings = {
-    title: "-",
-    x: Math.floor(Math.random() * 64),
-    y: Math.floor(Math.random() * 64),
-  };
+  let electronWindow: ElectronWindow;
+  // const settings = {
+  //   title: "-",
+  //   x: Math.floor(Math.random() * 64),
+  //   y: Math.floor(Math.random() * 64),
+  // };
 
-  const urlPage = globals.get.mainUrl();
-  customWindow = new CustomWindow(settings);
-  customWindow.createWindow(urlPage);
+  const url = globals.get.mainUrl();
+  const preload = globals.get.preloadjs();
+  // electronWindow = new ElectronWindow(settings);
+  // electronWindow.createWindow({ url });
 
-  await customWindow.setIpcMain(listAPI);
-  return customWindow;
+  // await electronWindow.setIpcMain(listAPI);
+  electronWindow = await createWindow({
+    url,
+    preload,
+    themeSource: "light",
+    settings: {
+      x: Math.floor(Math.random() * 64),
+      y: Math.floor(Math.random() * 64),
+    },
+  });
+  return electronWindow;
 }
 
 async function showBrowserView(
