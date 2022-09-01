@@ -2,7 +2,8 @@ import { IPC, SendChannels } from "@el3um4s/ipc-for-electron";
 import { BrowserWindow, BrowserView, ipcMain } from "electron";
 
 import createWindow from "../createWindow";
-import ElectronWindow from "../electronWindow";
+// import ElectronWindow from "../electronWindow";
+import ElectronWindow from "@el3um4s/electron-window";
 
 import listAPI from "./listAPI";
 

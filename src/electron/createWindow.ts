@@ -1,4 +1,5 @@
-import ElectronWindow from "./electronWindow";
+// import ElectronWindow from "./electronWindow";
+import ElectronWindow from "@el3um4s/electron-window";
 
 import listAPI from "./IPC/listAPI";
 
