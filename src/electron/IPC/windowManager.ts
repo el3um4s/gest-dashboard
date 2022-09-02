@@ -5,7 +5,7 @@ import createWindow from "../createWindow";
 // import ElectronWindow from "../electronWindow";
 import ElectronWindow from "@el3um4s/electron-window";
 
-import listAPI from "./listAPI";
+// import listAPI from "./listAPI";
 
 import * as globals from "../globals";
 
@@ -48,6 +48,7 @@ async function openInNewWindow(
   await createMainWindow();
 }
 
+// move to custom IPC - RENDERER
 async function openInBrowserView(
   customWindow: BrowserWindow,
   event: Electron.IpcMainEvent,
@@ -58,18 +59,10 @@ async function openInBrowserView(
 
 async function createMainWindow() {
   let electronWindow: ElectronWindow;
-  // const settings = {
-  //   title: "-",
-  //   x: Math.floor(Math.random() * 64),
-  //   y: Math.floor(Math.random() * 64),
-  // };
 
   const url = globals.get.mainUrl();
   const preload = globals.get.preloadjs();
-  // electronWindow = new ElectronWindow(settings);
-  // electronWindow.createWindow({ url });
 
-  // await electronWindow.setIpcMain(listAPI);
   electronWindow = await createWindow({
     url,
     preload,
@@ -82,6 +75,7 @@ async function createMainWindow() {
   return electronWindow;
 }
 
+// refractor to use in the renderer
 async function showBrowserView(
   customWindow: BrowserWindow,
   event: Electron.IpcMainEvent,
@@ -118,6 +112,7 @@ async function showBrowserView(
   }
 }
 
+// refractor to use in the renderer
 async function resizeBrowserViewToMaximized(
   customWindow: BrowserWindow,
   event: Electron.IpcMainEvent,
@@ -137,6 +132,7 @@ async function resizeBrowserViewToMaximized(
   }
 }
 
+// refractor to use in the renderer
 async function resizeBrowserViewToUnMaximized(
   customWindow: BrowserWindow,
   event: Electron.IpcMainEvent,
@@ -156,6 +152,7 @@ async function resizeBrowserViewToUnMaximized(
   }
 }
 
+// move to custom IPC - RENDERER
 async function removeBrowserView(
   customWindow: BrowserWindow,
   event: Electron.IpcMainEvent,
@@ -167,6 +164,7 @@ async function removeBrowserView(
   }
 }
 
+// move to custom IPC - RENDERER
 async function openDevTools(
   customWindow: BrowserWindow,
   event: Electron.IpcMainEvent,
@@ -175,6 +173,7 @@ async function openDevTools(
   customWindow.webContents.openDevTools();
 }
 
+// move to custom IPC - RENDERER
 async function openBrowserViewDevTools(
   customWindow: BrowserWindow,
   event: Electron.IpcMainEvent,
@@ -186,15 +185,18 @@ async function openBrowserViewDevTools(
   }
 }
 
+// move to custom IPC - RENDERER
 async function setBrowserView(win: BrowserWindow, link: string) {
   const browserView = win.getBrowserView();
   if (browserView) {
     browserView.webContents.loadURL(link);
-  } else {
-    addNewBrowserView(win, link);
   }
+  // else {
+  //   addNewBrowserView(win, link);
+  // }
 }
 
+// move to custom IPC - RENDERER
 async function printBrowserView(
   customWindow: BrowserWindow,
   event: Electron.IpcMainEvent,
@@ -206,44 +208,45 @@ async function printBrowserView(
   }
 }
 
-async function addNewBrowserView(win: BrowserWindow, link: string) {
-  console.log("addNewBrowserView");
-  console.log(win);
-  console.log("addNewBrowserView");
-  const [width, height] = win.getSize();
-  const urlPreload = globals.get.preloadjs();
+// async function addNewBrowserView(win: BrowserWindow, link: string) {
+//   console.log("addNewBrowserView");
+//   console.log(win);
+//   console.log("addNewBrowserView");
+//   const [width, height] = win.getSize();
+//   const urlPreload = globals.get.preloadjs();
 
-  let browserView = new BrowserView({
-    webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      sandbox: false,
-      preload: urlPreload,
-    },
-  });
+//   let browserView = new BrowserView({
+//     webPreferences: {
+//       nodeIntegration: false,
+//       contextIsolation: true,
+//       sandbox: false,
+//       preload: urlPreload,
+//     },
+//   });
 
-  win.setBrowserView(browserView);
-  browserView.setBounds({
-    x: 65, // 1
-    y: 33, // 32
-    width: width - 66, // -2
-    height: height - 58, // -33
-  });
-  browserView.setAutoResize({
-    width: true,
-    height: true,
-  });
-  if (link) {
-    browserView.webContents.loadURL(link);
-  }
+//   win.setBrowserView(browserView);
+//   browserView.setBounds({
+//     x: 65, // 1
+//     y: 33, // 32
+//     width: width - 66, // -2
+//     height: height - 58, // -33
+//   });
+//   browserView.setAutoResize({
+//     width: true,
+//     height: true,
+//   });
+//   if (link) {
+//     browserView.webContents.loadURL(link);
+//   }
 
-  setIpcMainView(browserView, listAPI);
-}
+//   setIpcMainView(browserView, listAPI);
+// }
 
-async function setIpcMainView(browserView: BrowserView, api: Array<IPC>) {
-  api.forEach(async (el) => el.initIpcMain(ipcMain, browserView));
-}
+// async function setIpcMainView(browserView: BrowserView, api: Array<IPC>) {
+//   api.forEach(async (el) => el.initIpcMain(ipcMain, browserView));
+// }
 
+// move to custom IPC - RENDERER
 async function goBackBrowserView(
   customWindow: BrowserWindow,
   event: Electron.IpcMainEvent,
@@ -255,6 +258,7 @@ async function goBackBrowserView(
   }
 }
 
+// move to custom IPC - RENDERER
 async function goForwardBrowserView(
   customWindow: BrowserWindow,
   event: Electron.IpcMainEvent,
@@ -266,6 +270,7 @@ async function goForwardBrowserView(
   }
 }
 
+// move to custom IPC - RENDERER
 async function reloadCurrentPageBrowserView(
   customWindow: BrowserWindow,
   event: Electron.IpcMainEvent,

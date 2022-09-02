@@ -1,5 +1,5 @@
-// import ElectronWindow from "./electronWindow";
 import ElectronWindow from "@el3um4s/electron-window";
+import path from "path";
 
 import listAPI from "./IPC/listAPI";
 
@@ -19,7 +19,12 @@ const createWindow = async (options: {
   };
   window = new ElectronWindow(settings);
 
-  window.createWindow({ url, themeSource, preload });
+  window.createWindow({
+    url,
+    themeSource,
+    preload,
+    iconPath: path.join(__dirname, "icon.png"),
+  });
 
   await window.setIpcMain(listAPI);
 
