@@ -40,23 +40,6 @@ export default windowManager;
 
 // Enter here the functions for ElectronJS
 
-async function openInNewWindow(
-  customWindow: BrowserWindow,
-  event: Electron.IpcMainEvent,
-  message: any
-) {
-  await createMainWindow();
-}
-
-// move to custom IPC - RENDERER
-async function openInBrowserView(
-  customWindow: BrowserWindow,
-  event: Electron.IpcMainEvent,
-  message: any
-) {
-  setBrowserView(customWindow, message.src);
-}
-
 async function createMainWindow() {
   let electronWindow: ElectronWindow;
 
@@ -73,6 +56,32 @@ async function createMainWindow() {
     },
   });
   return electronWindow;
+}
+
+async function openInNewWindow(
+  customWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  message: any
+) {
+  await createMainWindow();
+}
+
+// move to custom IPC - RENDERER
+async function openDevTools(
+  customWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  message: any
+) {
+  customWindow.webContents.openDevTools();
+}
+
+// move to custom IPC - RENDERER
+async function openInBrowserView(
+  customWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  message: any
+) {
+  setBrowserView(customWindow, message.src);
 }
 
 // refractor to use in the renderer
@@ -162,15 +171,6 @@ async function removeBrowserView(
   if (browserView) {
     customWindow.removeBrowserView(browserView);
   }
-}
-
-// move to custom IPC - RENDERER
-async function openDevTools(
-  customWindow: BrowserWindow,
-  event: Electron.IpcMainEvent,
-  message: any
-) {
-  customWindow.webContents.openDevTools();
 }
 
 // move to custom IPC - RENDERER
