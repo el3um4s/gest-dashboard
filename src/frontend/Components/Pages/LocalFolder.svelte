@@ -16,14 +16,26 @@
 
   let src = $status.urlBrowser;
 
+  const bounds = {
+    paddingLeft: 65,
+    paddingTop: 33,
+    paddingRight: 131,
+    paddingBottom: 58,
+    show: true,
+  };
+
   const openWebPage = async (url: string) => {
     status.componentVisible(LoadingPage);
-    await globalThis.api.windowManager.send("openInBrowserView", {
+    // await globalThis.api.windowManager.send("openInBrowserView", {
+    //   src,
+    // });
+    await globalThis.api.browserView.send("openInBrowserView", {
       src,
     });
-    await globalThis.api.windowManager.send("showBrowserView", {
-      show: true,
-    });
+    // await globalThis.api.windowManager.send("showBrowserView", {
+    //   show: true,
+    // });
+    await globalThis.api.browserView.send("showBrowserView", bounds);
     await status.urlBrowser(url);
     status.browserStarted(true);
     status.historyBrowserAddNew({
@@ -44,9 +56,10 @@
         status.folderHandle(null);
         await tick();
         status.componentVisible(LoadingPage);
-        await globalThis.api.windowManager.send("showBrowserView", {
-          show: true,
-        });
+        // await globalThis.api.windowManager.send("showBrowserView", {
+        //   show: true,
+        // });
+        await globalThis.api.browserView.send("showBrowserView", bounds);
         const hostName = $status.sw.hostName;
         const folderHandle = await FolderHandle.reInit(entry, hostName);
         status.folderHandle(folderHandle);

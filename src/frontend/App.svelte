@@ -85,7 +85,8 @@
     const link = $status.sw.swScope
       ? `${$status.sw.swScope}${$status.sw.hostName}/`
       : null;
-    globalThis.api.windowManager.send("openInBrowserView", { src });
+    // globalThis.api.windowManager.send("openInBrowserView", { src });
+    globalThis.api.browserView.send("openInBrowserView", { src });
   }
 
   let autoUpdateStatus = "";

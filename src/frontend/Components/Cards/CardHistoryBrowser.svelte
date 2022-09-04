@@ -42,15 +42,27 @@
 
   $: starred = item?.starred ? item.starred : false;
 
+  const bounds = {
+    paddingLeft: 65,
+    paddingTop: 33,
+    paddingRight: 131,
+    paddingBottom: 58,
+    show: true,
+  };
+
   const openWebPage = async (url: string) => {
     status.componentVisible(LoadingPage);
     editing = false;
-    await globalThis.api.windowManager.send("openInBrowserView", {
+    // await globalThis.api.windowManager.send("openInBrowserView", {
+    //   src: url,
+    // });
+    await globalThis.api.browserView.send("openInBrowserView", {
       src: url,
     });
-    await globalThis.api.windowManager.send("showBrowserView", {
-      show: true,
-    });
+    // await globalThis.api.windowManager.send("showBrowserView", {
+    //   show: true,
+    // });
+    await globalThis.api.browserView.send("showBrowserView", bounds);
     await status.urlBrowser(url);
     status.browserStarted(true);
     status.historyBrowserAddNew({ url, title, note, starred });
@@ -61,9 +73,10 @@
     status.folderHandle(null);
     await tick();
     status.componentVisible(LoadingPage);
-    await globalThis.api.windowManager.send("showBrowserView", {
-      show: true,
-    });
+    // await globalThis.api.windowManager.send("showBrowserView", {
+    //   show: true,
+    // });
+    await globalThis.api.browserView.send("showBrowserView", bounds);
     const hostName = $status.sw.hostName;
     await folderHandle.requestPermission({
       mode: "read",

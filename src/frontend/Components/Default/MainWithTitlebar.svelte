@@ -7,13 +7,27 @@
   let outerW = globalThis.outerWidth - 8;
   let isMaximized = outerW >= globalThis.screen.availWidth;
 
+  const bounds = {
+    paddingLeft: 65,
+    paddingTop: 33,
+    paddingRight: 131,
+    paddingBottom: 58,
+    show: true,
+  };
+
   $: {
     isMaximized = outerW >= globalThis.screen.availWidth;
-    globalThis.api.windowManager.send(
+    // globalThis.api.windowManager.send(
+    //   isMaximized
+    //     ? "resizeBrowserViewToMaximized"
+    //     : "resizeBrowserViewToUnMaximized",
+    //   null
+    // );
+    globalThis.api.browserView.send(
       isMaximized
         ? "resizeBrowserViewToMaximized"
         : "resizeBrowserViewToUnMaximized",
-      null
+      bounds
     );
   }
 </script>

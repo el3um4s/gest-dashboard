@@ -2,13 +2,23 @@ import { get } from "svelte/store";
 import { status } from "../Stores/Status";
 import { FolderHandle } from "../sw/folderHandler";
 
+const bounds = {
+  paddingLeft: 65,
+  paddingTop: 33,
+  paddingRight: 131,
+  paddingBottom: 58,
+  show: true,
+};
+
 export const show = (view: boolean, component: any = undefined) => {
   status.componentVisible(component);
-  globalThis.api.windowManager.send("showBrowserView", { show: view });
+  // globalThis.api.windowManager.send("showBrowserView", { show: view });
+  globalThis.api.browserView.send("showBrowserView", { ...bounds, show: view });
 };
 
 export const showDevTools = () => {
-  globalThis.api.windowManager.send("openBrowserViewDevTools");
+  // globalThis.api.windowManager.send("openBrowserViewDevTools");
+  globalThis.api.browserView.send("openBrowserViewDevTools");
 };
 
 export const openNewWindow = () => {
@@ -19,7 +29,8 @@ export const openNewWindow = () => {
 };
 
 export const printBrowserView = () => {
-  globalThis.api.windowManager.send("printBrowserView");
+  // globalThis.api.windowManager.send("printBrowserView");
+  globalThis.api.browserView.send("printBrowserView");
 };
 
 export const reloadFolder = async () => {
@@ -41,13 +52,16 @@ export const reloadFolder = async () => {
 };
 
 export const goBackBrowserView = () => {
-  globalThis.api.windowManager.send("goBackBrowserView");
+  // globalThis.api.windowManager.send("goBackBrowserView");
+  globalThis.api.browserView.send("goBackBrowserView");
 };
 
 export const goForwardBrowserView = () => {
-  globalThis.api.windowManager.send("goForwardBrowserView");
+  // globalThis.api.windowManager.send("goForwardBrowserView");
+  globalThis.api.browserView.send("goForwardBrowserView");
 };
 
 export const reloadCurrentPageBrowserView = () => {
-  globalThis.api.windowManager.send("reloadCurrentPageBrowserView");
+  // globalThis.api.windowManager.send("reloadCurrentPageBrowserView");
+  globalThis.api.browserView.send("reloadCurrentPageBrowserView");
 };
