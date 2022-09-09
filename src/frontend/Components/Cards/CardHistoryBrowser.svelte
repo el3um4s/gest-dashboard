@@ -55,8 +55,8 @@
     status.componentVisible(LoadingPage);
     editing = false;
 
-    browserView.openInBrowserView({ url, apiKey: "api" });
-    browserView.showBrowserView({ bounds, apiKey: "api" });
+    browserView.openInBrowserView({ url });
+    browserView.showBrowserView({ bounds });
 
     await status.urlBrowser(url);
     status.browserStarted(true);
@@ -68,7 +68,7 @@
     status.folderHandle(null);
     await tick();
     status.componentVisible(LoadingPage);
-    browserView.showBrowserView({ bounds, apiKey: "api" });
+    browserView.showBrowserView({ bounds });
 
     const hostName = $status.sw.hostName;
     await folderHandle.requestPermission({
@@ -81,7 +81,6 @@
     chokidar.watchFolder({
       folderPath: url,
       nameWatcher: "gestDashboard",
-      apiKey: "api",
     });
   };
 

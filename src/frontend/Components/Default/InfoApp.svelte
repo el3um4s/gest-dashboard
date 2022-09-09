@@ -8,7 +8,6 @@
   let electron: string = "-";
 
   systemInfo.requestSystemInfo({
-    apiKey: "api",
     callback: (data) => {
       chrome = data.chrome;
       node = data.node;

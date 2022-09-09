@@ -24,13 +24,12 @@
     paddingBottom: 58,
     show: true,
   };
-  const apiKey = "api";
 
   const openWebPage = async (url: string) => {
     status.componentVisible(LoadingPage);
-    browserView.openInBrowserView({ url: src, apiKey });
+    browserView.openInBrowserView({ url: src });
 
-    await browserView.showBrowserView({ bounds, apiKey });
+    await browserView.showBrowserView({ bounds });
 
     await status.urlBrowser(url);
     status.browserStarted(true);
@@ -53,7 +52,7 @@
         await tick();
         status.componentVisible(LoadingPage);
 
-        await browserView.showBrowserView({ bounds, apiKey });
+        await browserView.showBrowserView({ bounds });
         const hostName = $status.sw.hostName;
         const folderHandle = await FolderHandle.reInit(entry, hostName);
         status.folderHandle(folderHandle);
@@ -61,7 +60,6 @@
         chokidar.watchFolder({
           folderPath: url,
           nameWatcher: "gestDashboard",
-          apiKey: "api",
         });
 
         status.historyBrowserAddNew({

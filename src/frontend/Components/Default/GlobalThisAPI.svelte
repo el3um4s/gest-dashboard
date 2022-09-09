@@ -21,7 +21,6 @@
   };
 
   browserView.on.browserViewCanBeShowed({
-    apiKey: "api",
     callback: async (data) => {
       const folderHandle = $status.sw.folderHandle;
       const hostName = $status.sw.hostName;
@@ -30,9 +29,9 @@
       let isMaximized = outerW >= globalThis.screen.availWidth;
 
       if (isMaximized) {
-        browserView.resizeBrowserViewToMaximized({ bounds, apiKey: "api" });
+        browserView.resizeBrowserViewToMaximized({ bounds });
       } else {
-        browserView.resizeBrowserViewToUnMaximized({ bounds, apiKey: "api" });
+        browserView.resizeBrowserViewToUnMaximized({ bounds });
       }
 
       if (folderHandle && data == false) {
@@ -43,7 +42,6 @@
   });
 
   chokidar.on.folderChanged({
-    apiKey: "api",
     callback: (data) => {
       const { path, eventName, nameWatcher } = data;
       console.log(path, eventName, nameWatcher);
