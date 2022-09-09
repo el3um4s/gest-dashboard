@@ -86,7 +86,7 @@
     const link = $status.sw.swScope
       ? `${$status.sw.swScope}${$status.sw.hostName}/`
       : null;
-    browserView.openInBrowserView({ url: src, apiKey: "api" });
+    browserView.openInBrowserView({ url: src });
   }
 
   let autoUpdateStatus = "";
@@ -101,7 +101,6 @@
     : null;
 
   autoUpdater.on.updateAvailable({
-    apiKey: "api",
     callback: (data) => {
       console.log("autoUpdateAvailable");
       console.log(data);
@@ -110,7 +109,6 @@
   });
 
   autoUpdater.on.updateDownloaded({
-    apiKey: "api",
     callback: (data) => {
       console.log("autoUpdateDownloaded");
       autoUpdateStatus = `${data.releaseName} ${languages.appSvelte.newVersionDownloaded[lang]}`;

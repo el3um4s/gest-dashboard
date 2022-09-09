@@ -4,7 +4,7 @@ import { BrowserWindow } from "electron";
 import createWindow from "../createWindow";
 import ElectronWindow from "@el3um4s/electron-window";
 
-import * as globals from "../globals";
+import globals from "../globals";
 
 const nameAPI = "windowManager";
 

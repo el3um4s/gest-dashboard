@@ -13,20 +13,16 @@
 
   function check() {
     checkingForUpdate = true;
-    autoUpdater.checkForUpdates({
-      apiKey: "api",
-    });
+    autoUpdater.checkForUpdates();
   }
 
   autoUpdater.on.checkingForUpdate({
-    apiKey: "api",
     callback: () => {
       checkingForUpdate = true;
     },
   });
 
   autoUpdater.on.updateAvailable({
-    apiKey: "api",
     callback: (data) => {
       checkingForUpdate = false;
       updateAvailable = true;
@@ -34,7 +30,6 @@
   });
 
   autoUpdater.on.updateNotAvailable({
-    apiKey: "api",
     callback: (data) => {
       checkingForUpdate = false;
       updateAvailable = false;
@@ -43,15 +38,12 @@
   });
 
   function startDownloadUpdate() {
-    autoUpdater.startDownloadUpdate({
-      apiKey: "api",
-    });
+    autoUpdater.startDownloadUpdate();
     updateAvailable = false;
     downloading = true;
   }
 
   autoUpdater.on.downloadProgress({
-    apiKey: "api",
     callback: (data) => {
       downloading = true;
       updateAvailable = false;
@@ -67,7 +59,6 @@
   });
 
   autoUpdater.on.updateDownloaded({
-    apiKey: "api",
     callback: (data) => {
       downloading = false;
       updateAvailable = false;
@@ -76,9 +67,7 @@
   });
 
   function install() {
-    autoUpdater.quitAndInstall({
-      apiKey: "api",
-    });
+    autoUpdater.quitAndInstall();
     quitAndInstall = false;
     isInstalling = true;
   }

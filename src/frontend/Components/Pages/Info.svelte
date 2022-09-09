@@ -7,7 +7,6 @@
   let isWindows = false;
 
   systemInfo.requestIsWindows({
-    apiKey: "api",
     callback: (data) => {
       isWindows = data.isWindows;
     },

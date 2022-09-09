@@ -16,15 +16,13 @@
     show: true,
   };
 
-  const apiKey = "api";
-
   $: {
     isMaximized = outerW >= globalThis.screen.availWidth;
 
     if (isMaximized) {
-      browserView.resizeBrowserViewToMaximized({ bounds, apiKey });
+      browserView.resizeBrowserViewToMaximized({ bounds });
     } else {
-      browserView.resizeBrowserViewToUnMaximized({ bounds, apiKey });
+      browserView.resizeBrowserViewToUnMaximized({ bounds });
     }
   }
 </script>
@@ -36,10 +34,10 @@
     <TitleBar
       {title}
       {isMaximized}
-      on:clickMinimize={() => windowControls.minimize({ apiKey: "api" })}
-      on:clickUnmaximize={() => windowControls.unmaximize({ apiKey: "api" })}
-      on:clickMaximize={() => windowControls.maximize({ apiKey: "api" })}
-      on:clickClose={() => windowControls.close({ apiKey: "api" })}
+      on:clickMinimize={() => windowControls.minimize()}
+      on:clickUnmaximize={() => windowControls.unmaximize()}
+      on:clickMaximize={() => windowControls.maximize()}
+      on:clickClose={() => windowControls.close()}
     />
   </div>
   <div class="main">

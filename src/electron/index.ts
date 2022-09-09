@@ -5,7 +5,7 @@ require("electron-reload")(__dirname);
 
 import createWindow from "./createWindow";
 
-import * as globals from "./globals";
+import globals from "./globals";
 // import ADODB from "@el3um4s/node-adodb";
 
 // if (app.isPackaged) {

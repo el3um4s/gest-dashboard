@@ -12,8 +12,6 @@ const bounds = {
   show: true,
 };
 
-const apiKey = "api";
-
 export const show = (view: boolean, component: any = undefined) => {
   status.componentVisible(component);
   browserView.showBrowserView({
@@ -21,12 +19,11 @@ export const show = (view: boolean, component: any = undefined) => {
       ...bounds,
       show: view,
     },
-    apiKey,
   });
 };
 
 export const showDevTools = () => {
-  browserView.openBrowserViewDevTools({ apiKey });
+  browserView.openBrowserViewDevTools();
 };
 
 export const openNewWindow = () => {
@@ -37,7 +34,7 @@ export const openNewWindow = () => {
 };
 
 export const printBrowserView = () => {
-  browserView.printBrowserView({ apiKey });
+  browserView.printBrowserView();
 };
 
 export const reloadFolder = async () => {
@@ -59,13 +56,13 @@ export const reloadFolder = async () => {
 };
 
 export const goBackBrowserView = () => {
-  browserView.goBackBrowserView({ apiKey });
+  browserView.goBackBrowserView();
 };
 
 export const goForwardBrowserView = () => {
-  browserView.goForwardBrowserView({ apiKey });
+  browserView.goForwardBrowserView();
 };
 
 export const reloadCurrentPageBrowserView = () => {
-  browserView.reloadCurrentPageBrowserView({ apiKey });
+  browserView.reloadCurrentPageBrowserView();
 };
