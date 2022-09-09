@@ -86,12 +86,6 @@
     const link = $status.sw.swScope
       ? `${$status.sw.swScope}${$status.sw.hostName}/`
       : null;
-    // globalThis.api.windowManager.send("openInBrowserView", { src });
-    // globalThis.api.browserView.send("openInBrowserView", { src });
-    // browserView.openInBrowserView({ url: src, apiKey: "api" });
-    // ok
-    // globalThis.api.browserView.send("openInBrowserView", { url: src });
-    // ko
     browserView.openInBrowserView({ url: src, apiKey: "api" });
   }
 
@@ -105,18 +99,6 @@
   $: src = $status.sw.swScope
     ? `${$status.sw.swScope}${$status.sw.hostName}/`
     : null;
-
-  // AUTO UPDATER
-
-  // globalThis.api.updaterInfo.receive("autoUpdateAvailable", (data) => {
-  //   console.log("autoUpdateAvailable");
-  //   console.log(data);
-  //   autoUpdateStatus = `${languages.appSvelte.newVersionAvailable[lang]} (${data.releaseName}) `;
-  // });
-  // globalThis.api.updaterInfo.receive("autoUpdateDownloaded", (data) => {
-  //   console.log("autoUpdateDownloaded");
-  //   autoUpdateStatus = `${data.releaseName} ${languages.appSvelte.newVersionDownloaded[lang]}`;
-  // });
 
   autoUpdater.on.updateAvailable({
     apiKey: "api",

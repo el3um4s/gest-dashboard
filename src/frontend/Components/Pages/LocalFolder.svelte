@@ -28,17 +28,8 @@
 
   const openWebPage = async (url: string) => {
     status.componentVisible(LoadingPage);
-    // await globalThis.api.windowManager.send("openInBrowserView", {
-    //   src,
-    // });
-    // await globalThis.api.browserView.send("openInBrowserView", {
-    //   src,
-    // });
     browserView.openInBrowserView({ url: src, apiKey });
-    // await globalThis.api.windowManager.send("showBrowserView", {
-    //   show: true,
-    // });
-    // await globalThis.api.browserView.send("showBrowserView", bounds);
+
     await browserView.showBrowserView({ bounds, apiKey });
 
     await status.urlBrowser(url);
@@ -61,10 +52,7 @@
         status.folderHandle(null);
         await tick();
         status.componentVisible(LoadingPage);
-        // await globalThis.api.windowManager.send("showBrowserView", {
-        //   show: true,
-        // });
-        // await globalThis.api.browserView.send("showBrowserView", bounds);
+
         await browserView.showBrowserView({ bounds, apiKey });
         const hostName = $status.sw.hostName;
         const folderHandle = await FolderHandle.reInit(entry, hostName);

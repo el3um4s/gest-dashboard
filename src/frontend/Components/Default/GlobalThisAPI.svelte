@@ -20,31 +20,6 @@
     show: true,
   };
 
-  // browserView.on.browserViewCanBeShowed({
-  //   apiKey: "api",
-  //   callback: async (data) => {
-  //     console.log(data);
-  //     // if (data) {
-  //     const folderHandle = $status.sw.folderHandle;
-  //     const hostName = $status.sw.hostName;
-
-  //     if (folderHandle) {
-  //       status.folderHandle(await FolderHandle.reInit(folderHandle, hostName));
-  //       show($status.sw.folderHandle ? true : false);
-  //     }
-
-  //     let outerW = globalThis.outerWidth;
-  //     let isMaximized = outerW >= globalThis.screen.availWidth;
-  //     if (isMaximized) {
-  //       browserView.resizeBrowserViewToMaximized({ bounds, apiKey: "api" });
-  //     } else {
-  //       browserView.resizeBrowserViewToUnMaximized({ bounds, apiKey: "api" });
-  //     }
-
-  //     // }
-  //   },
-  // });
-
   browserView.on.browserViewCanBeShowed({
     apiKey: "api",
     callback: async (data) => {
@@ -66,64 +41,6 @@
       }
     },
   });
-
-  // ok
-  // globalThis.api.browserView.receive("showBrowserView", async (data) => {
-  //   const folderHandle = $status.sw.folderHandle;
-  //   const hostName = $status.sw.hostName;
-
-  //   let outerW = globalThis.outerWidth;
-  //   let isMaximized = outerW >= globalThis.screen.availWidth;
-  //   globalThis.api.browserView.send(
-  //     isMaximized
-  //       ? "resizeBrowserViewToMaximized"
-  //       : "resizeBrowserViewToUnMaximized",
-  //     bounds
-  //   );
-
-  //   if (folderHandle && data == false) {
-  //     status.folderHandle(await FolderHandle.reInit(folderHandle, hostName));
-  //     show($status.sw.folderHandle ? true : false);
-  //   }
-  // });
-
-  // globalThis.api.browserView.receive("showBrowserView", async (data) => {
-  //   const folderHandle = $status.sw.folderHandle;
-  //   const hostName = $status.sw.hostName;
-
-  //   let outerW = globalThis.outerWidth;
-  //   let isMaximized = outerW >= globalThis.screen.availWidth;
-  //   globalThis.api.browserView.send(
-  //     isMaximized
-  //       ? "resizeBrowserViewToMaximized"
-  //       : "resizeBrowserViewToUnMaximized",
-  //     bounds
-  //   );
-
-  //   if (folderHandle && data.present == "no") {
-  //     status.folderHandle(await FolderHandle.reInit(folderHandle, hostName));
-  //     show($status.sw.folderHandle ? true : false);
-  //   }
-  // });
-
-  // globalThis.api.windowManager.receive("showBrowserView", async (data) => {
-  //   const folderHandle = $status.sw.folderHandle;
-  //   const hostName = $status.sw.hostName;
-
-  //   let outerW = globalThis.outerWidth;
-  //   let isMaximized = outerW >= globalThis.screen.availWidth;
-  //   globalThis.api.windowManager.send(
-  //     isMaximized
-  //       ? "resizeBrowserViewToMaximized"
-  //       : "resizeBrowserViewToUnMaximized",
-  //     null
-  //   );
-
-  //   if (folderHandle && data.present == "no") {
-  //     status.folderHandle(await FolderHandle.reInit(folderHandle, hostName));
-  //     show($status.sw.folderHandle ? true : false);
-  //   }
-  // });
 
   chokidar.on.folderChanged({
     apiKey: "api",

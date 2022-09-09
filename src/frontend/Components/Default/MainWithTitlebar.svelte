@@ -20,23 +20,12 @@
 
   $: {
     isMaximized = outerW >= globalThis.screen.availWidth;
-    // globalThis.api.windowManager.send(
-    //   isMaximized
-    //     ? "resizeBrowserViewToMaximized"
-    //     : "resizeBrowserViewToUnMaximized",
-    //   null
-    // );
+
     if (isMaximized) {
       browserView.resizeBrowserViewToMaximized({ bounds, apiKey });
     } else {
       browserView.resizeBrowserViewToUnMaximized({ bounds, apiKey });
     }
-    // globalThis.api.browserView.send(
-    //   isMaximized
-    //     ? "resizeBrowserViewToMaximized"
-    //     : "resizeBrowserViewToUnMaximized",
-    //   bounds
-    // );
   }
 </script>
 

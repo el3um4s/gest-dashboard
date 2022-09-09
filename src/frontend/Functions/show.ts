@@ -16,8 +16,6 @@ const apiKey = "api";
 
 export const show = (view: boolean, component: any = undefined) => {
   status.componentVisible(component);
-  // globalThis.api.windowManager.send("showBrowserView", { show: view });
-  // globalThis.api.browserView.send("showBrowserView", { ...bounds, show: view });
   browserView.showBrowserView({
     bounds: {
       ...bounds,
@@ -28,8 +26,6 @@ export const show = (view: boolean, component: any = undefined) => {
 };
 
 export const showDevTools = () => {
-  // globalThis.api.windowManager.send("openBrowserViewDevTools");
-  // globalThis.api.browserView.send("openBrowserViewDevTools");
   browserView.openBrowserViewDevTools({ apiKey });
 };
 
@@ -41,8 +37,6 @@ export const openNewWindow = () => {
 };
 
 export const printBrowserView = () => {
-  // globalThis.api.windowManager.send("printBrowserView");
-  // globalThis.api.browserView.send("printBrowserView");
   browserView.printBrowserView({ apiKey });
 };
 
@@ -65,19 +59,13 @@ export const reloadFolder = async () => {
 };
 
 export const goBackBrowserView = () => {
-  // globalThis.api.windowManager.send("goBackBrowserView");
-  // globalThis.api.browserView.send("goBackBrowserView");
   browserView.goBackBrowserView({ apiKey });
 };
 
 export const goForwardBrowserView = () => {
-  // globalThis.api.windowManager.send("goForwardBrowserView");
-  // globalThis.api.browserView.send("goForwardBrowserView");
   browserView.goForwardBrowserView({ apiKey });
 };
 
 export const reloadCurrentPageBrowserView = () => {
-  // globalThis.api.windowManager.send("reloadCurrentPageBrowserView");
-  // globalThis.api.browserView.send("reloadCurrentPageBrowserView");
   browserView.reloadCurrentPageBrowserView({ apiKey });
 };
