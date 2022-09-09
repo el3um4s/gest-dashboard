@@ -1,6 +1,7 @@
 <script lang="ts">
   import "./css/tailwind.pcss";
   import autoUpdater from "@el3um4s/renderer-for-electron-auto-updater";
+  import browserView from "@el3um4s/renderer-electron-window-browser-view";
 
   import { onMount } from "svelte";
   import { tick } from "svelte";
@@ -86,7 +87,12 @@
       ? `${$status.sw.swScope}${$status.sw.hostName}/`
       : null;
     // globalThis.api.windowManager.send("openInBrowserView", { src });
-    globalThis.api.browserView.send("openInBrowserView", { src });
+    // globalThis.api.browserView.send("openInBrowserView", { src });
+    // browserView.openInBrowserView({ url: src, apiKey: "api" });
+    // ok
+    // globalThis.api.browserView.send("openInBrowserView", { url: src });
+    // ko
+    browserView.openInBrowserView({ url: src, apiKey: "api" });
   }
 
   let autoUpdateStatus = "";

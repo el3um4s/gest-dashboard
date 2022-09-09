@@ -1,5 +1,6 @@
 <script lang="ts">
   import chokidar from "@el3um4s/renderer-for-electron-chokidar";
+  import browserView from "@el3um4s/renderer-electron-window-browser-view";
 
   import { status } from "../../Stores/Status";
   import {
@@ -19,24 +20,91 @@
     show: true,
   };
 
-  globalThis.api.browserView.receive("showBrowserView", async (data) => {
-    const folderHandle = $status.sw.folderHandle;
-    const hostName = $status.sw.hostName;
+  // browserView.on.browserViewCanBeShowed({
+  //   apiKey: "api",
+  //   callback: async (data) => {
+  //     console.log(data);
+  //     // if (data) {
+  //     const folderHandle = $status.sw.folderHandle;
+  //     const hostName = $status.sw.hostName;
 
-    let outerW = globalThis.outerWidth;
-    let isMaximized = outerW >= globalThis.screen.availWidth;
-    globalThis.api.browserView.send(
-      isMaximized
-        ? "resizeBrowserViewToMaximized"
-        : "resizeBrowserViewToUnMaximized",
-      bounds
-    );
+  //     if (folderHandle) {
+  //       status.folderHandle(await FolderHandle.reInit(folderHandle, hostName));
+  //       show($status.sw.folderHandle ? true : false);
+  //     }
 
-    if (folderHandle && data.present == "no") {
-      status.folderHandle(await FolderHandle.reInit(folderHandle, hostName));
-      show($status.sw.folderHandle ? true : false);
-    }
+  //     let outerW = globalThis.outerWidth;
+  //     let isMaximized = outerW >= globalThis.screen.availWidth;
+  //     if (isMaximized) {
+  //       browserView.resizeBrowserViewToMaximized({ bounds, apiKey: "api" });
+  //     } else {
+  //       browserView.resizeBrowserViewToUnMaximized({ bounds, apiKey: "api" });
+  //     }
+
+  //     // }
+  //   },
+  // });
+
+  browserView.on.browserViewCanBeShowed({
+    apiKey: "api",
+    callback: async (data) => {
+      const folderHandle = $status.sw.folderHandle;
+      const hostName = $status.sw.hostName;
+
+      let outerW = globalThis.outerWidth;
+      let isMaximized = outerW >= globalThis.screen.availWidth;
+
+      if (isMaximized) {
+        browserView.resizeBrowserViewToMaximized({ bounds, apiKey: "api" });
+      } else {
+        browserView.resizeBrowserViewToUnMaximized({ bounds, apiKey: "api" });
+      }
+
+      if (folderHandle && data == false) {
+        status.folderHandle(await FolderHandle.reInit(folderHandle, hostName));
+        show($status.sw.folderHandle ? true : false);
+      }
+    },
   });
+
+  // ok
+  // globalThis.api.browserView.receive("showBrowserView", async (data) => {
+  //   const folderHandle = $status.sw.folderHandle;
+  //   const hostName = $status.sw.hostName;
+
+  //   let outerW = globalThis.outerWidth;
+  //   let isMaximized = outerW >= globalThis.screen.availWidth;
+  //   globalThis.api.browserView.send(
+  //     isMaximized
+  //       ? "resizeBrowserViewToMaximized"
+  //       : "resizeBrowserViewToUnMaximized",
+  //     bounds
+  //   );
+
+  //   if (folderHandle && data == false) {
+  //     status.folderHandle(await FolderHandle.reInit(folderHandle, hostName));
+  //     show($status.sw.folderHandle ? true : false);
+  //   }
+  // });
+
+  // globalThis.api.browserView.receive("showBrowserView", async (data) => {
+  //   const folderHandle = $status.sw.folderHandle;
+  //   const hostName = $status.sw.hostName;
+
+  //   let outerW = globalThis.outerWidth;
+  //   let isMaximized = outerW >= globalThis.screen.availWidth;
+  //   globalThis.api.browserView.send(
+  //     isMaximized
+  //       ? "resizeBrowserViewToMaximized"
+  //       : "resizeBrowserViewToUnMaximized",
+  //     bounds
+  //   );
+
+  //   if (folderHandle && data.present == "no") {
+  //     status.folderHandle(await FolderHandle.reInit(folderHandle, hostName));
+  //     show($status.sw.folderHandle ? true : false);
+  //   }
+  // });
 
   // globalThis.api.windowManager.receive("showBrowserView", async (data) => {
   //   const folderHandle = $status.sw.folderHandle;

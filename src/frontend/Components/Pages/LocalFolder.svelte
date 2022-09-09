@@ -1,5 +1,6 @@
 <script lang="ts">
   import chokidar from "@el3um4s/renderer-for-electron-chokidar";
+  import browserView from "@el3um4s/renderer-electron-window-browser-view";
 
   import { tick } from "svelte";
 
@@ -23,19 +24,23 @@
     paddingBottom: 58,
     show: true,
   };
+  const apiKey = "api";
 
   const openWebPage = async (url: string) => {
     status.componentVisible(LoadingPage);
     // await globalThis.api.windowManager.send("openInBrowserView", {
     //   src,
     // });
-    await globalThis.api.browserView.send("openInBrowserView", {
-      src,
-    });
+    // await globalThis.api.browserView.send("openInBrowserView", {
+    //   src,
+    // });
+    browserView.openInBrowserView({ url: src, apiKey });
     // await globalThis.api.windowManager.send("showBrowserView", {
     //   show: true,
     // });
-    await globalThis.api.browserView.send("showBrowserView", bounds);
+    // await globalThis.api.browserView.send("showBrowserView", bounds);
+    await browserView.showBrowserView({ bounds, apiKey });
+
     await status.urlBrowser(url);
     status.browserStarted(true);
     status.historyBrowserAddNew({
@@ -59,7 +64,8 @@
         // await globalThis.api.windowManager.send("showBrowserView", {
         //   show: true,
         // });
-        await globalThis.api.browserView.send("showBrowserView", bounds);
+        // await globalThis.api.browserView.send("showBrowserView", bounds);
+        await browserView.showBrowserView({ bounds, apiKey });
         const hostName = $status.sw.hostName;
         const folderHandle = await FolderHandle.reInit(entry, hostName);
         status.folderHandle(folderHandle);

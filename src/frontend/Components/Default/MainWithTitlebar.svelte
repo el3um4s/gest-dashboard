@@ -1,6 +1,7 @@
 <script lang="ts">
   import { TitleBar } from "@el3um4s/svelte-titlebar";
   import windowControls from "@el3um4s/renderer-for-electron-window-controls";
+  import browserView from "@el3um4s/renderer-electron-window-browser-view";
 
   export let title: string = "GEST DASHBOARD";
 
@@ -15,6 +16,8 @@
     show: true,
   };
 
+  const apiKey = "api";
+
   $: {
     isMaximized = outerW >= globalThis.screen.availWidth;
     // globalThis.api.windowManager.send(
@@ -23,12 +26,17 @@
     //     : "resizeBrowserViewToUnMaximized",
     //   null
     // );
-    globalThis.api.browserView.send(
-      isMaximized
-        ? "resizeBrowserViewToMaximized"
-        : "resizeBrowserViewToUnMaximized",
-      bounds
-    );
+    if (isMaximized) {
+      browserView.resizeBrowserViewToMaximized({ bounds, apiKey });
+    } else {
+      browserView.resizeBrowserViewToUnMaximized({ bounds, apiKey });
+    }
+    // globalThis.api.browserView.send(
+    //   isMaximized
+    //     ? "resizeBrowserViewToMaximized"
+    //     : "resizeBrowserViewToUnMaximized",
+    //   bounds
+    // );
   }
 </script>
 

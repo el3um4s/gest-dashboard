@@ -2,6 +2,8 @@ import { get } from "svelte/store";
 import { status } from "../Stores/Status";
 import { FolderHandle } from "../sw/folderHandler";
 
+import browserView from "@el3um4s/renderer-electron-window-browser-view";
+
 const bounds = {
   paddingLeft: 65,
   paddingTop: 33,
@@ -10,15 +12,25 @@ const bounds = {
   show: true,
 };
 
+const apiKey = "api";
+
 export const show = (view: boolean, component: any = undefined) => {
   status.componentVisible(component);
   // globalThis.api.windowManager.send("showBrowserView", { show: view });
-  globalThis.api.browserView.send("showBrowserView", { ...bounds, show: view });
+  // globalThis.api.browserView.send("showBrowserView", { ...bounds, show: view });
+  browserView.showBrowserView({
+    bounds: {
+      ...bounds,
+      show: view,
+    },
+    apiKey,
+  });
 };
 
 export const showDevTools = () => {
   // globalThis.api.windowManager.send("openBrowserViewDevTools");
-  globalThis.api.browserView.send("openBrowserViewDevTools");
+  // globalThis.api.browserView.send("openBrowserViewDevTools");
+  browserView.openBrowserViewDevTools({ apiKey });
 };
 
 export const openNewWindow = () => {
@@ -30,7 +42,8 @@ export const openNewWindow = () => {
 
 export const printBrowserView = () => {
   // globalThis.api.windowManager.send("printBrowserView");
-  globalThis.api.browserView.send("printBrowserView");
+  // globalThis.api.browserView.send("printBrowserView");
+  browserView.printBrowserView({ apiKey });
 };
 
 export const reloadFolder = async () => {
@@ -53,15 +66,18 @@ export const reloadFolder = async () => {
 
 export const goBackBrowserView = () => {
   // globalThis.api.windowManager.send("goBackBrowserView");
-  globalThis.api.browserView.send("goBackBrowserView");
+  // globalThis.api.browserView.send("goBackBrowserView");
+  browserView.goBackBrowserView({ apiKey });
 };
 
 export const goForwardBrowserView = () => {
   // globalThis.api.windowManager.send("goForwardBrowserView");
-  globalThis.api.browserView.send("goForwardBrowserView");
+  // globalThis.api.browserView.send("goForwardBrowserView");
+  browserView.goForwardBrowserView({ apiKey });
 };
 
 export const reloadCurrentPageBrowserView = () => {
   // globalThis.api.windowManager.send("reloadCurrentPageBrowserView");
-  globalThis.api.browserView.send("reloadCurrentPageBrowserView");
+  // globalThis.api.browserView.send("reloadCurrentPageBrowserView");
+  browserView.reloadCurrentPageBrowserView({ apiKey });
 };

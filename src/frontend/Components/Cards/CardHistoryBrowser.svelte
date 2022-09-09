@@ -1,5 +1,6 @@
 <script lang="ts">
   import chokidar from "@el3um4s/renderer-for-electron-chokidar";
+  import browserView from "@el3um4s/renderer-electron-window-browser-view";
 
   import { tick } from "svelte";
   import { marked } from "marked";
@@ -56,13 +57,17 @@
     // await globalThis.api.windowManager.send("openInBrowserView", {
     //   src: url,
     // });
-    await globalThis.api.browserView.send("openInBrowserView", {
-      src: url,
-    });
+    // await globalThis.api.browserView.send("openInBrowserView", {
+    //   src: url,
+    // });
+    browserView.openInBrowserView({ url, apiKey: "api" });
+
     // await globalThis.api.windowManager.send("showBrowserView", {
     //   show: true,
     // });
-    await globalThis.api.browserView.send("showBrowserView", bounds);
+    // await globalThis.api.browserView.send("showBrowserView", bounds);
+    browserView.showBrowserView({ bounds, apiKey: "api" });
+
     await status.urlBrowser(url);
     status.browserStarted(true);
     status.historyBrowserAddNew({ url, title, note, starred });
@@ -76,7 +81,9 @@
     // await globalThis.api.windowManager.send("showBrowserView", {
     //   show: true,
     // });
-    await globalThis.api.browserView.send("showBrowserView", bounds);
+    // await globalThis.api.browserView.send("showBrowserView", bounds);
+    browserView.showBrowserView({ bounds, apiKey: "api" });
+
     const hostName = $status.sw.hostName;
     await folderHandle.requestPermission({
       mode: "read",
