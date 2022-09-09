@@ -2,8 +2,6 @@
   import Lang from "./Lang.svelte";
   import autoUpdater from "@el3um4s/renderer-for-electron-auto-updater";
 
-  // let version: string = "-";
-
   let checkingForUpdate: boolean = false;
   let updateAvailable: boolean = false;
   let updateNotAvailable: boolean = false;
@@ -13,26 +11,8 @@
 
   let downloadMessage: string = "";
 
-  // updaterInfo.requestVersionNumber((data) => {
-  //   version = data.version;
-  // });
-
-  // autoUpdater.requestVersionNumber({
-  //   apiKey: "api",
-  //   callback: (data) => {
-  //     version = data.version;
-  //   },
-  // });
-
-  // globalThis.api.updaterInfo.send("requestVersionNumber", null);
-
-  // globalThis.api.updaterInfo.receive("getVersionNumber", (data) => {
-  //   version = data.version;
-  // });
-
   function check() {
     checkingForUpdate = true;
-    // globalThis.api.updaterInfo.send("checkForUpdate", { version });
     autoUpdater.checkForUpdates({
       apiKey: "api",
     });
@@ -44,9 +24,6 @@
       checkingForUpdate = true;
     },
   });
-  // globalThis.api.updaterInfo.receive("checkingForUpdate", (data) => {
-  //   checkingForUpdate = true;
-  // });
 
   autoUpdater.on.updateAvailable({
     apiKey: "api",
@@ -55,11 +32,6 @@
       updateAvailable = true;
     },
   });
-
-  // globalThis.api.updaterInfo.receive("updateAvailable", (data) => {
-  //   checkingForUpdate = false;
-  //   updateAvailable = true;
-  // });
 
   autoUpdater.on.updateNotAvailable({
     apiKey: "api",
@@ -70,17 +42,10 @@
     },
   });
 
-  // globalThis.api.updaterInfo.receive("updateNotAvailable", (data) => {
-  //   checkingForUpdate = false;
-  //   updateAvailable = false;
-  //   updateNotAvailable = true;
-  // });
-
   function startDownloadUpdate() {
     autoUpdater.startDownloadUpdate({
       apiKey: "api",
     });
-    // globalThis.api.updaterInfo.send("startDownloadUpdate", null);
     updateAvailable = false;
     downloading = true;
   }
@@ -101,22 +66,6 @@
     },
   });
 
-  // globalThis.api.updaterInfo.receive("downloadProgress", (data) => {
-  //   downloading = true;
-  //   updateAvailable = false;
-  //   let log_message = "Download speed: " + data.bytesPerSecond;
-  //   log_message =
-  //     log_message + " - Downloaded " + data.percent.toFixed(2) + "%";
-  //   log_message =
-  //     log_message +
-  //     " (" +
-  //     data.transferred.toFixed(2) +
-  //     "/" +
-  //     data.total.toFixed(2) +
-  //     ")";
-  //   downloadMessage = log_message;
-  // });
-
   autoUpdater.on.updateDownloaded({
     apiKey: "api",
     callback: (data) => {
@@ -126,14 +75,7 @@
     },
   });
 
-  // globalThis.api.updaterInfo.receive("updateDownloaded", (data) => {
-  //   downloading = false;
-  //   updateAvailable = false;
-  //   quitAndInstall = true;
-  // });
-
   function install() {
-    // globalThis.api.updaterInfo.send("quitAndInstall", null);
     autoUpdater.quitAndInstall({
       apiKey: "api",
     });

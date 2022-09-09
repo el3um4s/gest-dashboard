@@ -1,5 +1,6 @@
 <script lang="ts">
   import chokidar from "@el3um4s/renderer-for-electron-chokidar";
+  import browserView from "@el3um4s/renderer-electron-window-browser-view";
 
   import { tick } from "svelte";
   import { marked } from "marked";
@@ -42,15 +43,21 @@
 
   $: starred = item?.starred ? item.starred : false;
 
+  const bounds = {
+    paddingLeft: 65,
+    paddingTop: 33,
+    paddingRight: 131,
+    paddingBottom: 58,
+    show: true,
+  };
+
   const openWebPage = async (url: string) => {
     status.componentVisible(LoadingPage);
     editing = false;
-    await globalThis.api.windowManager.send("openInBrowserView", {
-      src: url,
-    });
-    await globalThis.api.windowManager.send("showBrowserView", {
-      show: true,
-    });
+
+    browserView.openInBrowserView({ url, apiKey: "api" });
+    browserView.showBrowserView({ bounds, apiKey: "api" });
+
     await status.urlBrowser(url);
     status.browserStarted(true);
     status.historyBrowserAddNew({ url, title, note, starred });
@@ -61,9 +68,8 @@
     status.folderHandle(null);
     await tick();
     status.componentVisible(LoadingPage);
-    await globalThis.api.windowManager.send("showBrowserView", {
-      show: true,
-    });
+    browserView.showBrowserView({ bounds, apiKey: "api" });
+
     const hostName = $status.sw.hostName;
     await folderHandle.requestPermission({
       mode: "read",

@@ -1,6 +1,7 @@
 <script lang="ts">
   import "./css/tailwind.pcss";
   import autoUpdater from "@el3um4s/renderer-for-electron-auto-updater";
+  import browserView from "@el3um4s/renderer-electron-window-browser-view";
 
   import { onMount } from "svelte";
   import { tick } from "svelte";
@@ -85,7 +86,7 @@
     const link = $status.sw.swScope
       ? `${$status.sw.swScope}${$status.sw.hostName}/`
       : null;
-    globalThis.api.windowManager.send("openInBrowserView", { src });
+    browserView.openInBrowserView({ url: src, apiKey: "api" });
   }
 
   let autoUpdateStatus = "";
@@ -98,18 +99,6 @@
   $: src = $status.sw.swScope
     ? `${$status.sw.swScope}${$status.sw.hostName}/`
     : null;
-
-  // AUTO UPDATER
-
-  // globalThis.api.updaterInfo.receive("autoUpdateAvailable", (data) => {
-  //   console.log("autoUpdateAvailable");
-  //   console.log(data);
-  //   autoUpdateStatus = `${languages.appSvelte.newVersionAvailable[lang]} (${data.releaseName}) `;
-  // });
-  // globalThis.api.updaterInfo.receive("autoUpdateDownloaded", (data) => {
-  //   console.log("autoUpdateDownloaded");
-  //   autoUpdateStatus = `${data.releaseName} ${languages.appSvelte.newVersionDownloaded[lang]}`;
-  // });
 
   autoUpdater.on.updateAvailable({
     apiKey: "api",

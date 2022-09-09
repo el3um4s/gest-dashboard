@@ -1,5 +1,6 @@
 <script lang="ts">
   import chokidar from "@el3um4s/renderer-for-electron-chokidar";
+  import browserView from "@el3um4s/renderer-electron-window-browser-view";
 
   import { status } from "../../Stores/Status";
   import {
@@ -11,23 +12,34 @@
 
   import match from "@el3um4s/match";
 
-  globalThis.api.windowManager.receive("showBrowserView", async (data) => {
-    const folderHandle = $status.sw.folderHandle;
-    const hostName = $status.sw.hostName;
+  const bounds = {
+    paddingLeft: 65,
+    paddingTop: 33,
+    paddingRight: 131,
+    paddingBottom: 58,
+    show: true,
+  };
 
-    let outerW = globalThis.outerWidth;
-    let isMaximized = outerW >= globalThis.screen.availWidth;
-    globalThis.api.windowManager.send(
-      isMaximized
-        ? "resizeBrowserViewToMaximized"
-        : "resizeBrowserViewToUnMaximized",
-      null
-    );
+  browserView.on.browserViewCanBeShowed({
+    apiKey: "api",
+    callback: async (data) => {
+      const folderHandle = $status.sw.folderHandle;
+      const hostName = $status.sw.hostName;
 
-    if (folderHandle && data.present == "no") {
-      status.folderHandle(await FolderHandle.reInit(folderHandle, hostName));
-      show($status.sw.folderHandle ? true : false);
-    }
+      let outerW = globalThis.outerWidth;
+      let isMaximized = outerW >= globalThis.screen.availWidth;
+
+      if (isMaximized) {
+        browserView.resizeBrowserViewToMaximized({ bounds, apiKey: "api" });
+      } else {
+        browserView.resizeBrowserViewToUnMaximized({ bounds, apiKey: "api" });
+      }
+
+      if (folderHandle && data == false) {
+        status.folderHandle(await FolderHandle.reInit(folderHandle, hostName));
+        show($status.sw.folderHandle ? true : false);
+      }
+    },
   });
 
   chokidar.on.folderChanged({

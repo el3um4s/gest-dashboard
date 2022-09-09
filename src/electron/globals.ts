@@ -14,6 +14,7 @@ interface BrowserViewBounds {
 const globals: Globals = {
   mainURL: "index.html",
   preloadjs: "preload.js",
+  // check if this is still used
   browserViewBounds: {
     x: 65,
     y: 33,
