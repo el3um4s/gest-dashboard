@@ -12,6 +12,14 @@ const bounds = {
   show: true,
 };
 
+const boundsFullScreen = {
+  paddingLeft: 1,
+  paddingTop: 1,
+  paddingRight: 1,
+  paddingBottom: 1,
+  show: true,
+};
+
 export const show = (view: boolean, component: any = undefined) => {
   status.componentVisible(component);
   browserView.showBrowserView({
@@ -36,7 +44,16 @@ export const openInBrowserView = (url: string) => {
 };
 
 export const resizeBrowserView = (isMaximized: boolean) => {
-  if (isMaximized) {
+  if (globalThis.innerHeight == screen.height) {
+    console.log("FULL SCREEN");
+  } else {
+    console.log("NORMAL SCREEN");
+  }
+  const fullScreen = globalThis.innerHeight == screen.height;
+  console.log(fullScreen);
+  if (isMaximized && fullScreen) {
+    browserView.resizeBrowserViewToMaximized({ bounds: boundsFullScreen });
+  } else if (isMaximized) {
     browserView.resizeBrowserViewToMaximized({ bounds });
   } else {
     browserView.resizeBrowserViewToUnMaximized({ bounds });

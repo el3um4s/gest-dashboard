@@ -40,4 +40,20 @@
         .on("local folder", () => reloadFolder());
     },
   });
+
+  const handleKeydown = (event) => {
+    const { key } = event;
+
+    match(key).on("F11", () => {
+      let outerW = globalThis.outerWidth;
+      let isMaximized = outerW >= globalThis.screen.availWidth;
+      const fullScreen = globalThis.innerHeight == screen.height;
+      if (fullScreen) {
+        globalThis.exitFullscreen();
+      }
+      resizeBrowserView(isMaximized);
+    });
+  };
 </script>
+
+<svelte:window on:keydown={handleKeydown} />
