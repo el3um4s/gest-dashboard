@@ -22,6 +22,27 @@ export const show = (view: boolean, component: any = undefined) => {
   });
 };
 
+export const showBrowserView = async (view: boolean = true) => {
+  await browserView.showBrowserView({
+    bounds: {
+      ...bounds,
+      show: view,
+    },
+  });
+};
+
+export const openInBrowserView = (url: string) => {
+  browserView.openInBrowserView({ url });
+};
+
+export const resizeBrowserView = (isMaximized: boolean) => {
+  if (isMaximized) {
+    browserView.resizeBrowserViewToMaximized({ bounds });
+  } else {
+    browserView.resizeBrowserViewToUnMaximized({ bounds });
+  }
+};
+
 export const showDevTools = () => {
   browserView.openBrowserViewDevTools();
 };

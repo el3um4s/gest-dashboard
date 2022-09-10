@@ -1,8 +1,6 @@
 <script lang="ts">
   import "./css/tailwind.pcss";
   import autoUpdater from "@el3um4s/renderer-for-electron-auto-updater";
-  import browserView from "@el3um4s/renderer-electron-window-browser-view";
-
   import { onMount } from "svelte";
   import { tick } from "svelte";
 
@@ -16,6 +14,7 @@
   import StatusBar from "./Components/Default/StatusBar.svelte";
   import LeftBar from "./Components/Default/LeftBar.svelte";
   import RightBar from "./Components/Default/RightBar.svelte";
+  import { openInBrowserView } from "./Functions/show";
 
   import { idbSettings } from "./IndexedDB/Settings";
 
@@ -83,10 +82,10 @@
     status.clientId(data.clientId);
     await tick();
 
-    const link = $status.sw.swScope
-      ? `${$status.sw.swScope}${$status.sw.hostName}/`
-      : null;
-    browserView.openInBrowserView({ url: src });
+    // const link = $status.sw.swScope
+    //   ? `${$status.sw.swScope}${$status.sw.hostName}/`
+    //   : null;
+    openInBrowserView(src);
   }
 
   let autoUpdateStatus = "";
