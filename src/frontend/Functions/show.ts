@@ -30,7 +30,7 @@ export const openNewWindow = () => {
   const message = {
     link: undefined,
   };
-  globalThis.api.windowManager.send("openInNewWindow", message);
+  globalThis.ipc.windowManager.send("openInNewWindow", message);
 };
 
 export const printBrowserView = () => {
