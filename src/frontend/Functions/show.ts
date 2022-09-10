@@ -12,6 +12,14 @@ const bounds = {
   show: true,
 };
 
+const boundsFullScreen = {
+  paddingLeft: 1,
+  paddingTop: 1,
+  paddingRight: 1,
+  paddingBottom: 1,
+  show: true,
+};
+
 export const show = (view: boolean, component: any = undefined) => {
   status.componentVisible(component);
   browserView.showBrowserView({
@@ -20,6 +28,36 @@ export const show = (view: boolean, component: any = undefined) => {
       show: view,
     },
   });
+};
+
+export const showBrowserView = async (view: boolean = true) => {
+  await browserView.showBrowserView({
+    bounds: {
+      ...bounds,
+      show: view,
+    },
+  });
+};
+
+export const openInBrowserView = (url: string) => {
+  browserView.openInBrowserView({ url });
+};
+
+export const resizeBrowserView = (isMaximized: boolean) => {
+  if (globalThis.innerHeight == screen.height) {
+    console.log("FULL SCREEN");
+  } else {
+    console.log("NORMAL SCREEN");
+  }
+  const fullScreen = globalThis.innerHeight == screen.height;
+  console.log(fullScreen);
+  if (isMaximized && fullScreen) {
+    browserView.resizeBrowserViewToMaximized({ bounds: boundsFullScreen });
+  } else if (isMaximized) {
+    browserView.resizeBrowserViewToMaximized({ bounds });
+  } else {
+    browserView.resizeBrowserViewToUnMaximized({ bounds });
+  }
 };
 
 export const showDevTools = () => {

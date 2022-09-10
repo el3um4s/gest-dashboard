@@ -7,18 +7,11 @@
     show,
     reloadCurrentPageBrowserView,
     reloadFolder,
+    resizeBrowserView,
   } from "../../Functions/show";
   import { FolderHandle } from "../../sw/folderHandler";
 
   import match from "@el3um4s/match";
-
-  const bounds = {
-    paddingLeft: 65,
-    paddingTop: 33,
-    paddingRight: 131,
-    paddingBottom: 58,
-    show: true,
-  };
 
   browserView.on.browserViewCanBeShowed({
     callback: async (data) => {
@@ -27,12 +20,7 @@
 
       let outerW = globalThis.outerWidth;
       let isMaximized = outerW >= globalThis.screen.availWidth;
-
-      if (isMaximized) {
-        browserView.resizeBrowserViewToMaximized({ bounds });
-      } else {
-        browserView.resizeBrowserViewToUnMaximized({ bounds });
-      }
+      resizeBrowserView(isMaximized);
 
       if (folderHandle && data == false) {
         status.folderHandle(await FolderHandle.reInit(folderHandle, hostName));
@@ -52,4 +40,20 @@
         .on("local folder", () => reloadFolder());
     },
   });
+
+  const handleKeydown = (event) => {
+    const { key } = event;
+
+    match(key).on("F11", () => {
+      let outerW = globalThis.outerWidth;
+      let isMaximized = outerW >= globalThis.screen.availWidth;
+      const fullScreen = globalThis.innerHeight == screen.height;
+      if (fullScreen) {
+        globalThis.exitFullscreen();
+      }
+      resizeBrowserView(isMaximized);
+    });
+  };
 </script>
+
+<svelte:window on:keydown={handleKeydown} />
