@@ -107,10 +107,21 @@
   {#if isInstalling}
     <span class="message"><Lang c="checkForUpdate" v="installing" /></span>
   {/if}
+
+  <div class="message">
+    If the installation process doesn't work, download the latest release from <a
+      href="https://github.com/el3um4s/gest-dashboard/releases/latest"
+      target="_blank">Gest Dashboard - last release</a
+    >
+  </div>
 </div>
 
 <style lang="postcss">
   .message {
     @apply rounded-md text-lg m-1 p-2;
+  }
+
+  a {
+    @apply underline;
   }
 </style>
