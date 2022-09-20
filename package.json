@@ -33,11 +33,11 @@
     "@types/marked": "^4.0.7",
     "@types/sqlite3": "^3.1.8",
     "@types/wicg-file-system-access": "^2020.9.5",
-    "autoprefixer": "^10.4.9",
-    "electron": "^20.1.3",
+    "autoprefixer": "^10.4.11",
+    "electron": "^20.1.4",
     "electron-builder": "^23.3.3",
     "electron-rebuild": "^3.2.9",
-    "nodemon": "^2.0.19",
+    "nodemon": "^2.0.20",
     "postcss": "^8.4.16",
     "postcss-load-config": "^4.0.1",
     "rollup": "^2.79.0",
@@ -56,7 +56,7 @@
     "typescript": "^4.8.3"
   },
   "dependencies": {
-    "@el3um4s/electron-window": "^1.0.1",
+    "@el3um4s/electron-window": "^1.1.0",
     "@el3um4s/ipc-for-electron": "^1.0.7",
     "@el3um4s/ipc-for-electron-auto-updater": "^1.0.2",
     "@el3um4s/ipc-for-electron-chokidar": "^1.0.2",
@@ -80,7 +80,7 @@
     "idb-keyval": "^6.2.0",
     "marked": "^4.1.0",
     "sirv-cli": "^2.0.2",
-    "sqlite3": "^5.0.11",
+    "sqlite3": "^5.1.1",
     "svelte-fa": "^3.0.3"
   },
   "build": {
