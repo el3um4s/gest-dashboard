@@ -78,7 +78,7 @@
     "idb-keyval": "^6.2.0",
     "marked": "^4.2.5",
     "sirv-cli": "^2.0.2",
-    "sqlite3": "^5.1.4",
+    "sqlite3": "^5.1.5",
     "svelte-fa": "^3.0.3"
   },
   "build": {
